@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { NextPage } from "next";
 import css from "styled-jsx/css";
+import Image from "next/image";
 
 const style = css`
     section.theater {
         div.year-block {
-            width: calc(100% - 700px);
+            width: 1000px;
             margin: 10px auto 50px auto;
             padding: 15px 0;
             
@@ -33,12 +34,24 @@ const style = css`
                         
                         &.hr-line {
                             position: relative;
-                            top: -8px;
+                            top: -8.5px;
                             display: inline-block;
                             background-color: transparent;
                             width: calc(100% - 106px);
                             height: 0.5px;
                             border-top: 1px solid #a5a5a5;
+                        }
+                    }
+                }
+                
+                &:last-child > div.theater-block {
+                    margin: 10px 30px;
+                    
+                    p {
+                        text-align: left;
+                        
+                        h3 {
+                            margin: 7px 0;
                         }
                     }
                 }
@@ -99,24 +112,28 @@ const Theater: NextPage = () => {
 
     return (
         <section className="theater">
-            Theater
-            {years.map((year, i) => {
-                return (
-                    <div key={i} className="year-block">
-                        <div>
-                            <h2>{year}</h2>
-                            <span className="hr-circle" />
-                            <span className="hr-line" />
-                            <span className="hr-circle" />
-                        </div>
-                        <div>
-                            {data[year].map(obj => {
-
-                            })}
-                        </div>
+            {years.map((year, i) => (
+                <div key={i} className="year-block">
+                    <div>
+                        <h2>{year}</h2>
+                        <span className="hr-circle" />
+                        <span className="hr-line" />
+                        <span className="hr-circle" />
                     </div>
-                );
-            })}
+                    <div>
+                        {data[year].map(obj => (
+                            <div className="theater-block">
+                                <Image src={"/api/img/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} />
+                                <p>
+                                    <h3>{obj.title}</h3>
+                                    장소: {obj.theater}<br />
+                                    {obj.schedule}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            ))}
             <style jsx>{style}</style>
         </section>
     );

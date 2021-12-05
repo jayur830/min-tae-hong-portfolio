@@ -87,7 +87,7 @@ const Contact: NextPage = () => {
                 </div>
             </div>
             <div>
-                <Image src={"/api/img/" + img.filename} width={img.width} height={img.height} />
+                <Image src={"/api/img/" + img.filename} width={img.width} height={img.height} draggable={false} />
             </div>
             <style jsx>{style}</style>
         </section>
