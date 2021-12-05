@@ -1,13 +1,52 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInstagram } from "@fortawesome/free-brands-svg-icons";
+import * as Icons from "@fortawesome/free-brands-svg-icons";
+
+import { execAsync } from "../assets/ts/async";
+
+type HomeData = {
+    title: string
+};
+
+type FooterData = {
+    sns: {
+        name: string,
+        url: string
+    }[]
+};
 
 const AppLayout: NextPage = ({ children }) => {
+    let [title, setTitle] = useState("Hello");
+    let [iconsHtml, setIconsHtml] = useState([<React.Fragment key={0} />]);
+
+    useEffect(() => {
+        fetch("/api/home")
+            .then(data => data.json())
+            .then((data: HomeData) => setTitle(data.title));
+        fetch("/api/footer")
+            .then(data => data.json())
+            .then((data: FooterData) => {
+                setIconsHtml(data.sns.map((obj, i) => {
+                    switch (obj.name) {
+                    case "instagram": return <a key={i + "-" + obj.name} href={obj.url} target="_blank"><FontAwesomeIcon size="1x" icon={Icons.faInstagram} /></a>;
+                    case "facebook": return <a key={i + "-" + obj.name} href={obj.url} target="_blank"><FontAwesomeIcon size="1x" icon={Icons.faFacebook} /></a>;
+                    case "twitter": return <a key={i + "-" + obj.name} href={obj.url} target="_blank"><FontAwesomeIcon size="1x" icon={Icons.faTwitter} /></a>;
+                    case "line": return <a key={i + "-" + obj.name} href={obj.url} target="_blank"><FontAwesomeIcon size="1x" icon={Icons.faLine} /></a>;
+                    case "youtube": return <a key={i + "-" + obj.name} href={obj.url} target="_blank"><FontAwesomeIcon size="1x" icon={Icons.faYoutube} /></a>;
+                    case "pinterest": return <a key={i + "-" + obj.name} href={obj.url} target="_blank"><FontAwesomeIcon size="1x" icon={Icons.faPinterest} /></a>;
+                    case "tiktok": return <a key={i + "-" + obj.name} href={obj.url} target="_blank"><FontAwesomeIcon size="1x" icon={Icons.faTiktok} /></a>;
+                    case "snapchat": return <a key={i + "-" + obj.name} href={obj.url} target="_blank"><FontAwesomeIcon size="1x" icon={Icons.faSnapchat} /></a>;
+                    default: return <a key={i} href="#" />;
+                    }
+                }));
+            });
+    }, []);
+
     return (
         <div>
             <Head>
@@ -19,7 +58,7 @@ const AppLayout: NextPage = ({ children }) => {
             <header className="app-header">
                 <div>
                     <Link href="/">
-                        <h1>Min Tae Hong</h1>
+                        <h1>{title}</h1>
                     </Link>
                 </div>
                 <nav>
@@ -35,7 +74,7 @@ const AppLayout: NextPage = ({ children }) => {
             {children}
             <footer className="app-footer">
                 <div>©Copyright 2021. All Rights Reserved.</div>
-                <FontAwesomeIcon size="1x" icon={faInstagram} />
+                {iconsHtml}
             </footer>
         </div>
     );

@@ -1,10 +1,10 @@
 @font-face {
-    src: url('../fonts/HeirofLightBold.ttf') format('truetype');
+    src: url('../assets/fonts/HeirofLightBold.ttf') format('truetype');
     font-family: 'HeirofLight Bold';
 }
 
 @font-face {
-    src: url('../fonts/HeirofLightRegular.ttf') format('truetype');
+    src: url('../assets/fonts/HeirofLightRegular.ttf') format('truetype');
     font-family: 'HeirofLight Regular';
 }
 
@@ -76,7 +76,7 @@ html, body {
     header.app-header {
         > div h1 {
             display: inline-block;
-            font: 40px 'HeirofLight Bold', serif;
+            font: 40px 'Old English Text MT', serif;
             padding: 50px 0;
             cursor: pointer;
         }
@@ -103,8 +103,9 @@ html, body {
                         transition: background-color 0.2s, color 0.2s;
                     }
 
-                    &:hover h4 {
-                        background-color: #2d2d2d;
+                    &:hover h4,
+                    &.on h4 {
+                        background-color: black;
                         color: white;
                     }
                 }
@@ -126,8 +127,14 @@ html, body {
             margin: auto 0;
         }
 
-        svg {
-            width: 30px !important;
+        a {
+            color: white;
+            width: 30px;
+            height: 30px;
+
+            svg {
+                width: 30px;
+            }
 
             &:nth-child(2) {
                 margin-left: 10%;
