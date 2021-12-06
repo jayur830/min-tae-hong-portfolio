@@ -1,0 +1,17 @@
+[
+  {
+    "filename": "photo1.png",
+    "width": 1000,
+    "height": 666
+  },
+  {
+    "filename": "photo2.png",
+    "width": 466,
+    "height": 700
+  },
+  {
+    "filename": "photo3.png",
+    "width": 466,
+    "height": 700
+  }
+]

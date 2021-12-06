@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { NextPage } from "next";
 import css from "styled-jsx/css";
 import Image from "next/image";
+import { useSelector } from "react-redux";
 
 const style = css`
     section.contact {
@@ -50,23 +51,7 @@ type ContactData = {
 };
 
 const Contact: NextPage = () => {
-    const [email, setEmail] = useState("");
-    const [tel, seTel] = useState("");
-    const [img, setImg] = useState({
-        filename: "",
-        width: 0,
-        height: 0
-    });
-
-    useEffect(() => {
-        fetch("/api/contact")
-            .then(data => data.json())
-            .then((data: ContactData) => {
-                setEmail(data.email);
-                seTel(data.tel);
-                setImg(data.img);
-            });
-    }, []);
+    const contactState = useSelector((state: any) => state.contact);
 
     return (
         <section className="contact">
@@ -76,18 +61,18 @@ const Contact: NextPage = () => {
                         <tbody>
                         <tr>
                             <td>EMAIL.</td>
-                            <td>{email}</td>
+                            <td>{contactState.email}</td>
                         </tr>
                         <tr>
                             <td>TEL.</td>
-                            <td>{tel}</td>
+                            <td>{contactState.tel}</td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
             <div>
-                <Image src={"/api/img/" + img.filename} width={img.width} height={img.height} draggable={false} />
+                <Image src={"/api/img/" + contactState.img.filename} width={contactState.img.width} height={contactState.img.height} draggable={false} />
             </div>
             <style jsx>{style}</style>
         </section>

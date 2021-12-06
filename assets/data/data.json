@@ -1,0 +1,66 @@
+{
+  "title": "Min Tae Hong",
+  "home": [
+    {
+      "filename": "photo1.png",
+      "width": 1000,
+      "height": 666
+    },
+    {
+      "filename": "photo2.png",
+      "width": 466,
+      "height": 700
+    },
+    {
+      "filename": "photo3.png",
+      "width": 466,
+      "height": 700
+    }
+  ],
+  "about": {
+    "name": "민태홍",
+    "birth": "1995.11.01",
+    "info": "blah blah blah",
+    "img": {
+      "filename": "about.png",
+      "width": 435,
+      "height": 651
+    },
+    "comments": [
+      {
+        "user": "anonymous-123",
+        "comment": "hello hello hello hello hello"
+      }
+    ]
+  },
+  "theater": [
+    {
+      "title": "세기의 사나이",
+      "theater": "대학로예술극장 대극장",
+      "year": 2019,
+      "schedule": "2019.02.22 ~ 03.03 — 화~금 8시, 토 3시 7시, 일 3시, 월 쉼",
+      "img": {
+        "filename": "세기의사나이.png",
+        "width": 640,
+        "height": 894
+      }
+    }
+  ],
+  "contact": {
+    "email": "kokonet1101@naver.com",
+    "tel": "010-6255-3990",
+    "img": {
+      "filename": "contact.png",
+      "width": 512,
+      "height": 539
+    }
+  },
+  "footer": {
+    "sns": [
+      {
+        "name": "instagram",
+        "url": "https://github.com/jayur830"
+      }
+    ]
+  }
+}

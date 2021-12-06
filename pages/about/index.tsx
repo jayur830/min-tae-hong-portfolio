@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { NextPage } from "next";
 import Image from "next/image";
 
 import css from "styled-jsx/css";
+import { useSelector } from "react-redux";
 
 const style = css`
     section.about {
@@ -70,32 +71,7 @@ type AboutData = {
 }
 
 const About: NextPage = () => {
-    const [name, setName] = useState("");
-    const [birthday, setBirthday] = useState("");
-    const [info, setInfo] = useState("");
-    const [img, setImg] = useState({
-        filename: "",
-        width: 0,
-        height: 0
-    });
-    const [comments, setComments] = useState([
-        {
-            user: "",
-            comment: ""
-        }
-    ]);
-
-    useEffect(() => {
-        fetch("/api/about")
-            .then(data => data.json())
-            .then((data: AboutData) => {
-                setName(data.name);
-                setBirthday(data.birth);
-                setInfo(data.info);
-                setImg(data.img);
-                setComments(data.comments);
-            });
-    }, []);
+    const aboutState = useSelector((state: any) => state.about);
 
     return (
         <section className="about">
@@ -105,21 +81,21 @@ const About: NextPage = () => {
                         <table>
                             <tbody>
                             <tr>
-                                <td colSpan={2}>{name}</td>
+                                <td colSpan={2}>{aboutState.name}</td>
                             </tr>
                             <tr>
                                 <td>BIRTH.</td>
-                                <td>{birthday}</td>
+                                <td>{aboutState.birth}</td>
                             </tr>
                             <tr>
-                                <td colSpan={2}><p>{info}</p></td>
+                                <td colSpan={2}><p>{aboutState.info}</p></td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div>
-                    <Image src={"/api/img/" + img.filename} width={img.width} height={img.height} draggable={false} />
+                    <Image src={"/api/img/" + aboutState.img.filename} width={aboutState.img.width} height={aboutState.img.height} draggable={false} />
                 </div>
             </div>
             <div>
