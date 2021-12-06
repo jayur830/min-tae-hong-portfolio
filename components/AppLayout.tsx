@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as Icons from "@fortawesome/free-brands-svg-icons";
@@ -32,6 +33,8 @@ const AppLayout: NextPage = ({ children }) => {
 
     let [title, setTitle] = useState("");
     let [iconsHtml, setIconsHtml] = useState([<React.Fragment key={0} />]);
+
+    const router = useRouter();
 
     useEffect(() => {
         fetch("/api/data")
@@ -126,11 +129,11 @@ const AppLayout: NextPage = ({ children }) => {
                 </div>
                 <nav>
                     <ul>
-                        <li><Link scroll={false} href="/about"><h4>ABOUT</h4></Link></li>
-                        <li><Link scroll={false} href="/movies"><h4>MOVIES</h4></Link></li>
-                        <li><Link scroll={false} href="/drama"><h4>DRAMA</h4></Link></li>
-                        <li><Link scroll={false} href="/theater"><h4>THEATER</h4></Link></li>
-                        <li><Link scroll={false} href="/contact"><h4>CONTACT</h4></Link></li>
+                        <li className={router.pathname === "/about" ? "on" : ""}><Link scroll={false} href="/about"><h4>ABOUT</h4></Link></li>
+                        <li className={router.pathname === "/movies" ? "on" : ""}><Link scroll={false} href="/movies"><h4>MOVIES</h4></Link></li>
+                        <li className={router.pathname === "/drama" ? "on" : ""}><Link scroll={false} href="/drama"><h4>DRAMA</h4></Link></li>
+                        <li className={router.pathname === "/theater" ? "on" : ""}><Link scroll={false} href="/theater"><h4>THEATER</h4></Link></li>
+                        <li className={router.pathname === "/contact" ? "on" : ""}><Link scroll={false} href="/contact"><h4>CONTACT</h4></Link></li>
                     </ul>
                 </nav>
             </header>
