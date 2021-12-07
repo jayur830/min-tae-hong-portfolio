@@ -13,30 +13,20 @@ export type MoviesState = {
             filename: string,
             width: number,
             height: number
-        }
+        } | {
+            url: string,
+            width: number,
+            height: number
+        } | null,
+        scenes: {
+            filename: string,
+            width: number,
+            height: number
+        }[]
     }[]
 };
 
-const initialState: MoviesState = {
-    [new Date().getFullYear().toString()]: [
-        {
-            title: "",
-            director: "",
-            actors: [""],
-            awards: [""],
-            img: {
-                filename: "",
-                width: 0,
-                height: 0
-            },
-            video: {
-                filename: "",
-                width: 0,
-                height: 0
-            }
-        }
-    ]
-};
+const initialState: MoviesState = {};
 
 export default (state: MoviesState = initialState, action: any) => {
     switch (action.type) {

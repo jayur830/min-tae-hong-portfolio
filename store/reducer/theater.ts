@@ -16,27 +16,7 @@ export type TheaterState = {
     }[]
 };
 
-const initialState: TheaterState = {
-    // [new Date().getFullYear().toString()]: [
-    //     {
-    //         title: "",
-    //         theater: "",
-    //         schedule: "",
-    //         img: {
-    //             filename: "",
-    //             width: 0,
-    //             height: 0
-    //         },
-    //         scenes: [
-    //             {
-    //                 filename: "",
-    //                 width: 0,
-    //                 height: 0
-    //             }
-    //         ]
-    //     }
-    // ]
-};
+const initialState: TheaterState = {};
 
 export default (state: TheaterState = initialState, action: any) => {
     switch (action.type) {

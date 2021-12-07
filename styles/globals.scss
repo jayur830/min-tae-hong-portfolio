@@ -113,6 +113,10 @@ html, body {
         }
     }
 
+    section {
+        min-height: 1000px;
+    }
+
     footer.app-footer {
         background-color: black;
         color: white;

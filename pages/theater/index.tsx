@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { NextPage } from "next";
 import css from "styled-jsx/css";
 import Image from "next/image";
@@ -60,18 +60,6 @@ const style = css`
         }
     }
 `;
-
-type TheaterData = {
-    title: string,
-    theater: string,
-    year: number,
-    schedule: string,
-    img: {
-        filename: string,
-        width: number,
-        height: number
-    }
-}[];
 
 const Theater: NextPage = () => {
     const theaterState = useSelector((state: any) => state.theater);

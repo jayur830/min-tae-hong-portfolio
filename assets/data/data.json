@@ -1,5 +1,8 @@
 {
-  "title": "Min Tae Hong",
+  "common": {
+    "title": "Min Tae Hong",
+    "headerTitle": "Min Tae Hong"
+  },
   "home": [
     {
       "filename": "photo1.png",
@@ -33,6 +36,37 @@
       }
     ]
   },
+  "movies": [
+    {
+      "title": "못다핀 꽃",
+      "year": 2019,
+      "director": "???",
+      "actors": ["???", "???", "???", "???", "???", "???"],
+      "awards": ["제 20회 대한민국청소년영화제 특별상"],
+      "img": {
+        "filename": "못다핀꽃.png",
+        "width": 880,
+        "height": 494
+      },
+      "video": null,
+      "scenes": []
+    }
+  ],
+  "drama": [
+    {
+      "title": "언더커버 (JTBC)",
+      "year": 2021,
+      "director": "송현욱",
+      "actors": ["지진희", "김현주", "연우진", "한선화"],
+      "schedule": "2021.04.23 ~ 06.12",
+      "img": {
+        "filename": "언더커버.png",
+        "width": 552,
+        "height": 869
+      },
+      "scenes": []
+    }
+  ],
   "theater": [
     {
       "title": "세기의 사나이",
@@ -43,7 +77,8 @@
         "filename": "세기의사나이.png",
         "width": 640,
         "height": 894
-      }
+      },
+      "scenes": []
     }
   ],
   "contact": {

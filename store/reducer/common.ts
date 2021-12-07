@@ -1,14 +1,16 @@
 export type CommonState = {
-    title: string
+    title: string,
+    headerTitle: string
 };
 
 const initialState: CommonState = {
-    title: ""
+    title: "",
+    headerTitle: ""
 };
 
 export default (state: CommonState = initialState, action: any) => {
     switch (action.type) {
-    case "SET_COMMON_TITLE":
+    case "SET_COMMON_DATA":
         return {
             ...state,
             ...action.payload
