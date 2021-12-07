@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 const style = css`
     section.contact {
         display: flex;
-        margin: 210px 0;
+        margin: 0;
             
         > div {                
             &:first-child {
@@ -33,8 +33,14 @@ const style = css`
             
             &:last-child {
                 flex: 4;
+                display: table;
                 text-align: left;
                 width: 100%;
+                
+                > div {
+                    display: table-cell;
+                    vertical-align: middle;
+                }
             }
         }
     }
@@ -72,7 +78,9 @@ const Contact: NextPage = () => {
                 </div>
             </div>
             <div>
-                <Image src={"/api/img/" + contactState.img.filename} width={contactState.img.width} height={contactState.img.height} draggable={false} />
+                <div>
+                    <Image src={"/api/img/" + contactState.img.filename} width={contactState.img.width} height={contactState.img.height} draggable={false} />
+                </div>
             </div>
             <style jsx>{style}</style>
         </section>
