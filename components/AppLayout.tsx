@@ -120,14 +120,14 @@ const AppLayout: NextPage = ({ children }) => {
                     });
                     setIconsHtml(data.footer.sns.map((obj: { name: string, url: string }, i: number) => {
                         switch (obj.name) {
-                        case "instagram": return <a key={i + "-" + obj.name} href={obj.url} target="_blank"><FontAwesomeIcon size="1x" icon={Icons.faInstagram} /></a>;
-                        case "facebook": return <a key={i + "-" + obj.name} href={obj.url} target="_blank"><FontAwesomeIcon size="1x" icon={Icons.faFacebook} /></a>;
-                        case "twitter": return <a key={i + "-" + obj.name} href={obj.url} target="_blank"><FontAwesomeIcon size="1x" icon={Icons.faTwitter} /></a>;
-                        case "line": return <a key={i + "-" + obj.name} href={obj.url} target="_blank"><FontAwesomeIcon size="1x" icon={Icons.faLine} /></a>;
-                        case "youtube": return <a key={i + "-" + obj.name} href={obj.url} target="_blank"><FontAwesomeIcon size="1x" icon={Icons.faYoutube} /></a>;
-                        case "pinterest": return <a key={i + "-" + obj.name} href={obj.url} target="_blank"><FontAwesomeIcon size="1x" icon={Icons.faPinterest} /></a>;
-                        case "tiktok": return <a key={i + "-" + obj.name} href={obj.url} target="_blank"><FontAwesomeIcon size="1x" icon={Icons.faTiktok} /></a>;
-                        case "snapchat": return <a key={i + "-" + obj.name} href={obj.url} target="_blank"><FontAwesomeIcon size="1x" icon={Icons.faSnapchat} /></a>;
+                        case "instagram": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={Icons.faInstagram} /></a>;
+                        case "facebook": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={Icons.faFacebook} /></a>;
+                        case "twitter": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={Icons.faTwitter} /></a>;
+                        case "line": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={Icons.faLine} /></a>;
+                        case "youtube": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={Icons.faYoutube} /></a>;
+                        case "pinterest": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={Icons.faPinterest} /></a>;
+                        case "tiktok": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={Icons.faTiktok} /></a>;
+                        case "snapchat": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={Icons.faSnapchat} /></a>;
                         default: return <a key={i} href="#" />;
                         }
                     }));
