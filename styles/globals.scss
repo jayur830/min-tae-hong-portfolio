@@ -33,6 +33,34 @@ html, body {
         box-sizing: border-box;
     }
 
+    .light-mode {
+        background-color: white;
+        color: black;
+        transition: background-color 0.5s;
+    }
+
+    .dark-mode {
+        background-color: #1c1e2a;
+        color: #ced4da;
+        transition: background-color 0.5s;
+
+        ul li h4 {
+            &:hover h4,
+            &.on h4 {
+                background-color: #ced4da;
+                color: #1c1e2a;
+            }
+        }
+
+        div.dark-mode-btn > div {
+            border-color: #ced4da;
+
+            span {
+                background-color: #ced4da;
+            }
+        }
+    }
+
     .scroll {
         overflow: scroll;
 
@@ -71,6 +99,41 @@ html, body {
         -khtml-user-select: none;
         -webkit-user-select: none;
         user-select: none;
+    }
+
+    div.dark-mode-btn {
+        position: absolute;
+        right: 0;
+        display: inline-block;
+        font-family: 'HeirofLight Bold', serif;
+        margin: 10px;
+
+        > span {
+            position: relative;
+            top: -6px;
+            margin-right: 7px;
+        }
+
+        > div {
+            display: inline-block;
+            width: 50px;
+            height: 25px;
+            border: 2px solid black;
+            border-radius: 15px;
+            padding: 2px;
+
+            > span {
+                position: relative;
+                top: -1px;
+                display: inline-block;
+                background-color: black;
+                width: 19px;
+                height: 19px;
+                border-radius: 30px;
+                cursor: pointer;
+                transition: transform 0.5s;
+            }
+        }
     }
 
     header.app-header {

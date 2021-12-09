@@ -46,7 +46,7 @@ const style = css`
                 }
                 
                 &:last-child > div.movies-block {
-                    margin: 10px 30px;
+                    margin: 10px 30px 100px;
                     
                     > div {
                         position: relative;

@@ -1,11 +1,13 @@
 export type CommonState = {
     title: string,
-    headerTitle: string
+    headerTitle: string,
+    darkMode: boolean
 };
 
 const initialState: CommonState = {
     title: "",
-    headerTitle: ""
+    headerTitle: "",
+    darkMode: false
 };
 
 export default (state: CommonState = initialState, action: any) => {
@@ -15,6 +17,11 @@ export default (state: CommonState = initialState, action: any) => {
             ...state,
             ...action.payload
         };
+    case "SET_DARK_MODE":
+        return {
+            ...state,
+            darkMode: !state.darkMode
+        }
     default:
         return state;
     }
