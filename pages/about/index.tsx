@@ -2,73 +2,10 @@ import React from "react";
 import { NextPage } from "next";
 import Image from "next/image";
 
-import css from "styled-jsx/css";
 import { useSelector } from "react-redux";
 
-const style = css`
-    section.about {
-        margin: 150px 0;
-        
-        > div {
-            &:first-child {
-                display: flex;
-            
-                > div {                
-                    &:first-child {
-                        flex: 5;
-                        display: table;
-                        
-                        > div {
-                            display: table-cell;
-                            vertical-align: middle;
-                            
-                            table {
-                                width: 100px;
-                                margin: 0 250px 0 auto;
-                                
-                                td {
-                                    font-size: 18px;
-                                    text-align: left;
-                                    padding: 30px 20px;
-                                }
-                            }
-                        }
-                    }
-                    
-                    &:last-child {
-                        flex: 4;
-                        text-align: left;
-                        width: 100%;
-                    }
-                }
-            }
-            
-            &:last-child {
-                padding: 50px calc(50% - 600px) 10px calc(50% - 600px);
-                
-                > h2 {
-                    text-align: left;
-                    margin-bottom: 20px;
-                }
-            }
-        }
-    }
-`;
-
-type AboutData = {
-    name: string,
-    birth: string,
-    info: string,
-    img: {
-        filename: string,
-        width: number,
-        height: number
-    },
-    comments: {
-        user: string,
-        comment: string
-    }[]
-}
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
 const About: NextPage = () => {
     const aboutState = useSelector((state: any) => state.about);
@@ -98,10 +35,28 @@ const About: NextPage = () => {
                     <Image src={"/api/img/" + aboutState.img.filename} width={aboutState.img.width} height={aboutState.img.height} draggable={false} />
                 </div>
             </div>
-            <div>
+            <div className="comment">
                 <h2>Comments</h2>
+                {aboutState.comments.map((obj: { comment: string, date: string, secret: boolean }, i: number) => (
+                    <div key={`comment-${i}`} className="comment-block">
+                        <div>
+                            <FontAwesomeIcon size="1x" icon={faUserCircle} style={{
+                                position: "relative",
+                                left: -10,
+                                width: 40
+                            }} />
+                            <span className="hr-circle" />
+                            <span className="hr-line" />
+                            <span className="hr-circle" />
+                            <span className="comment-date">{obj.date}</span>
+                        </div>
+                        <div className={obj.secret ? "secret" : ""}>
+                            {obj.secret ? "비밀 댓글입니다." : obj.comment}
+                        </div>
+                    </div>
+                ))}
+                <input type="button" value="댓글 쓰기" />
             </div>
-            <style jsx>{style}</style>
         </section>
     );
 };

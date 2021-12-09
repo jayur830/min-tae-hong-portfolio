@@ -1,65 +1,7 @@
 import React from "react";
 import { NextPage } from "next";
-import css from "styled-jsx/css";
 import Image from "next/image";
 import { useSelector } from "react-redux";
-
-const style = css`
-    section.theater {
-        div.year-block {
-            width: 1000px;
-            margin: 10px auto 50px auto;
-            padding: 15px 0;
-            
-            > div {
-                &:first-child {
-                    text-align: left;
-                    
-                    h2 {
-                        display: inline-block;
-                        margin-right: 10px;
-                    }
-                    
-                    span {
-                        &.hr-circle {
-                            position: relative;
-                            top: -5px;
-                            display: inline-block;
-                            background-color: transparent;
-                            width: 8px;
-                            height: 8px;
-                            border: 1px solid #a5a5a5;
-                            border-radius: 10px;
-                            margin: 0 5px;
-                        }
-                        
-                        &.hr-line {
-                            position: relative;
-                            top: -8.5px;
-                            display: inline-block;
-                            background-color: transparent;
-                            width: calc(100% - 106px);
-                            height: 0.5px;
-                            border-top: 1px solid #a5a5a5;
-                        }
-                    }
-                }
-                
-                &:last-child > div.theater-block {
-                    margin: 10px 30px 100px;
-                    
-                    > div {
-                        text-align: left;
-                        
-                        h3 {
-                            margin: 7px 0;
-                        }
-                    }
-                }
-            }
-        }
-    }
-`;
 
 const Theater: NextPage = () => {
     const theaterState = useSelector((state: any) => state.theater);
@@ -91,7 +33,6 @@ const Theater: NextPage = () => {
                     </div>
                 </div>
             ))}
-            <style jsx>{style}</style>
         </section>
     );
 };

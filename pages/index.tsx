@@ -12,11 +12,11 @@ const Home: NextPage = () => {
 
 
     return (
-        <div className="home">
+        <section className="home">
             <h1>Hello</h1>
 
             <style jsx>{style}</style>
-        </div>
+        </section>
     );
 };
 

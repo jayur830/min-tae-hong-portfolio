@@ -1,4 +1,9 @@
 @font-face {
+    src: url('../assets/fonts/OPTIEngraversOldEnglish.otf') format('opentype');
+    font-family: 'OPTIEngraversOldEnglish';
+}
+
+@font-face {
     src: url('../assets/fonts/HeirofLightBold.ttf') format('truetype');
     font-family: 'HeirofLight Bold';
 }
@@ -31,34 +36,6 @@ html, body {
 
     * {
         box-sizing: border-box;
-    }
-
-    .light-mode {
-        background-color: white;
-        color: black;
-        transition: background-color 0.5s;
-    }
-
-    .dark-mode {
-        background-color: #1c1e2a;
-        color: #ced4da;
-        transition: background-color 0.5s;
-
-        ul li h4 {
-            &:hover h4,
-            &.on h4 {
-                background-color: #ced4da;
-                color: #1c1e2a;
-            }
-        }
-
-        div.dark-mode-btn > div {
-            border-color: #ced4da;
-
-            span {
-                background-color: #ced4da;
-            }
-        }
     }
 
     .scroll {
@@ -139,7 +116,7 @@ html, body {
     header.app-header {
         > div h1 {
             display: inline-block;
-            font: 40px 'Old English Text MT', serif;
+            font: 40px 'OPTIEngraversOldEnglish', serif;
             padding: 50px 0;
             cursor: pointer;
         }
@@ -212,7 +189,37 @@ html, body {
         }
     }
 
-    &::-webkit-scrollbar {
-        display: none;
+    .light-mode {
+        background-color: white;
+        color: black;
+        transition: background-color 0.5s;
+    }
+
+    .dark-mode {
+        background-color: #1c1e2a;
+        color: #ced4da;
+        transition: background-color 0.5s;
+
+        .app-header ul li {
+            &:hover h4,
+            &.on h4 {
+                background-color: #ced4da;
+                color: #1c1e2a;
+            }
+        }
+
+        div.dark-mode-btn > div {
+            border-color: #ced4da;
+
+            span {
+                background-color: #ced4da;
+            }
+        }
     }
 }
+
+@import "about";
+@import "movies";
+@import "drama";
+@import "theater";
+@import "contact";
