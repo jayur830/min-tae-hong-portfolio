@@ -18,7 +18,7 @@ export type TheaterState = {
 
 const initialState: TheaterState = {};
 
-export default (state: TheaterState = initialState, action: any) => {
+const theaterReducer = (state: TheaterState = initialState, action: any) => {
     switch (action.type) {
     case "SET_THEATER_DATA":
         return {
@@ -29,3 +29,5 @@ export default (state: TheaterState = initialState, action: any) => {
         return state;
     }
 };
+
+export default theaterReducer;

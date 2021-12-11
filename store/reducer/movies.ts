@@ -28,7 +28,7 @@ export type MoviesState = {
 
 const initialState: MoviesState = {};
 
-export default (state: MoviesState = initialState, action: any) => {
+const moviesReducer = (state: MoviesState = initialState, action: any) => {
     switch (action.type) {
     case "SET_MOVIES_DATA":
         return {
@@ -39,3 +39,5 @@ export default (state: MoviesState = initialState, action: any) => {
         return state;
     }
 };
+
+export default moviesReducer;

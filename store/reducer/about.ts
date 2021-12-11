@@ -8,8 +8,9 @@ export type AboutState = {
         height: number
     },
     comments: {
-        user: string,
         comment: string
+        date: string,
+        secret: boolean
     }[]
 };
 
@@ -24,20 +25,28 @@ const initialState: AboutState = {
     },
     comments: [
         {
-            user: "",
-            comment: ""
+            comment: "",
+            date: "",
+            secret: false
         }
     ]
 };
 
-export default (state: AboutState = initialState, action: any) => {
+const aboutReducer = (state: AboutState = initialState, action: any) => {
     switch (action.type) {
     case "SET_ABOUT_DATA":
         return {
             ...state,
             ...action.payload
         };
+    case "ADD_ABOUT_COMMENT":
+        return {
+            ...state,
+            comments: state.comments.concat(action.payload)
+        }
     default:
         return state;
     }
 };
+
+export default aboutReducer;

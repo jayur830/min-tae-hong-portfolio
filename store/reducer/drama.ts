@@ -40,7 +40,7 @@ const initialState: DramaState = {
     ]
 };
 
-export default (state: DramaState = initialState, action: any) => {
+const dramaReducer = (state: DramaState = initialState, action: any) => {
     switch (action.type) {
     case "SET_DRAMA_DATA":
         return {
@@ -51,3 +51,5 @@ export default (state: DramaState = initialState, action: any) => {
         return state;
     }
 };
+
+export default dramaReducer;

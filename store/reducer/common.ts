@@ -10,7 +10,7 @@ const initialState: CommonState = {
     darkMode: false
 };
 
-export default (state: CommonState = initialState, action: any) => {
+const commonReducer = (state: CommonState = initialState, action: any) => {
     switch (action.type) {
     case "SET_COMMON_DATA":
         return {
@@ -26,3 +26,5 @@ export default (state: CommonState = initialState, action: any) => {
         return state;
     }
 };
+
+export default commonReducer;

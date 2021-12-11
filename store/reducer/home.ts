@@ -12,7 +12,7 @@ const initialState: HomeState = [
     }
 ];
 
-export default (state: HomeState = initialState, action: any) => {
+const homeReducer = (state: HomeState = initialState, action: any) => {
     switch (action.type) {
     case "SET_HOME_DATA":
         return {
@@ -23,3 +23,5 @@ export default (state: HomeState = initialState, action: any) => {
         return state;
     }
 };
+
+export default homeReducer;

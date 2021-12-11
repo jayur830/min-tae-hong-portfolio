@@ -14,7 +14,7 @@ const initialState: FooterState = {
     ]
 };
 
-export default (state: FooterState = initialState, action: any) => {
+const footerReducer = (state: FooterState = initialState, action: any) => {
     switch (action.type) {
     case "SET_FOOTER_SNS_LIST":
         return {
@@ -25,3 +25,5 @@ export default (state: FooterState = initialState, action: any) => {
         return state;
     }
 };
+
+export default footerReducer;

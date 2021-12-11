@@ -22,7 +22,8 @@ const Drama: NextPage = () => {
                     <div>
                         {(dramaState[year] as any[]).map((obj: any, j: number) => (
                             <div key={j} className="drama-block">
-                                <Image src={"/api/img/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} />
+                                {/*<Image src={"/api/img/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} />*/}
+                                <img src={"/api/img/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="" />
                                 <div>
                                     <h3>{obj.title}</h3>
                                     <div>연출: {obj.director}</div>

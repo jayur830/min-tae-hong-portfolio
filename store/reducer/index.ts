@@ -10,7 +10,7 @@ import theater from "./theater";
 import contact from "./contact";
 import footer from "./footer";
 
-export default (state: any, action: any) => {
+const reducer = (state: any, action: any) => {
     switch (action.type) {
     case HYDRATE:
         return { ...action.payload };
@@ -27,3 +27,5 @@ export default (state: any, action: any) => {
         })(state, action);
     }
 };
+
+export default reducer;

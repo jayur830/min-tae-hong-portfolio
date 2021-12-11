@@ -4,7 +4,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 
 import reducer from "./reducer";
 
-export default createWrapper(() => {
+const wrapper = createWrapper(() => {
     const middlewares: Middleware[] = [];
     const enhancer = process.env.NODE_ENV === "production" ?
         compose(applyMiddleware(...middlewares)) :
@@ -13,3 +13,5 @@ export default createWrapper(() => {
     // @ts-ignore
     return createStore(reducer, enhancer);
 }, { debug: process.env.NODE_ENV === "production" });
+
+export default wrapper;

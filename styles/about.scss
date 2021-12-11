@@ -40,15 +40,15 @@ section.about {
 
             > h2 {
                 text-align: left;
-                margin-bottom: 20px;
+                margin-bottom: 50px;
             }
 
             div.comment-block {
                 position: relative;
-                margin-bottom: 80px;
+                margin-bottom: 200px;
 
                 > div {
-                    &:first-child {
+                    &:nth-child(1) {
                         span {
                             &.hr-circle {
                                 position: relative;
@@ -82,7 +82,7 @@ section.about {
                         }
                     }
 
-                    &:last-child {
+                    &:nth-child(2) {
                         position: relative;
                         left: 70px;
                         text-align: left;
@@ -91,11 +91,29 @@ section.about {
                         &.secret {
                             color: #808080;
                         }
+
+                        input[type=text] {
+                            font: 16px 'HeirofLight Regular';
+                            width: 100%;
+                            border: none;
+                            border-bottom: 1px solid #a5a5a5;
+                            padding: 10px 0;
+                        }
+                    }
+
+                    &:nth-child(3) {
+                        text-align: right;
+                        padding: 10px 40px 0 0;
+
+                        input[type=button] {
+                            font-size: 13px;
+                            margin-left: 20px;
+                        }
                     }
                 }
             }
 
-            > input[type=button] {
+            input[type=button] {
                 float: right;
                 font: 18px 'HeirofLight Bold';
                 background-color: black;
@@ -112,6 +130,30 @@ section.about {
                 &:active {
                     background-color: #373737;
                 }
+            }
+        }
+    }
+}
+
+.dark-mode section.about > div:last-child {
+    input {
+        &[type=text] {
+            background-color: transparent;
+            color: #a7a9bf;
+        }
+
+        &[type=button] {
+            background-color: #8c90ac;
+            color: #1c1e2a;
+
+            &:hover {
+                background-color: #a7a9bf;
+                color: #333647;
+            }
+
+            &:active {
+                background-color: #6d7290;
+                color: #171a24;
             }
         }
     }

@@ -22,7 +22,8 @@ const Theater: NextPage = () => {
                     <div>
                         {(theaterState[year] as any[]).map((obj: any, j: number) => (
                             <div key={j} className="theater-block">
-                                <Image src={"/api/img/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} />
+                                {/*<Image src={"/api/img/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} />*/}
+                                <img src={"/api/img/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="" />
                                 <div>
                                     <h3>{obj.title}</h3>
                                     <div>장소: {obj.theater}</div>

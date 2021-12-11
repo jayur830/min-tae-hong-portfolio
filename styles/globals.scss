@@ -203,7 +203,20 @@ html, body {
         .app-header ul li {
             &:hover h4,
             &.on h4 {
-                background-color: #ced4da;
+                background-color: #8c90ac;
+                color: #1c1e2a;
+            }
+        }
+
+        .app-footer {
+            background-color: #636a93;
+            color: #1c1e2a;
+
+            > div {
+                font-family: 'HeirofLight Bold', serif;
+            }
+
+            a svg {
                 color: #1c1e2a;
             }
         }
