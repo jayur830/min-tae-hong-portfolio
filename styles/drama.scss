@@ -76,6 +76,87 @@ section.drama {
                         margin: 15px 0;
                         padding: 0;
                     }
+
+                    &.scenes {
+                        display: block;
+                        height: 200px;
+                        margin-top: 50px;
+
+                        > div {
+                            display: table;
+                            width: 100%;
+                            height: 100%;
+
+                            > div {
+                                display: table-cell;
+                                vertical-align: middle;
+
+                                svg {
+                                    width: 20px;
+                                    cursor: pointer;
+
+                                    &:hover {
+                                        color: #585858;
+                                    }
+
+                                    &:active {
+                                        color: #323232;
+                                    }
+
+                                    &.disable {
+                                        color: #a5a5a5;
+                                        cursor: default;
+                                    }
+                                }
+
+                                &:first-child,
+                                &:last-child {
+                                    width: 20px;
+                                }
+
+                                &:first-child {
+                                    padding-right: 10px;
+                                }
+
+                                &:last-child {
+                                    padding-left: 10px;
+                                }
+                            }
+
+                            ul {
+                                background-color: dodgerblue;
+                                list-style-type: none;
+                                width: 880px;
+                                height: 100%;
+                                margin: 0;
+                                padding: 0;
+                                overflow-x: hidden;
+                                white-space: nowrap;
+
+                                li {
+                                    display: inline-block;
+                                    height: 100%;
+
+                                    > div {
+                                        display: table;
+                                        height: 100%;
+
+                                        > div {
+                                            display: table-cell;
+                                            vertical-align: middle;
+
+                                            * {
+                                                background-color: #513ebd;
+                                                width: 166px;
+                                                height: 40px;
+                                                margin: 0 5px;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

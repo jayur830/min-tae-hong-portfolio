@@ -25,9 +25,9 @@ const Theater: NextPage = () => {
                                 {/*<Image src={"/api/img/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} />*/}
                                 <img src={"/api/img/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="" />
                                 <div>
-                                    <h3>{obj.title}</h3>
-                                    <div>장소: {obj.theater}</div>
-                                    <div>{obj.schedule}</div>
+                                    <h3 className="font-smoothing">{obj.title}</h3>
+                                    <div className="font-smoothing">장소: {obj.theater}</div>
+                                    <div className="font-smoothing">{obj.schedule}</div>
                                 </div>
                             </div>
                         ))}

@@ -3,6 +3,12 @@ import { NextPage } from "next";
 import { useSelector } from "react-redux";
 import Image from "next/image";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faChevronLeft,
+    faChevronRight
+} from "@fortawesome/free-solid-svg-icons";
+
 const Drama: NextPage = () => {
     const dramaState = useSelector((state: any) => state.drama);
 
@@ -25,11 +31,41 @@ const Drama: NextPage = () => {
                                 {/*<Image src={"/api/img/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} />*/}
                                 <img src={"/api/img/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="" />
                                 <div>
-                                    <h3>{obj.title}</h3>
-                                    <div>연출: {obj.director}</div>
-                                    <div>출연: {obj.actors.join(", ")}</div>
-                                    <div>방송: {obj.schedule}</div>
+                                    <h3 className="font-smoothing">{obj.title}</h3>
+                                    <div className="font-smoothing">연출: {obj.director}</div>
+                                    <div className="font-smoothing">출연: {obj.actors.join(", ")}</div>
+                                    <div className="font-smoothing">방송: {obj.schedule}</div>
                                 </div>
+                                {obj.scenes.length === 0 ? null : (
+                                    <div className="scenes">
+                                        <div>
+                                            <div><FontAwesomeIcon size="2x" icon={faChevronLeft} /></div>
+                                            <ul className="no-scrollbar">
+                                                <li><div><div><p></p></div></div></li>
+                                                <li><div><div><p></p></div></div></li>
+                                                <li><div><div><p></p></div></div></li>
+                                                <li><div><div><p></p></div></div></li>
+                                                <li><div><div><p></p></div></div></li>
+                                                <li><div><div><p></p></div></div></li>
+                                                <li><div><div><p></p></div></div></li>
+                                                <li><div><div><p></p></div></div></li>
+                                                <li><div><div><p></p></div></div></li>
+                                                <li><div><div><p></p></div></div></li>
+                                                <li><div><div><p></p></div></div></li>
+                                                <li><div><div><p></p></div></div></li>
+                                                <li><div><div><p></p></div></div></li>
+                                                <li><div><div><p></p></div></div></li>
+                                                <li><div><div><p></p></div></div></li>
+                                                <li><div><div><p></p></div></div></li>
+                                                <li><div><div><p></p></div></div></li>
+                                                <li><div><div><p></p></div></div></li>
+                                                <li><div><div><p></p></div></div></li>
+                                                <li><div><div><p></p></div></div></li>
+                                            </ul>
+                                            <div><FontAwesomeIcon size="2x" icon={faChevronRight} className="disable" /></div>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         ))}
                     </div>

@@ -19,7 +19,16 @@ html, body {
     padding: 0;
     font-family: 'HeirofLight Regular', serif;
     text-align: center;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: auto;
+    overflow-x: hidden;
+}
 
+html {
+    overflow-y: hidden;
+}
+
+body {
     a {
         outline: none;
         color: black;
@@ -76,6 +85,15 @@ html, body {
         -khtml-user-select: none;
         -webkit-user-select: none;
         user-select: none;
+    }
+
+    .font-smoothing {
+        transform: rotate(0.03deg);
+    }
+
+    span.font-smoothing {
+        display: inline-block;
+        transform: rotate(0.03deg);
     }
 
     div.dark-mode-btn {
@@ -236,3 +254,4 @@ html, body {
 @import "drama";
 @import "theater";
 @import "contact";
+@import "~animate.css";

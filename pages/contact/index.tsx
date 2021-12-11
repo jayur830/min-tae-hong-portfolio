@@ -13,12 +13,12 @@ const Contact: NextPage = () => {
                     <table>
                         <tbody>
                         <tr>
-                            <td>EMAIL.</td>
-                            <td>{contactState.email}</td>
+                            <td className="font-smoothing">EMAIL.</td>
+                            <td className="font-smoothing">{contactState.email}</td>
                         </tr>
                         <tr>
-                            <td>TEL.</td>
-                            <td>{contactState.tel}</td>
+                            <td className="font-smoothing">TEL.</td>
+                            <td className="font-smoothing">{contactState.tel}</td>
                         </tr>
                         </tbody>
                     </table>

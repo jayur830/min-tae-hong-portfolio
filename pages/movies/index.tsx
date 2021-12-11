@@ -26,10 +26,10 @@ const Movies: NextPage = () => {
                                 <img src={"/api/img/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="" />
                                 <div>
                                     {obj.video == null ? null : <input type="button" className="video-btn" value="VIDEO" />}
-                                    <h3>{obj.title}</h3>
-                                    <div>감독: {obj.director}</div>
-                                    <div>출연: {obj.actors.join(", ")}</div>
-                                    {obj.awards.length > 0 ? <ul>{obj.awards.map((award: string, k: number) => <li key={k}>{award}</li>)}</ul> : null}
+                                    <h3 className="font-smoothing">{obj.title}</h3>
+                                    <div className="font-smoothing">감독: {obj.director}</div>
+                                    <div className="font-smoothing">출연: {obj.actors.join(", ")}</div>
+                                    {obj.awards.length > 0 ? <ul>{obj.awards.map((award: string, k: number) => <li key={k} className="font-smoothing">{award}</li>)}</ul> : null}
                                 </div>
                             </div>
                         ))}

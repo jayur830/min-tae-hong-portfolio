@@ -44,14 +44,14 @@ const About: NextPage = () => {
                         <table>
                             <tbody>
                             <tr>
-                                <td colSpan={2}>{aboutState.name}</td>
+                                <td colSpan={2} className="font-smoothing">{aboutState.name}</td>
                             </tr>
                             <tr>
-                                <td>BIRTH.</td>
-                                <td>{aboutState.birth}</td>
+                                <td className="font-smoothing">BIRTH.</td>
+                                <td className="font-smoothing">{aboutState.birth}</td>
                             </tr>
                             <tr>
-                                <td colSpan={2}><p>{aboutState.info}</p></td>
+                                <td colSpan={2} className="font-smoothing"><p>{aboutState.info}</p></td>
                             </tr>
                             </tbody>
                         </table>
@@ -75,9 +75,9 @@ const About: NextPage = () => {
                             <span className="hr-circle" />
                             <span className="hr-line" />
                             <span className="hr-circle" />
-                            <span className="comment-date">{obj.date}</span>
+                            <span className="comment-date font-smoothing">{obj.date}</span>
                         </div>
-                        <div className={obj.secret ? "secret" : ""}>
+                        <div className={(obj.secret ? "secret" : "") + " font-smoothing"}>
                             {obj.secret ? "비밀 댓글입니다." : obj.comment}
                         </div>
                     </div>

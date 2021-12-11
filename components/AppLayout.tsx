@@ -144,8 +144,8 @@ const AppLayout: NextPage = ({ children }) => {
             </Head>
 
             <div className="dark-mode-btn">
-                <span>{commonState.darkMode ? "Dark" : "Light"}</span>
-                <div><span style={{ transform: `translateX(${commonState.darkMode ? 11 : -12}px)` }} onClick={() => dispatch({ type: "SET_DARK_MODE" })} /></div>
+                <span className="font-smoothing">{commonState.darkMode ? "Dark" : "Light"}</span>
+                <div className="font-smoothing"><span style={{ transform: `translateX(${commonState.darkMode ? 11 : -12}px)` }} onClick={() => dispatch({ type: "SET_DARK_MODE" })} /></div>
             </div>
             <header className="app-header">
                 <div>
@@ -165,7 +165,7 @@ const AppLayout: NextPage = ({ children }) => {
             </header>
             {children}
             <footer className="app-footer">
-                <div>©Copyright 2021. All Rights Reserved.</div>
+                <div className="font-smoothing">©Copyright 2021. All Rights Reserved.</div>
                 {iconsHtml}
             </footer>
         </div>
