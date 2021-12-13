@@ -126,8 +126,21 @@
         "height": 869
       },
       "scenes": [
-        "언더커버스틸컷1.png",
-        "언더커버스틸컷2.png"
+        {
+          "filename": "언더커버스틸컷1.png",
+          "width": 1087,
+          "height": 463
+        },
+        {
+          "filename": "언더커버스틸컷2.png",
+          "width": 1106,
+          "height": 462
+        },
+        {
+          "filename": "샘플.jpg",
+          "width": 1029,
+          "height": 1544
+        }
       ]
     },
     {
@@ -202,7 +215,33 @@
         "width": 640,
         "height": 894
       },
-      "scenes": []
+      "scenes": [
+        {
+          "filename": "세기의사나이스틸컷1.png",
+          "width": 2489,
+          "height": 1659
+        },
+        {
+          "filename": "세기의사나이스틸컷2.png",
+          "width": 2489,
+          "height": 1659
+        },
+        {
+          "filename": "세기의사나이스틸컷3.png",
+          "width": 2489,
+          "height": 1659
+        },
+        {
+          "filename": "세기의사나이스틸컷1.png",
+          "width": 2489,
+          "height": 1659
+        },
+        {
+          "filename": "세기의사나이스틸컷2.png",
+          "width": 2489,
+          "height": 1659
+        }
+      ]
     },
     {
       "title": "세기의 사나이",

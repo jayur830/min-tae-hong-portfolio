@@ -1,10 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { NextPage } from "next";
+import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
-import { useSelector } from "react-redux";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faChevronLeft,
+    faChevronRight
+} from "@fortawesome/free-solid-svg-icons";
+
+import Scene from "../../components/Scene";
 
 const Theater: NextPage = () => {
+    const dispatch = useDispatch();
     const theaterState = useSelector((state: any) => state.theater);
+
+    const [theaterScene, setTheaterScene] = useState({
+        year: "",
+        theaterIndex: -1,
+        sceneIndex: -1,
+        max: -1
+    });
 
     const years = Object.keys(theaterState);
     years.sort((a, b) => a < b ? 1 : -1);
@@ -29,11 +45,66 @@ const Theater: NextPage = () => {
                                     <div className="font-smoothing">장소: {obj.theater}</div>
                                     <div className="font-smoothing">{obj.schedule}</div>
                                 </div>
+                                {obj.scenes.length === 0 ? null : (
+                                    <div className="scenes">
+                                        <div>
+                                            <div>
+                                                <FontAwesomeIcon
+                                                    icon={faChevronLeft}
+                                                    className={obj.scenePage === 0 ? "disable" : ""}
+                                                    onClick={() => obj.scenePage === 0 ? null : dispatch({
+                                                        type: "DECREASE_THEATER_SCENE_PAGE",
+                                                        payload: { year, i: j }
+                                                    })} />
+                                            </div>
+                                            <ul className="no-scrollbar">
+                                                {obj.scenes.slice(obj.scenePage * 5, Math.min((obj.scenePage + 1) * 5, obj.scenes.length)).map((scene: any, k: number) => (
+                                                    <li key={k}>
+                                                        <img
+                                                            src={"/api/img/" + scene.filename}
+                                                            alt=""
+                                                            style={scene.width > scene.height ? { width: 166 } : { height: 200, width: "auto" }}
+                                                            onClick={() => setTheaterScene({
+                                                                year,
+                                                                theaterIndex: j,
+                                                                sceneIndex: obj.scenePage * 5 + k,
+                                                                max: obj.scenes.length
+                                                            })} />
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                            <div>
+                                                <FontAwesomeIcon
+                                                    icon={faChevronRight}
+                                                    className={obj.scenePage === obj.scenePages - 1 ? "disable" : ""}
+                                                    onClick={() => obj.scenePage === obj.scenePages - 1 ? null : dispatch({
+                                                        type: "INCREASE_THEATER_SCENE_PAGE",
+                                                        payload: { year, i: j }
+                                                    })} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         ))}
                     </div>
                 </div>
             ))}
+            {theaterScene.year !== ""
+                && theaterScene.theaterIndex !== -1
+                && theaterScene.sceneIndex !== -1
+                && theaterScene.max !== -1 ?
+                    <Scene
+                        scenes={theaterState[theaterScene.year][theaterScene.theaterIndex].scenes}
+                        sceneIndex={theaterScene.sceneIndex}
+                        max={theaterScene.max}
+                        onClose={() => setTheaterScene({
+                            year: "",
+                            theaterIndex: -1,
+                            sceneIndex: -1,
+                            max: -1
+                        })} /> :
+                    null}
         </section>
     );
 };

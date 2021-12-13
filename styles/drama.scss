@@ -124,33 +124,28 @@ section.drama {
                             }
 
                             ul {
-                                background-color: dodgerblue;
+                                display: flex;
                                 list-style-type: none;
                                 width: 880px;
                                 height: 100%;
                                 margin: 0;
                                 padding: 0;
-                                overflow-x: hidden;
+                                overflow: hidden;
                                 white-space: nowrap;
 
                                 li {
                                     display: inline-block;
-                                    height: 100%;
+                                    text-align: center;
+                                    width: 176px;
+                                    margin: auto 0;
 
-                                    > div {
-                                        display: table;
-                                        height: 100%;
+                                    img {
+                                        margin: auto 5px;
+                                        cursor: pointer;
+                                        transition: filter 0.3s;
 
-                                        > div {
-                                            display: table-cell;
-                                            vertical-align: middle;
-
-                                            * {
-                                                background-color: #513ebd;
-                                                width: 166px;
-                                                height: 40px;
-                                                margin: 0 5px;
-                                            }
+                                        &:hover {
+                                            filter: brightness(60%);
                                         }
                                     }
                                 }

@@ -82,7 +82,10 @@ const AppLayout: NextPage = ({ children }) => {
                             actors: Object.freeze(obj.actors),
                             schedule: obj.schedule,
                             img: { ...obj.img },
-                            scenes: Object.freeze(obj.scenes)
+                            scenes: Object.freeze(obj.scenes),
+                            scenePage: 0,
+                            scenePages: Math.ceil(obj.scenes.length / 5),
+                            sceneIndex: -1
                         });
                     });
                     dispatch({
@@ -100,7 +103,10 @@ const AppLayout: NextPage = ({ children }) => {
                             theater: obj.theater,
                             schedule: obj.schedule,
                             img: { ...obj.img },
-                            scenes: Object.freeze(obj.scenes)
+                            scenes: Object.freeze(obj.scenes),
+                            scenePage: 0,
+                            scenePages: Math.ceil(obj.scenes.length / 5),
+                            sceneIndex: -1
                         });
                     });
                     dispatch({

@@ -13,32 +13,14 @@ export type DramaState = {
             filename: string,
             width: number,
             height: number
-        }[]
+        }[],
+        scenePage: number,
+        scenePages: number,
+        sceneIndex: number
     }[]
 };
 
-const initialState: DramaState = {
-    [new Date().getFullYear().toString()]: [
-        {
-            title: "",
-            director: "",
-            actors: [""],
-            schedule: "",
-            img: {
-                filename: "",
-                width: 0,
-                height: 0
-            },
-            scenes: [
-                {
-                    filename: "",
-                    width: 0,
-                    height: 0
-                }
-            ]
-        }
-    ]
-};
+const initialState: DramaState = {};
 
 const dramaReducer = (state: DramaState = initialState, action: any) => {
     switch (action.type) {
@@ -47,6 +29,18 @@ const dramaReducer = (state: DramaState = initialState, action: any) => {
             ...state,
             ...action.payload
         };
+    case "INCREASE_DRAMA_SCENE_PAGE": {
+        const _state = { ...state };
+        const { year, i } = action.payload;
+        ++_state[year][i].scenePage;
+        return _state;
+    }
+    case "DECREASE_DRAMA_SCENE_PAGE": {
+        const _state = { ...state };
+        const { year, i } = action.payload;
+        --_state[year][i].scenePage;
+        return _state;
+    }
     default:
         return state;
     }

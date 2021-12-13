@@ -12,7 +12,10 @@ export type TheaterState = {
             filename: string,
             width: number,
             height: number
-        }[]
+        }[],
+        scenePage: number,
+        scenePages: number,
+        sceneIndex: number
     }[]
 };
 
@@ -25,6 +28,18 @@ const theaterReducer = (state: TheaterState = initialState, action: any) => {
             ...state,
             ...action.payload
         };
+    case "INCREASE_THEATER_SCENE_PAGE": {
+        const _state = { ...state };
+        const { year, i } = action.payload;
+        ++_state[year][i].scenePage;
+        return _state;
+    }
+    case "DECREASE_THEATER_SCENE_PAGE": {
+        const _state = { ...state };
+        const { year, i } = action.payload;
+        --_state[year][i].scenePage;
+        return _state;
+    }
     default:
         return state;
     }
