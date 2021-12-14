@@ -158,3 +158,57 @@ section.theater {
         }
     }
 }
+
+@media screen and (max-width: 1120px){
+    section.theater div.year-block {
+        width: 100%;
+        padding: 0 20px;
+
+        h2 {
+            font-size: 18px;
+        }
+
+        .hr-line {
+            width: calc(100% - 100px) !important;
+        }
+
+        div.theater-block {
+            margin: 10px 15px 60px !important;
+
+            img {
+                width: 100%;
+                height: auto;
+            }
+
+            > div {
+                h3 {
+                    font-size: 14px;
+                }
+
+                div, ul li {
+                    font-size: 12px;
+                }
+
+                &.scenes {
+                    height: auto !important;
+                    margin-top: 25px !important;
+
+                    svg {
+                        width: 15px !important;
+                    }
+
+                    ul {
+                        width: 100% !important;
+
+                        li {
+                            width: calc(100% / 3) !important;
+
+                            img {
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

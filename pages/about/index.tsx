@@ -38,21 +38,21 @@ const About: NextPage = () => {
 
     return (
         <section className="about">
-            <div>
+            <div className="content">
                 <div>
                     <div>
                         <table>
                             <tbody>
-                            <tr>
-                                <td colSpan={2} className="font-smoothing">{aboutState.name}</td>
-                            </tr>
-                            <tr>
-                                <td className="font-smoothing">BIRTH.</td>
-                                <td className="font-smoothing">{aboutState.birth}</td>
-                            </tr>
-                            <tr>
-                                <td colSpan={2} className="font-smoothing"><p>{aboutState.info}</p></td>
-                            </tr>
+                                <tr>
+                                    <td colSpan={2} className="font-smoothing">{aboutState.name}</td>
+                                </tr>
+                                <tr>
+                                    <td className="font-smoothing">BIRTH.</td>
+                                    <td className="font-smoothing">{aboutState.birth}</td>
+                                </tr>
+                                <tr>
+                                    <td colSpan={2} className="font-smoothing"><p>{aboutState.info}</p></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -98,7 +98,7 @@ const About: NextPage = () => {
                             <input type="text" placeholder="댓글을 입력하세요." onKeyUp={(e: any) => {
                                 if (e.key === "Enter") postComment();
                                 else setComment(e.target.value);
-                            }} />
+                            }} autoFocus={true} />
                         </div>
                         <div>
                             <input type="button" value="취소" onClick={() => setWriteComment(false)} />

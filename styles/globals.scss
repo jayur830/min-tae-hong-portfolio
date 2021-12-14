@@ -96,42 +96,45 @@ body {
         transform: rotate(0.03deg);
     }
 
-    div.dark-mode-btn {
-        position: absolute;
-        right: 0;
-        display: inline-block;
-        font-family: 'HeirofLight Bold', serif;
-        margin: 10px;
+    header.app-header {
+        position: relative;
 
-        > span {
-            position: relative;
-            top: -6px;
-            margin-right: 7px;
-        }
-
-        > div {
+        div.dark-mode-btn {
+            position: absolute;
+            right: 0;
             display: inline-block;
-            width: 50px;
-            height: 25px;
-            border: 2px solid black;
-            border-radius: 15px;
-            padding: 2px;
+            font-family: 'HeirofLight Bold', serif;
+            margin: 10px;
+            z-index: 9998;
 
             > span {
                 position: relative;
-                top: -1px;
+                top: -6px;
+                margin-right: 7px;
+            }
+
+            > div {
                 display: inline-block;
-                background-color: black;
-                width: 19px;
-                height: 19px;
-                border-radius: 30px;
-                cursor: pointer;
-                transition: transform 0.5s;
+                width: 50px;
+                height: 25px;
+                border: 2px solid black;
+                border-radius: 15px;
+                padding: 2px;
+
+                > span {
+                    position: relative;
+                    top: -1px;
+                    display: inline-block;
+                    background-color: black;
+                    width: 19px;
+                    height: 19px;
+                    border-radius: 30px;
+                    cursor: pointer;
+                    transition: transform 0.5s;
+                }
             }
         }
-    }
 
-    header.app-header {
         > div h1 {
             display: inline-block;
             font: 40px 'Brush Script MT', serif;
@@ -146,7 +149,7 @@ body {
             ul {
                 list-style-type: none;
                 display: flex;
-                width: 50%;
+                width: 1060px;
                 margin: 0 auto;
                 padding: 0;
 
@@ -169,10 +172,95 @@ body {
                 }
             }
         }
-    }
 
-    section {
-        min-height: 1000px;
+        > div.mobile-nav {
+            position: fixed;
+            top: 0;
+            height: 100%;
+            z-index: 999;
+
+            > div {
+                &.side-menu {
+                    position: absolute;
+                    top: 0;
+                    background: linear-gradient(to right, white, rgba(255, 255, 255, 0.53));
+                    width: 200px;
+                    height: 100%;
+                    animation-duration: 0.3s;
+
+                    > nav ul {
+                        list-style-type: none;
+                        margin: 100px 0 0 0;
+                        padding: 0;
+
+                        li {
+                            font: 18px 'HeirofLight Bold';
+                            margin: 40px 0;
+
+                            h4 {
+                                display: inline;
+                                padding: 10px 45px;
+                                cursor: pointer;
+                                transition: background-color 0.2s, color 0.2s;
+                            }
+
+                            &:hover h4,
+                            &.on h4 {
+                                background-color: black;
+                                color: white;
+                            }
+                        }
+                    }
+                }
+
+                &.menu-btn {
+                    position: absolute;
+                    margin: 10px 0 0 10px;
+                    width: 30px;
+                    height: 30px;
+                    cursor: pointer;
+                    z-index: 9999;
+
+                    > span {
+                        position: absolute;
+                        left: 0;
+                        display: inline-block;
+                        background-color: black;
+                        width: 30px;
+                        height: 5px;
+                        transition: transform 0.3s, width 0.3s, height 0.3s;
+
+                        &:nth-child(1) {
+                            top: 0;
+                        }
+
+                        &:nth-child(2) {
+                            top: 10px;
+                        }
+
+                        &:nth-child(3) {
+                            top: 20px;
+                        }
+                    }
+
+                    &.on span {
+                        &:nth-child(1) {
+                            width: 35px;
+                            transform: rotate(45deg) translateX(5px) translateY(9px);
+                        }
+
+                        &:nth-child(2) {
+                            height: 0;
+                        }
+
+                        &:nth-child(3) {
+                            width: 35px;
+                            transform: rotate(-45deg) translateX(5px) translateY(-9px);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     footer.app-footer {
@@ -218,11 +306,25 @@ body {
         color: #ced4da;
         transition: background-color 0.5s;
 
-        .app-header ul li {
-            &:hover h4,
-            &.on h4 {
-                background-color: #8c90ac;
-                color: #1c1e2a;
+        .app-header {
+            div.dark-mode-btn > div {
+                border-color: #ced4da;
+
+                span {
+                    background-color: #ced4da;
+                }
+            }
+
+            ul li {
+                &:hover h4,
+                &.on h4 {
+                    background-color: #8c90ac;
+                    color: #1c1e2a;
+                }
+            }
+
+            div.mobile-nav div.menu-btn span {
+                background-color: #ced4da;
             }
         }
 
@@ -238,13 +340,15 @@ body {
                 color: #1c1e2a;
             }
         }
+    }
+}
 
-        div.dark-mode-btn > div {
-            border-color: #ced4da;
+@media screen and (max-width: 1120px) {
+    footer.app-footer {
+        padding: 30px 20px !important;
 
-            span {
-                background-color: #ced4da;
-            }
+        > div {
+            font-size: 7px !important;
         }
     }
 }

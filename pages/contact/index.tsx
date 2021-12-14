@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useSelector } from "react-redux";
 
 const Contact: NextPage = () => {
+    const commonState = useSelector((state: any) => state.common);
     const contactState = useSelector((state: any) => state.contact);
 
     return (
@@ -11,16 +12,33 @@ const Contact: NextPage = () => {
             <div>
                 <div>
                     <table>
-                        <tbody>
-                        <tr>
-                            <td className="font-smoothing">EMAIL.</td>
-                            <td className="font-smoothing">{contactState.email}</td>
-                        </tr>
-                        <tr>
-                            <td className="font-smoothing">TEL.</td>
-                            <td className="font-smoothing">{contactState.tel}</td>
-                        </tr>
-                        </tbody>
+                        {commonState.windowWidth > 1120 ? (
+                            <tbody>
+                                <tr>
+                                    <td className="font-smoothing">EMAIL.</td>
+                                    <td className="font-smoothing">{contactState.email}</td>
+                                </tr>
+                                <tr>
+                                    <td className="font-smoothing">TEL.</td>
+                                    <td className="font-smoothing">{contactState.tel}</td>
+                                </tr>
+                            </tbody>
+                        ): (
+                            <tbody>
+                                <tr>
+                                    <td className="font-smoothing">
+                                        EMAIL.<br />
+                                        {contactState.email}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="font-smoothing">
+                                        TEL.<br />
+                                        {contactState.tel}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        )}
                     </table>
                 </div>
             </div>

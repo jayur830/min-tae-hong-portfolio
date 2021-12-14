@@ -1,13 +1,15 @@
 export type CommonState = {
     title: string,
     headerTitle: string,
-    darkMode: boolean
+    darkMode: boolean,
+    windowWidth: number
 };
 
 const initialState: CommonState = {
     title: "",
     headerTitle: "",
-    darkMode: false
+    darkMode: false,
+    windowWidth: 0
 };
 
 const commonReducer = (state: CommonState = initialState, action: any) => {

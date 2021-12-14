@@ -9,22 +9,12 @@ import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as Icons from "@fortawesome/free-brands-svg-icons";
 
-type HomeData = {
-    title: string
-};
-
-type FooterData = {
-    sns: {
-        name: string,
-        url: string
-    }[]
-};
-
 const AppLayout: NextPage = ({ children }) => {
     const dispatch = useDispatch();
 
-    let commonState = useSelector((state: any) => state.common);
-    let [iconsHtml, setIconsHtml] = useState([<React.Fragment key={0} />]);
+    const commonState = useSelector((state: any) => state.common);
+    const [iconsHtml, setIconsHtml] = useState([<React.Fragment key={0} />]);
+    const [openSideMenu, setOpenSideMenu] = useState(false);
 
     const router = useRouter();
 
@@ -37,7 +27,8 @@ const AppLayout: NextPage = ({ children }) => {
                     dispatch({
                         type: "SET_COMMON_DATA",
                         payload: {
-                            ...data.common
+                            ...data.common,
+                            windowWidth: window.innerWidth
                         }
                     });
                 }
@@ -139,6 +130,7 @@ const AppLayout: NextPage = ({ children }) => {
                     }));
                 }
             });
+        window.addEventListener("resize", () => dispatch({ type: "SET_COMMON_DATA", payload: { windowWidth: window.innerWidth } }));
     }, []);
 
     return (
@@ -149,29 +141,51 @@ const AppLayout: NextPage = ({ children }) => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <div className="dark-mode-btn">
-                <span className="font-smoothing">{commonState.darkMode ? "Dark" : "Light"}</span>
-                <div className="font-smoothing"><span style={{ transform: `translateX(${commonState.darkMode ? 11 : -12}px)` }} onClick={() => dispatch({ type: "SET_DARK_MODE" })} /></div>
-            </div>
             <header className="app-header">
+                <div className="dark-mode-btn">
+                    <span className="font-smoothing">{commonState.darkMode ? "Dark" : "Light"}</span>
+                    <div className="font-smoothing"><span style={{ transform: `translateX(${commonState.darkMode ? 11 : -12}px)` }} onClick={() => dispatch({ type: "SET_DARK_MODE" })} /></div>
+                </div>
                 <div>
                     <Link href="/">
                         <h1>{commonState.headerTitle}</h1>
                     </Link>
                 </div>
-                <nav>
-                    <ul>
-                        <li className={router.pathname === "/about" ? "on" : ""}><Link scroll={false} href="/about"><h4>ABOUT</h4></Link></li>
-                        <li className={router.pathname === "/movies" ? "on" : ""}><Link scroll={false} href="/movies"><h4>MOVIES</h4></Link></li>
-                        <li className={router.pathname === "/drama" ? "on" : ""}><Link scroll={false} href="/drama"><h4>DRAMA</h4></Link></li>
-                        <li className={router.pathname === "/theater" ? "on" : ""}><Link scroll={false} href="/theater"><h4>THEATER</h4></Link></li>
-                        <li className={router.pathname === "/contact" ? "on" : ""}><Link scroll={false} href="/contact"><h4>CONTACT</h4></Link></li>
-                    </ul>
-                </nav>
+                {commonState.windowWidth > 1120 ? (
+                    <nav>
+                        <ul>
+                            <li className={router.pathname === "/about" ? "on" : ""}><Link scroll={false} href="/about"><h4>ABOUT</h4></Link></li>
+                            <li className={router.pathname === "/movies" ? "on" : ""}><Link scroll={false} href="/movies"><h4>MOVIES</h4></Link></li>
+                            <li className={router.pathname === "/drama" ? "on" : ""}><Link scroll={false} href="/drama"><h4>DRAMA</h4></Link></li>
+                            <li className={router.pathname === "/theater" ? "on" : ""}><Link scroll={false} href="/theater"><h4>THEATER</h4></Link></li>
+                            <li className={router.pathname === "/contact" ? "on" : ""}><Link scroll={false} href="/contact"><h4>CONTACT</h4></Link></li>
+                        </ul>
+                    </nav>
+                    ) : (
+                    <div className="mobile-nav">
+                        <div className={"menu-btn " + (openSideMenu ? "on" : "")} onClick={() => setOpenSideMenu(!openSideMenu)}>
+                            <span />
+                            <span />
+                            <span />
+                        </div>
+                        <div className={"side-menu animate__animated animate__slide" + (openSideMenu ? "InLeft" : "OutLeft")}>
+                            <nav>
+                                <ul>
+                                    <li className={router.pathname === "/about" ? "on" : ""}><Link scroll={false} href="/about"><h4>ABOUT</h4></Link></li>
+                                    <li className={router.pathname === "/movies" ? "on" : ""}><Link scroll={false} href="/movies"><h4>MOVIES</h4></Link></li>
+                                    <li className={router.pathname === "/drama" ? "on" : ""}><Link scroll={false} href="/drama"><h4>DRAMA</h4></Link></li>
+                                    <li className={router.pathname === "/theater" ? "on" : ""}><Link scroll={false} href="/theater"><h4>THEATER</h4></Link></li>
+                                    <li className={router.pathname === "/contact" ? "on" : ""}><Link scroll={false} href="/contact"><h4>CONTACT</h4></Link></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    )}
             </header>
             {children}
             <footer className="app-footer">
                 <div className="font-smoothing">©Copyright 2021. All Rights Reserved.</div>
+                {commonState.windowWidth > 1120 ? null : <br />}
                 {iconsHtml}
             </footer>
         </div>

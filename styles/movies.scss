@@ -81,3 +81,35 @@ section.movies {
         }
     }
 }
+
+@media screen and (max-width: 1120px){
+    section.movies div.year-block {
+        width: 100%;
+        padding: 0 20px;
+
+        h2 {
+            font-size: 18px;
+        }
+
+        .hr-line {
+            width: calc(100% - 100px) !important;
+        }
+
+        div.movies-block {
+            img {
+                width: 100%;
+                height: auto;
+            }
+
+            > div {
+                h3 {
+                    font-size: 14px;
+                }
+
+                div, ul li {
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+}

@@ -23,7 +23,7 @@
   "about": {
     "name": "민태홍",
     "birth": "1995.11.01",
-    "info": "blah blah blah",
+    "info": "blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah",
     "img": {
       "filename": "about.png",
       "width": 435,
@@ -31,8 +31,8 @@
     },
     "comments": [
       {
-        "comment": "안녕하세요.",
-        "date": "2021.12.12 02:52",
+        "comment": "반말하지마라",
+        "date": "2021.12.14 00:10",
         "secret": false
       }
     ]

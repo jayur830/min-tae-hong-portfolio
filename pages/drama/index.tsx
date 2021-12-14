@@ -13,6 +13,7 @@ import Scene from "../../components/Scene";
 
 const Drama: NextPage = () => {
     const dispatch = useDispatch();
+    const commonState = useSelector((state: any) => state.common);
     const dramaState = useSelector((state: any) => state.drama);
 
     const [dramaScene, setDramaScene] = useState({
@@ -59,16 +60,16 @@ const Drama: NextPage = () => {
                                                     })} />
                                             </div>
                                             <ul className="no-scrollbar">
-                                                {obj.scenes.slice(obj.scenePage * 5, Math.min((obj.scenePage + 1) * 5, obj.scenes.length)).map((scene: any, k: number) => (
+                                                {obj.scenes.slice(obj.scenePage * (commonState.windowWidth > 1120 ? 5 : 3), Math.min((obj.scenePage + 1) * (commonState.windowWidth > 1120 ? 5 : 3), obj.scenes.length)).map((scene: any, k: number) => (
                                                     <li key={k}>
                                                         <img
                                                             src={"/api/img/" + scene.filename}
                                                             alt=""
-                                                            style={scene.width > scene.height ? { width: 166 } : { height: 200, width: "auto" }}
+                                                            style={commonState.windowWidth < 1120 ? { width: "calc(100% - 10px)" } : (scene.width > scene.height ? { width: 166 } : { height: 200, width: "auto" })}
                                                             onClick={() => setDramaScene({
                                                                 year,
                                                                 dramaIndex: j,
-                                                                sceneIndex: obj.scenePage * 5 + k,
+                                                                sceneIndex: obj.scenePage * (commonState.windowWidth > 1120 ? 5 : 3) + k,
                                                                 max: obj.scenes.length
                                                             })} />
                                                     </li>

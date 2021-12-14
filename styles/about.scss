@@ -2,7 +2,7 @@ section.about {
     margin: 150px 0;
 
     > div {
-        &:first-child {
+        &.content {
             display: flex;
 
             > div {
@@ -15,8 +15,8 @@ section.about {
                         vertical-align: middle;
 
                         table {
-                            width: 100px;
-                            margin: 0 250px 0 auto;
+                            width: 430px;
+                            margin: 0 150px 0 auto;
 
                             td {
                                 font-size: 18px;
@@ -35,7 +35,7 @@ section.about {
             }
         }
 
-        &:last-child {
+        &.comment {
             padding: 50px calc(50% - 600px) 10px calc(50% - 600px);
 
             > h2 {
@@ -45,7 +45,7 @@ section.about {
 
             div.comment-block {
                 position: relative;
-                margin-bottom: 200px;
+                margin-bottom: 100px;
 
                 > div {
                     &:nth-child(1) {
@@ -154,6 +154,83 @@ section.about {
             &:active {
                 background-color: #6d7290;
                 color: #171a24;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1120px) {
+    section.about {
+        margin: 75px 0;
+
+        > div {
+            &.content {
+                display: flex;
+                width: 100%;
+
+                > div {
+                    flex: 1 !important;
+
+                    &:first-child {
+                        table {
+                            width: 100% !important;
+                            margin: 0 !important;
+
+                            tbody td {
+                                font-size: 13px;
+                                width: calc(50% - 60px);
+                                padding: 10px 30px;
+                            }
+                        }
+                    }
+
+                    &:last-child {
+                        img {
+                            width: calc(100% - 20px);
+                            height: auto;
+                        }
+                    }
+                }
+            }
+
+            &.comment {
+                padding: 50px 15px;
+
+                > h2 {
+                    font-size: 18px;
+                }
+
+                div.comment-block {
+                    margin-bottom: 50px;
+
+                    > div {
+                        &:first-child {
+                            svg {
+                                width: 30px !important;
+                            }
+
+                            span.hr-circle {
+                                top: -11px;
+                            }
+
+                            span.hr-line {
+                                top: -14px;
+                            }
+
+                            span.comment-date {
+                                font-size: 10px;
+                            }
+                        }
+
+                        &:last-child {
+                            font-size: 13px;
+                        }
+                    }
+                }
+
+                > input[type=button] {
+                    font-size: 14px;
+                }
             }
         }
     }

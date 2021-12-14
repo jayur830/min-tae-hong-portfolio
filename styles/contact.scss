@@ -37,3 +37,36 @@ section.contact {
         }
     }
 }
+
+@media screen and (max-width: 1120px) {
+    section.contact {
+        padding: 150px 0;
+
+        > div {
+            flex: 1 !important;
+            width: 50% !important;
+
+            &:first-child {
+                table {
+                    width: calc(100% - 50px) !important;
+                    margin: 0 auto !important;
+
+                    tbody td {
+                        font-size: 13px;
+                        width: 50%;
+                        padding: 10px 0;
+                    }
+                }
+            }
+
+            &:last-child {
+                padding-right: 20px;
+
+                img {
+                    width: 100%;
+                    height: auto;
+                }
+            }
+        }
+    }
+}
