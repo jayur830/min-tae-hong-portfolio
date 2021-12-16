@@ -9,6 +9,8 @@ import dayjs from "dayjs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
+import DatePicker from "react-datepicker";
+
 const About: NextPage = () => {
     const aboutState = useSelector((state: any) => state.about);
     const dispatch = useDispatch();
@@ -16,6 +18,10 @@ const About: NextPage = () => {
     const [writeComment, setWriteComment] = useState(false);
     const [comment, setComment] = useState("");
     const [secret, setSecret] = useState(false);
+
+    const [editName, setEditName] = useState(false);
+    const [editBirth, setEditBirth] = useState(false);
+    const [editInfo, setEditInfo] = useState(false);
 
     const postComment = () => {
         const payload = {
@@ -37,21 +43,59 @@ const About: NextPage = () => {
     };
 
     return (
-        <section className="about">
+        <section className="about admin">
             <div className="content">
                 <div>
                     <div>
                         <table>
                             <tbody>
                                 <tr>
-                                    <td colSpan={2} className="font-smoothing">{aboutState.name}</td>
+                                    <td colSpan={2} className="font-smoothing">
+                                        {editName ? <input type="text" defaultValue={aboutState.name} /> : aboutState.name}
+                                    </td>
+                                    {editName ?
+                                        <td>
+                                            <input type="button" value="등록" />
+                                            <input type="button" value="취소" onClick={() => setEditName(false)} />
+                                        </td> :
+                                        <td>
+                                            <input type="button" value="편집" onClick={() => setEditName(true)} />
+                                        </td>}
                                 </tr>
                                 <tr>
                                     <td className="font-smoothing">BIRTH.</td>
-                                    <td className="font-smoothing">{aboutState.birth}</td>
+                                    <td className="font-smoothing">
+                                        {aboutState.birth === "" ? null :
+                                            (editBirth ?
+                                                <DatePicker
+                                                    selected={dayjs(aboutState.birth, "YYYY.MM.DD").toDate()}
+                                                    onChange={(datetime: Date) => dispatch({ type: "SET_ABOUT_DATA", payload: { birth: dayjs(datetime).format("YYYY.MM.DD") } })} /> :
+                                                aboutState.birth)}
+                                        {editBirth ?
+                                            <div>
+                                                <input type="button" value="등록" />
+                                                <input type="button" value="취소" onClick={() => setEditBirth(false)} />
+                                            </div> :
+                                            <div>
+                                                <input type="button" value="편집" onClick={() => setEditBirth(true)} />
+                                            </div>}
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td colSpan={2} className="font-smoothing"><p>{aboutState.info}</p></td>
+                                    <td colSpan={2} className="font-smoothing">
+                                        <h4>소개글.</h4>
+                                        <p>
+                                            {editInfo ? <textarea defaultValue={aboutState.info} /> : aboutState.info}
+                                        </p>
+                                        {editInfo ?
+                                            <div>
+                                                <input type="button" value="등록" />
+                                                <input type="button" value="취소" onClick={() => setEditInfo(false)} />
+                                            </div> :
+                                            <div>
+                                                <input type="button" value="편집" onClick={() => setEditInfo(true)} />
+                                            </div>}
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>

@@ -323,8 +323,22 @@ body {
                 }
             }
 
-            div.mobile-nav div.menu-btn span {
-                background-color: #ced4da;
+            div.mobile-nav {
+                > div.side-menu {
+                    background: linear-gradient(to right, #454b66, rgba(69, 75, 102, 0.58)) !important;
+
+                    > nav ul li {
+                        &:hover h4,
+                        &.on h4 {
+                            background-color: #ced4da !important;
+                            color: #1c1e2a !important;
+                        }
+                    }
+                }
+
+                div.menu-btn span {
+                    background-color: #ced4da;
+                }
             }
         }
 

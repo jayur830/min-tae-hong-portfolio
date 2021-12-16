@@ -16,6 +16,10 @@ const AppLayout: NextPage = ({ children }) => {
     const [iconsHtml, setIconsHtml] = useState([<React.Fragment key={0} />]);
     const [openSideMenu, setOpenSideMenu] = useState(false);
 
+    const [editTitle, setEditTitle] = useState(false);
+    const [editHeaderTitle, setEditHeaderTitle] = useState(false);
+    const [editSnsList, setEditSnsList] = useState(false);
+
     const router = useRouter();
 
     useEffect(() => {
@@ -54,10 +58,7 @@ const AppLayout: NextPage = ({ children }) => {
                             awards: Object.freeze(obj.awards),
                             img: { ...obj.img },
                             video: obj.video == null ? null : { ...obj.video },
-                            scenes: Object.freeze(obj.scenes),
-                            scenePage: 0,
-                            scenePages: Math.ceil(obj.scenes.length / 5),
-                            sceneIndex: -1
+                            scenes: Object.freeze(obj.scenes)
                         });
                     });
                     dispatch({
@@ -144,24 +145,34 @@ const AppLayout: NextPage = ({ children }) => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
+            <div>
+                <h4>페이지 이름.</h4>
+            </div>
             <header className="app-header">
                 <div className="dark-mode-btn">
                     <span className="font-smoothing">{commonState.darkMode ? "Dark" : "Light"}</span>
                     <div className="font-smoothing"><span style={{ transform: `translateX(${commonState.darkMode ? 11 : -12}px)` }} onClick={() => dispatch({ type: "SET_DARK_MODE" })} /></div>
                 </div>
-                <div>
-                    <Link href="/home">
-                        <h1>{commonState.headerTitle}</h1>
-                    </Link>
-                </div>
+                {editHeaderTitle ?
+                    <div>
+                        <h1><input type="text" defaultValue={commonState.headerTitle} /></h1>
+                        <input type="button" value="등록" />
+                        <input type="button" value="취소" onClick={() => setEditHeaderTitle(false)} />
+                    </div> :
+                    <div>
+                        <Link href="/">
+                            <h1>{commonState.headerTitle}</h1>
+                        </Link>
+                        <input type="button" value="편집" onClick={() => setEditHeaderTitle(true)} />
+                    </div>}
                 {commonState.windowWidth > 1120 ? (
                     <nav>
                         <ul>
-                            <li className={router.pathname === "/about" ? "on" : ""}><Link scroll={false} href="/about"><h4>ABOUT</h4></Link></li>
-                            <li className={router.pathname === "/movies" ? "on" : ""}><Link scroll={false} href="/movies"><h4>MOVIES</h4></Link></li>
-                            <li className={router.pathname === "/drama" ? "on" : ""}><Link scroll={false} href="/drama"><h4>DRAMA</h4></Link></li>
-                            <li className={router.pathname === "/theater" ? "on" : ""}><Link scroll={false} href="/theater"><h4>THEATER</h4></Link></li>
-                            <li className={router.pathname === "/contact" ? "on" : ""}><Link scroll={false} href="/contact"><h4>CONTACT</h4></Link></li>
+                            <li className={router.pathname === "/admin/about" ? "on" : ""}><Link scroll={false} href="/admin/about"><h4>ABOUT</h4></Link></li>
+                            <li className={router.pathname === "/admin/movies" ? "on" : ""}><Link scroll={false} href="/admin/movies"><h4>MOVIES</h4></Link></li>
+                            <li className={router.pathname === "/admin/drama" ? "on" : ""}><Link scroll={false} href="/admin/drama"><h4>DRAMA</h4></Link></li>
+                            <li className={router.pathname === "/admin/theater" ? "on" : ""}><Link scroll={false} href="/admin/theater"><h4>THEATER</h4></Link></li>
+                            <li className={router.pathname === "/admin/contact" ? "on" : ""}><Link scroll={false} href="/admin/contact"><h4>CONTACT</h4></Link></li>
                         </ul>
                     </nav>
                     ) : (

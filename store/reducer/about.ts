@@ -1,7 +1,9 @@
 export type AboutState = {
     name: string,
-    birth: string,
-    info: string,
+    metadata: {
+        label: string,
+        value: string
+    }[],
     img: {
         filename: string,
         width: number,
@@ -16,8 +18,12 @@ export type AboutState = {
 
 const initialState: AboutState = {
     name: "",
-    birth: "",
-    info: "",
+    metadata: [
+        {
+            label: "",
+            value: ""
+        }
+    ],
     img: {
         filename: "",
         width: 0,

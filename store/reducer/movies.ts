@@ -22,7 +22,10 @@ export type MoviesState = {
             filename: string,
             width: number,
             height: number
-        }[]
+        }[],
+        scenePage: number,
+        scenePages: number,
+        sceneIndex: number
     }[]
 };
 
@@ -35,6 +38,18 @@ const moviesReducer = (state: MoviesState = initialState, action: any) => {
             ...state,
             ...action.payload
         };
+    case "INCREASE_MOVIES_SCENE_PAGE": {
+        const _state = { ...state };
+        const { year, i } = action.payload;
+        ++_state[year][i].scenePage;
+        return _state;
+    }
+    case "DECREASE_MOVIES_SCENE_PAGE": {
+        const _state = { ...state };
+        const { year, i } = action.payload;
+        --_state[year][i].scenePage;
+        return _state;
+    }
     default:
         return state;
     }

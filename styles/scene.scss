@@ -55,6 +55,7 @@ div.scene-background {
                         svg {
                             width: 20px;
                             cursor: pointer;
+                            transition: color 0.15s;
 
                             &:hover {
                                 color: #585858;
@@ -82,10 +83,53 @@ div.scene-background {
                             height: auto;
                             max-height: calc(100% - 100px);
                             margin: 0 auto;
+
+                            &.horizontal {
+                                width: 950px;
+                            }
+
+                            &.vertical {
+                                width: auto;
+                                height: 650px;
+                            }
                         }
                     }
                 }
             }
+        }
+    }
+}
+
+.dark-mode div.scene-background > div > div > div {
+    background-color: #ced4da;
+
+    .close {
+        color: #1c1e2a;
+
+        &:hover {
+            color: #868bb4;
+        }
+
+        &:active {
+            color: #0f1117;
+        }
+    }
+
+    .left svg,
+    .right svg {
+        color: #1c1e2a;
+
+        &:hover {
+            color: #51536f;
+        }
+
+        &:active {
+            color: #0f1117;
+        }
+
+        &.disable {
+            color: #a5a5a5;
+            cursor: default;
         }
     }
 }
@@ -96,7 +140,14 @@ div.scene-background {
         height: 450px;
 
         img {
-            width: 100% !important;
+            &.horizontal {
+                width: calc(100% - 25px) !important;
+            }
+
+            &.vertical {
+                height: auto !important;
+                max-height: 350px !important;
+            }
         }
     }
 }

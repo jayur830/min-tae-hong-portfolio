@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    faChevronLeft,
-    faChevronRight
-} from "@fortawesome/free-solid-svg-icons";
+import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 const Scene: (props: {
     scenes: {
@@ -42,7 +39,7 @@ const Scene: (props: {
                                 onClick={() => index === 0 ? null : setIndex(index - 1)} />
                         </div>
                         <div className="content">
-                            <img src={"/api/img/" + scenes[index].filename} alt="" style={scenes[index].width > scenes[index].height ? { width: 950 } : { height: 650, width: "auto" }} />
+                            <img src={"/api/img/" + scenes[index].filename} className={scenes[index].width > scenes[index].height ? "horizontal" : "vertical"} alt="" />
                         </div>
                         <div className="right">
                             <FontAwesomeIcon

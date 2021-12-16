@@ -15,13 +15,13 @@ section.about {
                         vertical-align: middle;
 
                         table {
-                            width: 430px;
-                            margin: 0 150px 0 auto;
+                            width: 600px;
+                            margin: 0 50px 0 auto;
 
                             td {
                                 font-size: 18px;
                                 text-align: left;
-                                padding: 30px 20px;
+                                padding: 10px 20px;
                             }
                         }
                     }
@@ -133,6 +133,43 @@ section.about {
             }
         }
     }
+
+    &.admin > div {
+        &.content {
+            display: flex;
+
+            > div {
+                &:first-child {
+
+                    > div {
+
+                        table {
+                            td {
+                                input[type=text] {
+                                    font: 15px 'HeirofLight Regular';
+                                    border: none;
+                                    border-bottom: 1px solid #a5a5a5;
+                                }
+
+                                h4 {
+                                    font-weight: normal;
+                                }
+
+                                textarea {
+                                    font: 15px 'HeirofLight Regular';
+                                    width: 430px;
+                                    height: 200px;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                &:last-child {
+                }
+            }
+        }
+    }
 }
 
 .dark-mode section.about > div:last-child {
@@ -159,22 +196,33 @@ section.about {
     }
 }
 
+@import "~react-datepicker/src/stylesheets/datepicker";
+
+.react-datepicker__tab-loop {
+    position: relative;
+
+    .react-datepicker {
+        position: relative;
+        z-index: 99;
+    }
+}
+
 @media screen and (max-width: 1120px) {
     section.about {
         margin: 75px 0;
 
         > div {
             &.content {
-                display: flex;
+                display: block;
                 width: 100%;
 
                 > div {
                     flex: 1 !important;
 
-                    &:first-child {
+                    &:last-child {
                         table {
                             width: 100% !important;
-                            margin: 0 !important;
+                            margin: 0 auto !important;
 
                             tbody td {
                                 font-size: 13px;
@@ -184,9 +232,11 @@ section.about {
                         }
                     }
 
-                    &:last-child {
+                    &:first-child {
+                        margin: 0 auto !important;
+
                         img {
-                            width: calc(100% - 20px);
+                            width: calc(100% - 50px);
                             height: auto;
                         }
                     }

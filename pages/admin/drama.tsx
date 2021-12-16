@@ -78,8 +78,8 @@ const Drama: NextPage = () => {
                                             <div>
                                                 <FontAwesomeIcon
                                                     icon={faChevronRight}
-                                                    className={obj.scenePage === obj.scenePages - 1 ? "disable" : ""}
-                                                    onClick={() => obj.scenePage === obj.scenePages - 1 ? null : dispatch({
+                                                    className={obj.scenePage === Math.ceil(obj.scenes.length / (commonState.windowWidth > 1120 ? 5 : 3)) - 1 ? "disable" : ""}
+                                                    onClick={() => obj.scenePage === Math.ceil(obj.scenes.length / (commonState.windowWidth > 1120 ? 5 : 3)) - 1 ? null : dispatch({
                                                         type: "INCREASE_DRAMA_SCENE_PAGE",
                                                         payload: { year, i: j }
                                                     })} />

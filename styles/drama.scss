@@ -94,6 +94,7 @@ section.drama {
                                 svg {
                                     width: 20px;
                                     cursor: pointer;
+                                    transition: color 0.15s;
 
                                     &:hover {
                                         color: #585858;
@@ -155,6 +156,22 @@ section.drama {
                 }
             }
         }
+    }
+}
+
+.dark-mode section.drama div.year-block div.drama-block .scenes svg {
+    color: #8c90ac;
+
+    &:hover {
+        color: white !important;
+    }
+
+    &:active {
+        color: #686c82 !important;
+    }
+
+    &.disable {
+        color: #3f435c !important;
     }
 }
 

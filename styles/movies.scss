@@ -76,9 +76,102 @@ section.movies {
                         margin: 15px 0;
                         padding: 0;
                     }
+
+                    &.scenes {
+                        display: block;
+                        height: 200px;
+                        margin-top: 50px;
+
+                        > div {
+                            display: table;
+                            width: 100%;
+                            height: 100%;
+
+                            > div {
+                                display: table-cell;
+                                vertical-align: middle;
+
+                                svg {
+                                    width: 20px;
+                                    cursor: pointer;
+                                    transition: color 0.15s;
+
+                                    &:hover {
+                                        color: #585858;
+                                    }
+
+                                    &:active {
+                                        color: #323232;
+                                    }
+
+                                    &.disable {
+                                        color: #a5a5a5;
+                                        cursor: default;
+                                    }
+                                }
+
+                                &:first-child,
+                                &:last-child {
+                                    width: 20px;
+                                }
+
+                                &:first-child {
+                                    padding-right: 10px;
+                                }
+
+                                &:last-child {
+                                    padding-left: 10px;
+                                }
+                            }
+
+                            ul {
+                                display: flex;
+                                list-style-type: none;
+                                width: 880px;
+                                height: 100%;
+                                margin: 0;
+                                padding: 0;
+                                overflow: hidden;
+                                white-space: nowrap;
+
+                                li {
+                                    display: inline-block;
+                                    text-align: center;
+                                    width: 176px;
+                                    margin: auto 0;
+
+                                    img {
+                                        margin: auto 5px;
+                                        cursor: pointer;
+                                        transition: filter 0.3s;
+
+                                        &:hover {
+                                            filter: brightness(60%);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
+    }
+}
+
+.dark-mode section.movies div.year-block div.movies-block .scenes svg {
+    color: #8c90ac;
+
+    &:hover {
+        color: white !important;
+    }
+
+    &:active {
+        color: #686c82 !important;
+    }
+
+    &.disable {
+        color: #3f435c !important;
     }
 }
 
@@ -108,6 +201,26 @@ section.movies {
 
                 div, ul li {
                     font-size: 12px;
+                }
+
+                &.scenes {
+                    height: auto !important;
+                    margin-top: 25px !important;
+
+                    svg {
+                        width: 15px !important;
+                    }
+
+                    ul {
+                        width: 100% !important;
+
+                        li {
+                            width: calc(100% / 3) !important;
+
+                            img {
+                            }
+                        }
+                    }
                 }
             }
         }

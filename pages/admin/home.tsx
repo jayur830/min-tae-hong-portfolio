@@ -8,7 +8,7 @@ const style = css`
     }
 `;
 
-const Index: NextPage = () => {
+const Home: NextPage = () => {
     return (
         <section className="home">
             <h1>Hello</h1>
@@ -18,4 +18,4 @@ const Index: NextPage = () => {
     );
 };
 
-export default Index;
+export default Home;

@@ -1,6 +1,6 @@
 section.contact {
     display: flex;
-    margin: 0;
+    margin: 210px 0;
 
     > div {
         &:first-child {
@@ -40,7 +40,7 @@ section.contact {
 
 @media screen and (max-width: 1120px) {
     section.contact {
-        padding: 150px 0;
+        margin: 150px 0;
 
         > div {
             flex: 1 !important;
