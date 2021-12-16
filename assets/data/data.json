@@ -27,7 +27,7 @@
     "metadata": [
       {
         "label": "BIRTH",
-        "value": "1995.11.01"
+        "value": "11월 1일"
       },
       {
         "label": "HEIGHT",
@@ -63,18 +63,7 @@
       "width": 435,
       "height": 651
     },
-    "comments": [
-      {
-        "comment": "반말하지마라",
-        "date": "2021.12.14 00:10",
-        "secret": false
-      },
-      {
-        "comment": "이재열",
-        "date": "2021.12.17 00:47",
-        "secret": false
-      }
-    ]
+    "comments": []
   },
   "movies": [
     {
@@ -389,7 +378,7 @@
     {
       "title": "세기의 사나이",
       "theater": "대학로예술극장 대극장",
-      "year": 2021,
+      "year": 2019,
       "schedule": "2019.02.22 ~ 03.03 — 화~금 8시, 토 3시 7시, 일 3시, 월 쉼",
       "img": {
         "filename": "세기의사나이.png",
