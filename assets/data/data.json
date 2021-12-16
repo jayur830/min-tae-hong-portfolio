@@ -27,7 +27,7 @@
     "metadata": [
       {
         "label": "BIRTH",
-        "value": "1995.11.01"
+        "value": "11월 1일"
       },
       {
         "label": "HEIGHT",
@@ -63,18 +63,7 @@
       "width": 435,
       "height": 651
     },
-    "comments": [
-      {
-        "comment": "반말하지마라",
-        "date": "2021.12.14 00:10",
-        "secret": false
-      },
-      {
-        "comment": "이재열",
-        "date": "2021.12.17 00:47",
-        "secret": false
-      }
-    ]
+    "comments": []
   },
   "movies": [
     {
