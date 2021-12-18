@@ -150,7 +150,7 @@ const AppLayout: NextPage = ({ children }) => {
                     <div className="font-smoothing"><span style={{ transform: `translateX(${commonState.darkMode ? 11 : -12}px)` }} onClick={() => dispatch({ type: "SET_DARK_MODE" })} /></div>
                 </div>
                 <div>
-                    <Link href="/home">
+                    <Link href="/">
                         <h1>{commonState.headerTitle}</h1>
                     </Link>
                 </div>

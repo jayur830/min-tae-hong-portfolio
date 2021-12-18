@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as Icons from "@fortawesome/free-brands-svg-icons";
 
-const AppLayout: NextPage = ({ children }) => {
+const AdminLayout: NextPage = ({ children }) => {
     const dispatch = useDispatch();
 
     const commonState = useSelector((state: any) => state.common);
@@ -19,6 +19,21 @@ const AppLayout: NextPage = ({ children }) => {
     const [editTitle, setEditTitle] = useState(false);
     const [editHeaderTitle, setEditHeaderTitle] = useState(false);
     const [editSnsList, setEditSnsList] = useState(false);
+
+    const [title, setTItle] = useState(commonState.title);
+    const [headerTitle, setHeaderTItle] = useState(commonState.headerTitle);
+
+    const commitTitle = (title: string) => {
+        fetch("/api/admin/setTitle?title=" + title);
+        dispatch({ type: "SET_COMMON_DATA", payload: { title } });
+        setEditTitle(false);
+    }
+
+    const commitHeaderTitle = (headerTitle: string) => {
+        fetch("/api/admin/setHeaderTitle?title=" + headerTitle);
+        dispatch({ type: "SET_COMMON_DATA", payload: { headerTitle } });
+        setEditHeaderTitle(false);
+    }
 
     const router = useRouter();
 
@@ -145,9 +160,23 @@ const AppLayout: NextPage = ({ children }) => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <div>
-                <h4>페이지 이름.</h4>
-            </div>
+            {editTitle ? (
+                <article className="title">
+                    <h4>페이지 타이틀.</h4>
+                    <input type="text" defaultValue={commonState.title} onKeyUp={(e: any) => {
+                        if (e.key === "Enter") commitTitle(e.target.value);
+                        else setTItle(e.target.value);
+                    }} />
+                    <input type="button" value="등록" onClick={() => commitTitle(title)} />
+                    <input type="button" value="취소" onClick={() => setEditTitle(false)} />
+                </article>
+            ) : (
+                <article className="title">
+                    <h4>페이지 타이틀.</h4>
+                    <span>{commonState.title}</span>
+                    <input type="button" value="편집" onClick={() => setEditTitle(true)} />
+                </article>
+            )}
             <header className="app-header">
                 <div className="dark-mode-btn">
                     <span className="font-smoothing">{commonState.darkMode ? "Dark" : "Light"}</span>
@@ -155,12 +184,15 @@ const AppLayout: NextPage = ({ children }) => {
                 </div>
                 {editHeaderTitle ?
                     <div>
-                        <h1><input type="text" defaultValue={commonState.headerTitle} /></h1>
-                        <input type="button" value="등록" />
+                        <h1><input type="text" defaultValue={commonState.headerTitle} onKeyUp={(e: any) => {
+                            if (e.key === "Enter") commitHeaderTitle(e.target.value);
+                            else setHeaderTItle(e.target.value);
+                        }} /></h1>
+                        <input type="button" value="등록" onClick={() => commitHeaderTitle(headerTitle)} />
                         <input type="button" value="취소" onClick={() => setEditHeaderTitle(false)} />
                     </div> :
                     <div>
-                        <Link href="/">
+                        <Link href="/admin">
                             <h1>{commonState.headerTitle}</h1>
                         </Link>
                         <input type="button" value="편집" onClick={() => setEditHeaderTitle(true)} />
@@ -200,10 +232,21 @@ const AppLayout: NextPage = ({ children }) => {
             <footer className="app-footer">
                 <div className="font-smoothing">©Copyright 2021. All Rights Reserved.</div>
                 {commonState.windowWidth > 1120 ? null : <br />}
-                {iconsHtml}
+                {editSnsList ? (
+                    <>
+                        {iconsHtml}
+                        <input type="button" value="등록" />
+                        <input type="button" value="취소" onClick={() => setEditSnsList(false)} />
+                    </>
+                ) : (
+                    <>
+                        {iconsHtml}
+                        <input type="button" value="편집" onClick={() => setEditSnsList(true)} />
+                    </>
+                )}
             </footer>
         </div>
     );
 };
 
-export default AppLayout;
+export default AdminLayout;

@@ -96,6 +96,13 @@ body {
         transform: rotate(0.03deg);
     }
 
+    article.title {
+        h4 {
+            display: inline-block;
+            margin-right: 10px;
+        }
+    }
+
     header.app-header {
         position: relative;
 
