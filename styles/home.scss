@@ -1,0 +1,14 @@
+section.home {
+    margin: 50px 0 210px 0;
+
+    table {
+        max-width: 1500px;
+        margin: 0 auto;
+    }
+}
+
+@media screen and (max-width: 1120px) {
+    section.home img {
+        width: calc(100% - 50px);
+    }
+}

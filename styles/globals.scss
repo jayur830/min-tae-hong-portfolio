@@ -300,6 +300,26 @@ body {
                 margin-left: 10px;
             }
         }
+
+        table {
+            margin: 0 auto;
+
+            input[type=text] {
+                width: 350px;
+            }
+
+            svg {
+                cursor: pointer;
+
+                &[data-icon=minus-circle] {
+                    width: 16px;
+                }
+
+                &[data-icon=plus] {
+                    width: 20px;
+                }
+            }
+        }
     }
 
     .light-mode {
@@ -374,6 +394,7 @@ body {
     }
 }
 
+@import "home";
 @import "about";
 @import "movies";
 @import "drama";

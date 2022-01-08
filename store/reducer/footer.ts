@@ -6,12 +6,7 @@ export type FooterState = {
 };
 
 const initialState: FooterState = {
-    sns: [
-        {
-            name: "",
-            url: ""
-        }
-    ]
+    sns: []
 };
 
 const footerReducer = (state: FooterState = initialState, action: any) => {

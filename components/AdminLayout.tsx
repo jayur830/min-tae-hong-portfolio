@@ -7,12 +7,14 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import * as Icons from "@fortawesome/free-brands-svg-icons";
+import * as SolidIcons from "@fortawesome/free-solid-svg-icons";
+import * as BrandsIcons from "@fortawesome/free-brands-svg-icons";
 
 const AdminLayout: NextPage = ({ children }) => {
     const dispatch = useDispatch();
 
     const commonState = useSelector((state: any) => state.common);
+    const footerState = useSelector((state: any) => state.footer);
     const [iconsHtml, setIconsHtml] = useState([<React.Fragment key={0} />]);
     const [openSideMenu, setOpenSideMenu] = useState(false);
 
@@ -22,6 +24,8 @@ const AdminLayout: NextPage = ({ children }) => {
 
     const [title, setTItle] = useState(commonState.title);
     const [headerTitle, setHeaderTItle] = useState(commonState.headerTitle);
+    const [snsList, setSnsList] = useState(Object.freeze(footerState.sns.concat()));
+    const [newSnsList, setNewSnsList] = useState(Object.freeze([]));
 
     const commitTitle = (title: string) => {
         fetch("/api/admin/setTitle?title=" + title);
@@ -42,7 +46,6 @@ const AdminLayout: NextPage = ({ children }) => {
             .then(data => data.json())
             .then(data => {
                 if ("common" in data) {
-                    console.log("common:", data.common);
                     dispatch({
                         type: "SET_COMMON_DATA",
                         payload: {
@@ -130,20 +133,21 @@ const AdminLayout: NextPage = ({ children }) => {
                         payload: data.contact
                     });
                 if ("footer" in data) {
+                    setSnsList(Object.freeze(data.footer.sns.concat()));
                     dispatch({
                         type: "SET_FOOTER_SNS_LIST",
                         payload: data.footer
                     });
                     setIconsHtml(data.footer.sns.map((obj: { name: string, url: string }, i: number) => {
                         switch (obj.name) {
-                        case "instagram": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={Icons.faInstagram} /></a>;
-                        case "facebook": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={Icons.faFacebook} /></a>;
-                        case "twitter": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={Icons.faTwitter} /></a>;
-                        case "line": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={Icons.faLine} /></a>;
-                        case "youtube": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={Icons.faYoutube} /></a>;
-                        case "pinterest": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={Icons.faPinterest} /></a>;
-                        case "tiktok": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={Icons.faTiktok} /></a>;
-                        case "snapchat": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={Icons.faSnapchat} /></a>;
+                        case "instagram": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={BrandsIcons.faInstagram} /></a>;
+                        case "facebook": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={BrandsIcons.faFacebook} /></a>;
+                        case "twitter": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={BrandsIcons.faTwitter} /></a>;
+                        case "line": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={BrandsIcons.faLine} /></a>;
+                        case "youtube": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={BrandsIcons.faYoutube} /></a>;
+                        case "pinterest": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={BrandsIcons.faPinterest} /></a>;
+                        case "tiktok": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={BrandsIcons.faTiktok} /></a>;
+                        case "snapchat": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={BrandsIcons.faSnapchat} /></a>;
                         default: return <a key={i} href="#" />;
                         }
                     }));
@@ -234,9 +238,75 @@ const AdminLayout: NextPage = ({ children }) => {
                 {commonState.windowWidth > 1120 ? null : <br />}
                 {editSnsList ? (
                     <>
-                        {iconsHtml}
-                        <input type="button" value="등록" />
-                        <input type="button" value="취소" onClick={() => setEditSnsList(false)} />
+                        <table>
+                            <tbody>
+                                {snsList.map(((sns: { name: string, url: string }, i: number) => (
+                                    <tr key={i}>
+                                        <td>
+                                            <select value={sns.name} onChange={(e: any) => {
+                                                const _snsList = snsList.concat();
+                                                _snsList[i].name = e.target.value;
+                                                setSnsList(_snsList);
+                                            }}>
+                                                <option value="instagram">Instagram</option>
+                                                <option value="facebook">Facebook</option>
+                                                <option value="twitter">Twitter</option>
+                                                <option value="line">Line</option>
+                                                <option value="youtube">Youtube</option>
+                                                <option value="pinterest">Pinterest</option>
+                                                <option value="tiktok">Tiktok</option>
+                                                <option value="snapchat">Snapchat</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="text" defaultValue={sns.url} onKeyUp={(e: any) => {
+                                                const _snsList = snsList.concat();
+                                                _snsList[i].url = e.target.value;
+                                                setSnsList(_snsList);
+                                            }} />
+                                        </td>
+                                        <td><FontAwesomeIcon size="1x" icon={SolidIcons.faMinusCircle} /></td>
+                                    </tr>
+                                )))}
+                                {newSnsList.map((sns: { name: string, url: string }, i: number) => (
+                                    <tr>
+                                        <td>
+                                            <select value={sns.name}>
+                                                <option value="instagram">Instagram</option>
+                                                <option value="facebook">Facebook</option>
+                                                <option value="twitter">Twitter</option>
+                                                <option value="line">Line</option>
+                                                <option value="youtube">Youtube</option>
+                                                <option value="pinterest">Pinterest</option>
+                                                <option value="tiktok">Tiktok</option>
+                                                <option value="snapchat">Snapchat</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="text" onKeyUp={(e: any) => {
+                                                const _newSnsList = newSnsList.concat();
+                                                // _newSnsList[i].url = e.target.value;
+                                                setNewSnsList(_newSnsList);
+                                            }} />
+                                        </td>
+                                        <td><FontAwesomeIcon size="1x" icon={SolidIcons.faMinusCircle} /></td>
+                                    </tr>
+                                ))}
+                                <tr>
+                                    <td colSpan={3}>
+                                        <FontAwesomeIcon icon={SolidIcons.faPlus} />
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colSpan={3}>
+                                    <input type="button" value="등록" />
+                                    <input type="button" value="취소" onClick={() => setEditSnsList(false)} />
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
                     </>
                 ) : (
                     <>
