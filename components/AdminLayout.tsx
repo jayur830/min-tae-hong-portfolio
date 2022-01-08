@@ -196,7 +196,7 @@ const AdminLayout: NextPage = ({ children }) => {
                         <input type="button" value="취소" onClick={() => setEditHeaderTitle(false)} />
                     </div> :
                     <div>
-                        <Link href="/admin">
+                        <Link href="/admin" passHref>
                             <h1>{commonState.headerTitle}</h1>
                         </Link>
                         <input type="button" value="편집" onClick={() => setEditHeaderTitle(true)} />
@@ -204,11 +204,11 @@ const AdminLayout: NextPage = ({ children }) => {
                 {commonState.windowWidth > 1120 ? (
                     <nav>
                         <ul>
-                            <li className={router.pathname === "/admin/about" ? "on" : ""}><Link scroll={false} href="/admin/about"><h4>ABOUT</h4></Link></li>
-                            <li className={router.pathname === "/admin/movies" ? "on" : ""}><Link scroll={false} href="/admin/movies"><h4>MOVIES</h4></Link></li>
-                            <li className={router.pathname === "/admin/drama" ? "on" : ""}><Link scroll={false} href="/admin/drama"><h4>DRAMA</h4></Link></li>
-                            <li className={router.pathname === "/admin/theater" ? "on" : ""}><Link scroll={false} href="/admin/theater"><h4>THEATER</h4></Link></li>
-                            <li className={router.pathname === "/admin/contact" ? "on" : ""}><Link scroll={false} href="/admin/contact"><h4>CONTACT</h4></Link></li>
+                            <li className={router.pathname === "/admin/about" ? "on" : ""}><Link scroll={false} href="/admin/about" passHref><h4>ABOUT</h4></Link></li>
+                            <li className={router.pathname === "/admin/movies" ? "on" : ""}><Link scroll={false} href="/admin/movies" passHref><h4>MOVIES</h4></Link></li>
+                            <li className={router.pathname === "/admin/drama" ? "on" : ""}><Link scroll={false} href="/admin/drama" passHref><h4>DRAMA</h4></Link></li>
+                            <li className={router.pathname === "/admin/theater" ? "on" : ""}><Link scroll={false} href="/admin/theater" passHref><h4>THEATER</h4></Link></li>
+                            <li className={router.pathname === "/admin/contact" ? "on" : ""}><Link scroll={false} href="/admin/contact" passHref><h4>CONTACT</h4></Link></li>
                         </ul>
                     </nav>
                     ) : (
@@ -221,11 +221,11 @@ const AdminLayout: NextPage = ({ children }) => {
                         <div className={"side-menu animate__animated animate__slide" + (openSideMenu ? "InLeft" : "OutLeft")}>
                             <nav>
                                 <ul>
-                                    <li className={router.pathname === "/about" ? "on" : ""}><Link scroll={false} href="/about"><h4>ABOUT</h4></Link></li>
-                                    <li className={router.pathname === "/movies" ? "on" : ""}><Link scroll={false} href="/movies"><h4>MOVIES</h4></Link></li>
-                                    <li className={router.pathname === "/drama" ? "on" : ""}><Link scroll={false} href="/drama"><h4>DRAMA</h4></Link></li>
-                                    <li className={router.pathname === "/theater" ? "on" : ""}><Link scroll={false} href="/theater"><h4>THEATER</h4></Link></li>
-                                    <li className={router.pathname === "/contact" ? "on" : ""}><Link scroll={false} href="/contact"><h4>CONTACT</h4></Link></li>
+                                    <li className={router.pathname === "/about" ? "on" : ""}><Link scroll={false} href="/about" passHref><h4>ABOUT</h4></Link></li>
+                                    <li className={router.pathname === "/movies" ? "on" : ""}><Link scroll={false} href="/movies" passHref><h4>MOVIES</h4></Link></li>
+                                    <li className={router.pathname === "/drama" ? "on" : ""}><Link scroll={false} href="/drama" passHref><h4>DRAMA</h4></Link></li>
+                                    <li className={router.pathname === "/theater" ? "on" : ""}><Link scroll={false} href="/theater" passHref><h4>THEATER</h4></Link></li>
+                                    <li className={router.pathname === "/contact" ? "on" : ""}><Link scroll={false} href="/contact" passHref><h4>CONTACT</h4></Link></li>
                                 </ul>
                             </nav>
                         </div>
@@ -269,7 +269,7 @@ const AdminLayout: NextPage = ({ children }) => {
                                     </tr>
                                 )))}
                                 {newSnsList.map((sns: { name: string, url: string }, i: number) => (
-                                    <tr>
+                                    <tr key={i}>
                                         <td>
                                             <select value={sns.name}>
                                                 <option value="instagram">Instagram</option>

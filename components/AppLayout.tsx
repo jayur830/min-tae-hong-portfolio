@@ -150,18 +150,18 @@ const AppLayout: NextPage = ({ children }) => {
                     <div className="font-smoothing"><span style={{ transform: `translateX(${commonState.darkMode ? 11 : -12}px)` }} onClick={() => dispatch({ type: "SET_DARK_MODE" })} /></div>
                 </div>
                 <div>
-                    <Link href="/">
+                    <Link href="/" passHref>
                         <h1>{commonState.headerTitle}</h1>
                     </Link>
                 </div>
                 {commonState.windowWidth > 1120 ? (
                     <nav>
                         <ul>
-                            <li className={router.pathname === "/about" ? "on" : ""}><Link scroll={false} href="/about"><h4>ABOUT</h4></Link></li>
-                            <li className={router.pathname === "/movies" ? "on" : ""}><Link scroll={false} href="/movies"><h4>MOVIES</h4></Link></li>
-                            <li className={router.pathname === "/drama" ? "on" : ""}><Link scroll={false} href="/drama"><h4>DRAMA</h4></Link></li>
-                            <li className={router.pathname === "/theater" ? "on" : ""}><Link scroll={false} href="/theater"><h4>THEATER</h4></Link></li>
-                            <li className={router.pathname === "/contact" ? "on" : ""}><Link scroll={false} href="/contact"><h4>CONTACT</h4></Link></li>
+                            <li className={router.pathname === "/about" ? "on" : ""}><Link scroll={false} href="/about" passHref><h4>ABOUT</h4></Link></li>
+                            <li className={router.pathname === "/movies" ? "on" : ""}><Link scroll={false} href="/movies" passHref><h4>MOVIES</h4></Link></li>
+                            <li className={router.pathname === "/drama" ? "on" : ""}><Link scroll={false} href="/drama" passHref><h4>DRAMA</h4></Link></li>
+                            <li className={router.pathname === "/theater" ? "on" : ""}><Link scroll={false} href="/theater" passHref><h4>THEATER</h4></Link></li>
+                            <li className={router.pathname === "/contact" ? "on" : ""}><Link scroll={false} href="/contact" passHref><h4>CONTACT</h4></Link></li>
                         </ul>
                     </nav>
                     ) : (
@@ -174,11 +174,11 @@ const AppLayout: NextPage = ({ children }) => {
                         <div className={"side-menu animate__animated animate__slide" + (openSideMenu ? "InLeft" : "OutLeft")}>
                             <nav>
                                 <ul>
-                                    <li className={router.pathname === "/about" ? "on" : ""}><Link scroll={false} href="/about"><h4>ABOUT</h4></Link></li>
-                                    <li className={router.pathname === "/movies" ? "on" : ""}><Link scroll={false} href="/movies"><h4>MOVIES</h4></Link></li>
-                                    <li className={router.pathname === "/drama" ? "on" : ""}><Link scroll={false} href="/drama"><h4>DRAMA</h4></Link></li>
-                                    <li className={router.pathname === "/theater" ? "on" : ""}><Link scroll={false} href="/theater"><h4>THEATER</h4></Link></li>
-                                    <li className={router.pathname === "/contact" ? "on" : ""}><Link scroll={false} href="/contact"><h4>CONTACT</h4></Link></li>
+                                    <li className={router.pathname === "/about" ? "on" : ""}><Link scroll={false} href="/about" passHref><h4>ABOUT</h4></Link></li>
+                                    <li className={router.pathname === "/movies" ? "on" : ""}><Link scroll={false} href="/movies" passHref><h4>MOVIES</h4></Link></li>
+                                    <li className={router.pathname === "/drama" ? "on" : ""}><Link scroll={false} href="/drama" passHref><h4>DRAMA</h4></Link></li>
+                                    <li className={router.pathname === "/theater" ? "on" : ""}><Link scroll={false} href="/theater" passHref><h4>THEATER</h4></Link></li>
+                                    <li className={router.pathname === "/contact" ? "on" : ""}><Link scroll={false} href="/contact" passHref><h4>CONTACT</h4></Link></li>
                                 </ul>
                             </nav>
                         </div>
