@@ -1,4 +1,5 @@
 import React from "react";
+import Line from "./Line";
 
 type Props = {
     children: any,
@@ -10,9 +11,7 @@ const YearBlock: (props: Props) => JSX.Element = (props) => (
     <div className="year-block">
         <div>
             <h2>{props.year}</h2>
-            <span className="hr-circle" />
-            <span className="hr-line" />
-            <span className="hr-circle" />
+            <Line />
         </div>
         <div>{props.children}</div>
     </div>

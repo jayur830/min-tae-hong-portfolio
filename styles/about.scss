@@ -143,7 +143,7 @@ section.about {
 
                     > div {
 
-                        table {
+                        table > tbody > tr {
                             td {
                                 input[type=text] {
                                     font: 15px 'HeirofLight Regular';
@@ -160,6 +160,20 @@ section.about {
                                     width: 430px;
                                     height: 200px;
                                 }
+
+                                &:last-child svg {
+                                    width: 20px;
+                                    cursor: pointer;
+                                    transition: color 0.15s ease;
+
+                                    &:hover {
+                                        color: #898989;
+                                    }
+                                }
+                            }
+
+                            &:last-child td {
+                                text-align: center;
                             }
                         }
                     }

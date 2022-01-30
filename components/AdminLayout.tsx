@@ -47,8 +47,8 @@ const AdminLayout: NextPage = ({ children }) => {
         "drama",
         "theater",
         "contact"].map((val, i) =>
-        <li key={i} className={router.pathname === "/" + val ? "on" : ""}>
-            <Link scroll={false} href={"/" + val} passHref>
+        <li key={i} className={router.pathname === "/admin/" + val ? "on" : ""}>
+            <Link scroll={false} href={"/admin/" + val} passHref>
                 <h4>{val.toUpperCase()}</h4>
             </Link>
         </li>), [router]);

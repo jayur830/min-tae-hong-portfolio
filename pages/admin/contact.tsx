@@ -44,8 +44,7 @@ const Contact: NextPage = () => {
             </div>
             <div>
                 <div>
-                    {/*<Image src={"/api/img/" + contactState.img.filename} width={contactState.img.width} height={contactState.img.height} draggable={false} />*/}
-                    <img src={"/api/img/" + contactState.img.filename} width={contactState.img.width} height={contactState.img.height} draggable={false} alt="" />
+                    <Image src={"/" + contactState.img.filename} width={contactState.img.width} height={contactState.img.height} draggable={false} />
                 </div>
             </div>
         </section>

@@ -8,6 +8,7 @@ import dayjs from "dayjs";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import Line from "../components/Line";
 
 const About: NextPage = () => {
     const commonState = useSelector((state: any) => state.common);
@@ -69,9 +70,7 @@ const About: NextPage = () => {
                                 left: -10,
                                 width: 40
                             }} />
-                            <span className="hr-circle" />
-                            <span className="hr-line" />
-                            <span className="hr-circle" />
+                            <Line />
                             <span className="comment-date font-smoothing">{obj.date}</span>
                         </div>
                         <div className={(obj.secret ? "secret" : "") + " font-smoothing"}>
@@ -87,9 +86,7 @@ const About: NextPage = () => {
                                 left: -10,
                                 width: 40
                             }} />
-                            <span className="hr-circle" />
-                            <span className="hr-line" />
-                            <span className="hr-circle" />
+                            <Line />
                         </div>
                         <div>
                             <input type="text" placeholder="댓글을 입력하세요." onKeyUp={(e: any) => {
