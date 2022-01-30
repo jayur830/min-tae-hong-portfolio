@@ -37,10 +37,12 @@ const About: NextPage = () => {
         setWriteComment(false);
     };
 
+    const aboutImg = <div><Image src={"/" + aboutState.img.filename} width={aboutState.img.width} height={aboutState.img.height} draggable={false} /></div>;
+
     return (
         <section className="about">
             <div className="content">
-                {commonState.windowWidth <= 1120 ? <div><img src={"/api/img/" + aboutState.img.filename} width={aboutState.img.width} height={aboutState.img.height} draggable={false} alt="" /></div> : null}
+                {commonState.windowWidth <= 1120 ? aboutImg : null}
                 <div>
                     <div>
                         <table>
@@ -55,7 +57,7 @@ const About: NextPage = () => {
                         </table>
                     </div>
                 </div>
-                {commonState.windowWidth > 1120 ? <div><img src={"/api/img/" + aboutState.img.filename} width={aboutState.img.width} height={aboutState.img.height} draggable={false} alt="" /></div> : null}
+                {commonState.windowWidth > 1120 ? aboutImg : null}
             </div>
             <div className="comment">
                 <h2>Comments</h2>

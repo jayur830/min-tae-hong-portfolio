@@ -10,6 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import Scene from "../components/Scene";
+import YearBlock from "../components/YearBlock";
 
 const Drama: NextPage = () => {
     const dispatch = useDispatch();
@@ -29,68 +30,59 @@ const Drama: NextPage = () => {
     return (
         <section className="drama">
             {years.map((year, i) => (
-                <div key={i} className="year-block">
-                    <div>
-                        <h2>{year}</h2>
-                        <span className="hr-circle" />
-                        <span className="hr-line" />
-                        <span className="hr-circle" />
-                    </div>
-                    <div>
-                        {(dramaState[year] as any[]).map((obj: any, j: number) => (
-                            <div key={j} className="drama-block">
-                                {/*<Image src={"/api/img/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} />*/}
-                                <img src={"/api/img/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="" />
-                                <div>
-                                    <h3 className="font-smoothing">{obj.title}</h3>
-                                    <div className="font-smoothing">연출: {obj.director}</div>
-                                    <div className="font-smoothing">출연: {obj.actors.join(", ")}</div>
-                                    {obj.schedule == null ? null : <div className="font-smoothing">방송: {obj.schedule}</div>}
-                                </div>
-                                {obj.scenes.length === 0 ? null : (
-                                    <div className="scenes">
+                <YearBlock key={i} year={year}>
+                    {(dramaState[year] as any[]).map((obj: any, j: number) => (
+                        <div key={j} className="drama-block">
+                            {obj.img.filename ? <Image src={"/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} /> : null}
+                            <div>
+                                <h3 className="font-smoothing">{obj.title}</h3>
+                                <div className="font-smoothing">연출: {obj.director}</div>
+                                <div className="font-smoothing">출연: {obj.actors.join(", ")}</div>
+                                {obj.schedule == null ? null : <div className="font-smoothing">방송: {obj.schedule}</div>}
+                            </div>
+                            {obj.scenes.length === 0 ? null : (
+                                <div className="scenes">
+                                    <div>
                                         <div>
-                                            <div>
-                                                <FontAwesomeIcon
-                                                    icon={faChevronLeft}
-                                                    className={obj.scenePage === 0 ? "disable" : ""}
-                                                    onClick={() => obj.scenePage === 0 ? null : dispatch({
-                                                        type: "DECREASE_DRAMA_SCENE_PAGE",
-                                                        payload: { year, i: j }
-                                                    })} />
-                                            </div>
-                                            <ul className="no-scrollbar">
-                                                {obj.scenes.slice(obj.scenePage * (commonState.windowWidth > 1120 ? 5 : 3), Math.min((obj.scenePage + 1) * (commonState.windowWidth > 1120 ? 5 : 3), obj.scenes.length)).map((scene: any, k: number) => (
-                                                    <li key={k}>
-                                                        <img
-                                                            src={"/api/img/" + scene.filename}
-                                                            alt=""
-                                                            style={commonState.windowWidth < 1120 ? { width: "calc(100% - 10px)" } : (scene.width > scene.height ? { width: 166 } : { height: 200, width: "auto" })}
-                                                            onClick={() => setDramaScene({
-                                                                year,
-                                                                dramaIndex: j,
-                                                                sceneIndex: obj.scenePage * (commonState.windowWidth > 1120 ? 5 : 3) + k,
-                                                                max: obj.scenes.length
-                                                            })} />
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                            <div>
-                                                <FontAwesomeIcon
-                                                    icon={faChevronRight}
-                                                    className={obj.scenePage === Math.ceil(obj.scenes.length / (commonState.windowWidth > 1120 ? 5 : 3)) - 1 ? "disable" : ""}
-                                                    onClick={() => obj.scenePage === Math.ceil(obj.scenes.length / (commonState.windowWidth > 1120 ? 5 : 3)) - 1 ? null : dispatch({
-                                                        type: "INCREASE_DRAMA_SCENE_PAGE",
-                                                        payload: { year, i: j }
-                                                    })} />
-                                            </div>
+                                            <FontAwesomeIcon
+                                                icon={faChevronLeft}
+                                                className={obj.scenePage === 0 ? "disable" : ""}
+                                                onClick={() => obj.scenePage === 0 ? null : dispatch({
+                                                    type: "DECREASE_DRAMA_SCENE_PAGE",
+                                                    payload: { year, i: j }
+                                                })} />
+                                        </div>
+                                        <ul className="no-scrollbar">
+                                            {obj.scenes.slice(obj.scenePage * (commonState.windowWidth > 1120 ? 5 : 3), Math.min((obj.scenePage + 1) * (commonState.windowWidth > 1120 ? 5 : 3), obj.scenes.length)).map((scene: any, k: number) => (
+                                                <li key={k}>
+                                                    <img
+                                                        src={"/api/img/" + scene.filename}
+                                                        alt=""
+                                                        style={commonState.windowWidth < 1120 ? { width: "calc(100% - 10px)" } : (scene.width > scene.height ? { width: 166 } : { height: 200, width: "auto" })}
+                                                        onClick={() => setDramaScene({
+                                                            year,
+                                                            dramaIndex: j,
+                                                            sceneIndex: obj.scenePage * (commonState.windowWidth > 1120 ? 5 : 3) + k,
+                                                            max: obj.scenes.length
+                                                        })} />
+                                                </li>
+                                            ))}
+                                        </ul>
+                                        <div>
+                                            <FontAwesomeIcon
+                                                icon={faChevronRight}
+                                                className={obj.scenePage === Math.ceil(obj.scenes.length / (commonState.windowWidth > 1120 ? 5 : 3)) - 1 ? "disable" : ""}
+                                                onClick={() => obj.scenePage === Math.ceil(obj.scenes.length / (commonState.windowWidth > 1120 ? 5 : 3)) - 1 ? null : dispatch({
+                                                    type: "INCREASE_DRAMA_SCENE_PAGE",
+                                                    payload: { year, i: j }
+                                                })} />
                                         </div>
                                     </div>
-                                )}
-                            </div>
-                        ))}
-                    </div>
-                </div>
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </YearBlock>
             ))}
             {dramaScene.year !== ""
                 && dramaScene.dramaIndex !== -1
