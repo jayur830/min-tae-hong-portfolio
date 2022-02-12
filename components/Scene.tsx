@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Image from "next/image";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
@@ -39,7 +40,12 @@ const Scene: (props: {
                                 onClick={() => index === 0 ? null : setIndex(index - 1)} />
                         </div>
                         <div className="content">
-                            <img src={"/api/img/" + scenes[index].filename} className={scenes[index].width > scenes[index].height ? "horizontal" : "vertical"} alt="" />
+                            <Image
+                                src={"/" + scenes[index].filename}
+                                className={scenes[index].width > scenes[index].height ? "horizontal" : "vertical"}
+                                width={scenes[index].width}
+                                height={scenes[index].height}
+                                draggable={false} />
                         </div>
                         <div className="right">
                             <FontAwesomeIcon

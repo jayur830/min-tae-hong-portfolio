@@ -49,7 +49,12 @@ const aboutReducer = (state: AboutState = initialState, action: any) => {
         return {
             ...state,
             comments: state.comments.concat(action.payload)
-        }
+        };
+    case "SET_ABOUT_METADATA":
+        return {
+            ...state,
+            metadata: action.payload.metadata
+        };
     default:
         return state;
     }

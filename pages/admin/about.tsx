@@ -1,4 +1,4 @@
-import React, { BaseSyntheticEvent, SyntheticEvent, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { NextPage } from "next";
 import Image from "next/image";
 
@@ -7,13 +7,26 @@ import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-
-import DatePicker from "react-datepicker";
+import { faPlus, faMinus, faPen, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import Line from "../../components/Line";
 
 const About: NextPage = () => {
+    const commonState = useSelector((state: any) => state.common);
     const aboutState = useSelector((state: any) => state.about);
     const dispatch = useDispatch();
+
+    const removeMetadata = useCallback(removeIndex => {
+        if (confirm("삭제하시겠습니까?")) {
+            const metadata = aboutState.metadata.concat();
+            metadata.splice(removeIndex, 1);
+            dispatch({ type: "SET_ABOUT_METADATA", payload: { metadata } });
+            fetch("/api/admin/about/setMetadata", {
+                method: "delete",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(metadata)
+            });
+        }
+    }, [aboutState]);
 
     const [writeComment, setWriteComment] = useState(false);
     const [comment, setComment] = useState("");
@@ -42,69 +55,36 @@ const About: NextPage = () => {
         setWriteComment(false);
     };
 
+    const aboutImg = <div><Image src={"/" + aboutState.img.filename} width={aboutState.img.width} height={aboutState.img.height} draggable={false} /></div>;
+
     return (
         <section className="about admin">
             <div className="content">
+                {commonState.windowWidth <= 1120 ? aboutImg : null}
                 <div>
                     <div>
                         <table>
                             <tbody>
-                                <tr>
-                                    <td colSpan={2} className="font-smoothing">
-                                        {editName ? <input type="text" defaultValue={aboutState.name} /> : aboutState.name}
-                                    </td>
-                                    {editName ?
+                                {aboutState.metadata.map((obj: any, i: number) => (
+                                    <tr key={i}>
+                                        <td className="font-smoothing">{obj.label}.</td>
+                                        <td className="font-smoothing">{obj.value}</td>
                                         <td>
-                                            <input type="button" value="등록" />
-                                            <input type="button" value="취소" onClick={() => setEditName(false)} />
-                                        </td> :
-                                        <td>
-                                            <input type="button" value="편집" onClick={() => setEditName(true)} />
-                                        </td>}
-                                </tr>
+                                            <FontAwesomeIcon size="1x" icon={faPen} />
+                                            <FontAwesomeIcon size="1x" icon={faMinus} onClick={() => removeMetadata(i)} />
+                                        </td>
+                                    </tr>
+                                ))}
                                 <tr>
-                                    <td className="font-smoothing">BIRTH.</td>
-                                    <td className="font-smoothing">
-                                        {aboutState.birth === "" ? null :
-                                            (editBirth ?
-                                                <DatePicker
-                                                    selected={dayjs(aboutState.birth, "YYYY.MM.DD").toDate()}
-                                                    onChange={(datetime: Date) => dispatch({ type: "SET_ABOUT_DATA", payload: { birth: dayjs(datetime).format("YYYY.MM.DD") } })} /> :
-                                                aboutState.birth)}
-                                        {editBirth ?
-                                            <div>
-                                                <input type="button" value="등록" />
-                                                <input type="button" value="취소" onClick={() => setEditBirth(false)} />
-                                            </div> :
-                                            <div>
-                                                <input type="button" value="편집" onClick={() => setEditBirth(true)} />
-                                            </div>}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colSpan={2} className="font-smoothing">
-                                        <h4>소개글.</h4>
-                                        <p>
-                                            {editInfo ? <textarea defaultValue={aboutState.info} /> : aboutState.info}
-                                        </p>
-                                        {editInfo ?
-                                            <div>
-                                                <input type="button" value="등록" />
-                                                <input type="button" value="취소" onClick={() => setEditInfo(false)} />
-                                            </div> :
-                                            <div>
-                                                <input type="button" value="편집" onClick={() => setEditInfo(true)} />
-                                            </div>}
+                                    <td colSpan={3}>
+                                        <FontAwesomeIcon size="1x" icon={faPlus} />
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <div>
-                    {/*<Image src={"/api/img/" + aboutState.img.filename} width={aboutState.img.width} height={aboutState.img.height} draggable={false} />*/}
-                    <img src={"/api/img/" + aboutState.img.filename} width={aboutState.img.width} height={aboutState.img.height} draggable={false} alt="" />
-                </div>
+                {commonState.windowWidth > 1120 ? aboutImg : null}
             </div>
             <div className="comment">
                 <h2>Comments</h2>
@@ -116,9 +96,7 @@ const About: NextPage = () => {
                                 left: -10,
                                 width: 40
                             }} />
-                            <span className="hr-circle" />
-                            <span className="hr-line" />
-                            <span className="hr-circle" />
+                            <Line />
                             <span className="comment-date font-smoothing">{obj.date}</span>
                         </div>
                         <div className={(obj.secret ? "secret" : "") + " font-smoothing"}>
@@ -134,9 +112,7 @@ const About: NextPage = () => {
                                 left: -10,
                                 width: 40
                             }} />
-                            <span className="hr-circle" />
-                            <span className="hr-line" />
-                            <span className="hr-circle" />
+                            <Line />
                         </div>
                         <div>
                             <input type="text" placeholder="댓글을 입력하세요." onKeyUp={(e: any) => {

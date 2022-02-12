@@ -1,4 +1,4 @@
-import React, { BaseSyntheticEvent, SyntheticEvent, useState } from "react";
+import React, { BaseSyntheticEvent, SyntheticEvent, useCallback, useState } from "react";
 import { NextPage } from "next";
 import Image from "next/image";
 
@@ -8,6 +8,7 @@ import dayjs from "dayjs";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import Line from "../components/Line";
 
 const About: NextPage = () => {
     const commonState = useSelector((state: any) => state.common);
@@ -18,7 +19,7 @@ const About: NextPage = () => {
     const [comment, setComment] = useState("");
     const [secret, setSecret] = useState(false);
 
-    const postComment = () => {
+    const postComment = useCallback(() => {
         const payload = {
             comment,
             date: dayjs().format("YYYY.MM.DD HH:mm"),
@@ -35,12 +36,14 @@ const About: NextPage = () => {
         });
         setComment("");
         setWriteComment(false);
-    };
+    }, []);
+
+    const aboutImg = <div><Image src={"/" + aboutState.img.filename} width={aboutState.img.width} height={aboutState.img.height} draggable={false} /></div>;
 
     return (
         <section className="about">
             <div className="content">
-                {commonState.windowWidth <= 1120 ? <div><img src={"/api/img/" + aboutState.img.filename} width={aboutState.img.width} height={aboutState.img.height} draggable={false} alt="" /></div> : null}
+                {commonState.windowWidth <= 1120 ? aboutImg : null}
                 <div>
                     <div>
                         <table>
@@ -55,7 +58,7 @@ const About: NextPage = () => {
                         </table>
                     </div>
                 </div>
-                {commonState.windowWidth > 1120 ? <div><img src={"/api/img/" + aboutState.img.filename} width={aboutState.img.width} height={aboutState.img.height} draggable={false} alt="" /></div> : null}
+                {commonState.windowWidth > 1120 ? aboutImg : null}
             </div>
             <div className="comment">
                 <h2>Comments</h2>
@@ -67,9 +70,7 @@ const About: NextPage = () => {
                                 left: -10,
                                 width: 40
                             }} />
-                            <span className="hr-circle" />
-                            <span className="hr-line" />
-                            <span className="hr-circle" />
+                            <Line />
                             <span className="comment-date font-smoothing">{obj.date}</span>
                         </div>
                         <div className={(obj.secret ? "secret" : "") + " font-smoothing"}>
@@ -85,9 +86,7 @@ const About: NextPage = () => {
                                 left: -10,
                                 width: 40
                             }} />
-                            <span className="hr-circle" />
-                            <span className="hr-line" />
-                            <span className="hr-circle" />
+                            <Line />
                         </div>
                         <div>
                             <input type="text" placeholder="댓글을 입력하세요." onKeyUp={(e: any) => {

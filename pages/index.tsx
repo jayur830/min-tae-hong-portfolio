@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import type { NextPage } from "next";
+import Image from "next/image";
 import { useSelector } from "react-redux";
 
 const Index: NextPage = () => {
@@ -12,15 +13,15 @@ const Index: NextPage = () => {
                     <tbody>
                         <tr>
                             <td colSpan={2}>
-                                <img src="/api/img/photo1.png" width={1000} alt="" />
+                                <Image src="/photo1.png" width={1000} height={667} draggable={false} />
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <img src="/api/img/photo2.png" width={498} alt="" />
+                                <Image src="/photo2.png" width={498} height={747} draggable={false} />
                             </td>
                             <td>
-                                <img src="/api/img/photo3.png" width={498} alt="" />
+                                <Image src="/photo3.png" width={498} height={747} draggable={false} />
                             </td>
                         </tr>
                     </tbody>
@@ -29,17 +30,17 @@ const Index: NextPage = () => {
                     <tbody>
                         <tr>
                             <td colSpan={2}>
-                                <img src="/api/img/photo1.png" alt="" />
+                                <Image src="/photo1.png" width={1000} height={667} draggable={false} />
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <img src="/api/img/photo2.png" alt="" />
+                                <Image src="/photo2.png" width={1000} height={1500} draggable={false} />
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <img src="/api/img/photo3.png" alt="" />
+                                <Image src="/photo3.png" width={1000} height={1500} draggable={false} />
                             </td>
                         </tr>
                     </tbody>
