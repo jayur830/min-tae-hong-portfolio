@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { NextPage } from "next";
 import { useSelector } from "react-redux";
 import Image from "next/image";
@@ -17,8 +17,11 @@ const Movies: NextPage = () => {
         max: -1
     });
 
-    const years = Object.keys(moviesState);
-    years.sort((a, b) => a < b ? 1 : -1);
+    const years = useMemo(() => {
+        const years = Object.keys(moviesState);
+        years.sort((a, b) => a < b ? 1 : -1);
+        return years;
+    }, []);
 
     return (
         <section className="movies">

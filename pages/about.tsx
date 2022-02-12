@@ -1,4 +1,4 @@
-import React, { BaseSyntheticEvent, SyntheticEvent, useState } from "react";
+import React, { BaseSyntheticEvent, SyntheticEvent, useCallback, useState } from "react";
 import { NextPage } from "next";
 import Image from "next/image";
 
@@ -19,7 +19,7 @@ const About: NextPage = () => {
     const [comment, setComment] = useState("");
     const [secret, setSecret] = useState(false);
 
-    const postComment = () => {
+    const postComment = useCallback(() => {
         const payload = {
             comment,
             date: dayjs().format("YYYY.MM.DD HH:mm"),
@@ -36,7 +36,7 @@ const About: NextPage = () => {
         });
         setComment("");
         setWriteComment(false);
-    };
+    }, []);
 
     const aboutImg = <div><Image src={"/" + aboutState.img.filename} width={aboutState.img.width} height={aboutState.img.height} draggable={false} /></div>;
 
