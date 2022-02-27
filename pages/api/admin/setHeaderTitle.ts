@@ -1,11 +1,15 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import fs from "fs";
+
+import mongoose from "mongoose";
+import { commonCollection } from "../../../assets/ts/db";
 
 const setHeaderTitle = (request: NextApiRequest, response: NextApiResponse) => {
-    fs.readFile("assets/data/data.json", "utf8", (error, data) => {
-        const _data = JSON.parse(data);
-        _data.common.headerTitle = request.query.title;
-        fs.writeFile("assets/data/data.json", JSON.stringify(_data, null, 2), "utf8", () => null);
+    commonCollection.findOneAndUpdate({
+        _id: new mongoose.Types.ObjectId(request.query._id as string)
+    }, {
+        $set: {
+            headerTitle: request.query.headerTitle
+        }
     });
 };
 

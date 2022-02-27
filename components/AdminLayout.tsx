@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { NextPage } from "next";
@@ -31,17 +31,17 @@ const AdminLayout: NextPage = ({ children }) => {
     const [snsList, setSnsList] = useState(Object.freeze(footerState.sns.concat()));
     const [newSnsList, setNewSnsList] = useState(Object.freeze([]));
 
-    const commitTitle = (title: string) => {
-        fetch("/api/admin/setTitle?title=" + title);
+    const commitTitle = useCallback((_id: string, title: string) => {
+        fetch(`/api/admin/setTitle?_id=${_id}&title=${title}`);
         dispatch({ type: "SET_COMMON_DATA", payload: { title } });
         setEditTitle(false);
-    }
+    }, [dispatch, setEditTitle]);
 
-    const commitHeaderTitle = (headerTitle: string) => {
-        fetch("/api/admin/setHeaderTitle?title=" + headerTitle);
+    const commitHeaderTitle = useCallback((_id: string, headerTitle: string) => {
+        fetch(`/api/admin/setHeaderTitle?_id=${_id}&headerTitle=${headerTitle}`);
         dispatch({ type: "SET_COMMON_DATA", payload: { headerTitle } });
         setEditHeaderTitle(false);
-    }
+    }, [dispatch, setEditHeaderTitle]);
 
     const linkList = useMemo(() => [
         "about",
@@ -74,10 +74,10 @@ const AdminLayout: NextPage = ({ children }) => {
                 <article className="title">
                     <h4>페이지 타이틀.</h4>
                     <input type="text" defaultValue={commonState.title} onKeyUp={(e: any) => {
-                        if (e.key === "Enter") commitTitle(e.target.value);
+                        if (e.key === "Enter") commitTitle(commonState._id, e.target.value);
                         else setTItle(e.target.value);
                     }} />
-                    <input type="button" value="등록" onClick={() => commitTitle(title)} />
+                    <input type="button" value="등록" onClick={() => commitTitle(commonState._id, title)} />
                     <input type="button" value="취소" onClick={() => setEditTitle(false)} />
                 </article>
             ) : (
@@ -92,10 +92,10 @@ const AdminLayout: NextPage = ({ children }) => {
                 {editHeaderTitle ?
                     <div>
                         <h1><input type="text" defaultValue={commonState.headerTitle} onKeyUp={(e: any) => {
-                            if (e.key === "Enter") commitHeaderTitle(e.target.value);
+                            if (e.key === "Enter") commitHeaderTitle(commonState._id, e.target.value);
                             else setHeaderTItle(e.target.value);
                         }} /></h1>
-                        <input type="button" value="등록" onClick={() => commitHeaderTitle(headerTitle)} />
+                        <input type="button" value="등록" onClick={() => commitHeaderTitle(commonState._id, headerTitle)} />
                         <input type="button" value="취소" onClick={() => setEditHeaderTitle(false)} />
                     </div> :
                     <div>
