@@ -29,7 +29,6 @@ const AdminLayout: NextPage = ({ children }) => {
     const [title, setTItle] = useState(commonState.title);
     const [headerTitle, setHeaderTItle] = useState(commonState.headerTitle);
     const [snsList, setSnsList] = useState(Object.freeze(footerState.sns.concat()));
-    const [newSnsList, setNewSnsList] = useState(Object.freeze([]));
 
     const commitTitle = useCallback((_id: string, title: string) => {
         fetch(`/api/admin/setTitle?_id=${_id}&title=${title}`);
@@ -42,6 +41,21 @@ const AdminLayout: NextPage = ({ children }) => {
         dispatch({ type: "SET_COMMON_DATA", payload: { headerTitle } });
         setEditHeaderTitle(false);
     }, [dispatch, setEditHeaderTitle]);
+
+    const commitFooterSnsList = useCallback((_id: string, sns: { name: string, url: string }[]) => {
+        fetch("/api/admin/footer/setSns", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                _id,
+                sns
+            })
+        });
+        dispatch({ type: "SET_FOOTER_DATA", payload: { sns } });
+        setEditSnsList(false);
+    }, [dispatch, setEditSnsList]);
 
     const linkList = useMemo(() => [
         "about",
@@ -147,35 +161,31 @@ const AdminLayout: NextPage = ({ children }) => {
                                                 setSnsList(_snsList);
                                             }} />
                                         </td>
-                                        <td><FontAwesomeIcon size="1x" icon={SolidIcons.faMinusCircle} /></td>
+                                        <td>
+                                            <FontAwesomeIcon size="1x" icon={SolidIcons.faMinusCircle} onClick={() => setSnsList(snsList.filter((_: any, j: number) => i !== j))} />
+                                        </td>
                                     </tr>
                                 )))}
-                                {newSnsList.map((sns: { name: string, url: string }, i: number) => (
-                                    <tr key={i}>
-                                        <td>
-                                            <select value={sns.name}>{snsOptions}</select>
-                                        </td>
-                                        <td>
-                                            <input type="text" onKeyUp={(e: any) => {
-                                                const _newSnsList = newSnsList.concat();
-                                                // _newSnsList[i].url = e.target.value;
-                                                setNewSnsList(_newSnsList);
-                                            }} />
-                                        </td>
-                                        <td><FontAwesomeIcon size="1x" icon={SolidIcons.faMinusCircle} /></td>
-                                    </tr>
-                                ))}
                                 <tr>
                                     <td colSpan={3}>
-                                        <FontAwesomeIcon icon={SolidIcons.faPlus} />
+                                        <FontAwesomeIcon icon={SolidIcons.faPlus} onClick={() => {
+                                            console.log(snsList);
+                                            setSnsList(snsList.concat({
+                                                name: "instagram",
+                                                url: ""
+                                            }));
+                                        }} />
                                     </td>
                                 </tr>
                             </tbody>
                             <tfoot>
                             <tr>
                                 <td colSpan={3}>
-                                    <input type="button" value="등록" />
-                                    <input type="button" value="취소" onClick={() => setEditSnsList(false)} />
+                                    <input type="button" value="등록" onClick={() => commitFooterSnsList(footerState._id, snsList)} />
+                                    <input type="button" value="취소" onClick={() => {
+                                        setSnsList(footerState.sns.concat());
+                                        setEditSnsList(false);
+                                    }} />
                                 </td>
                             </tr>
                             </tfoot>
