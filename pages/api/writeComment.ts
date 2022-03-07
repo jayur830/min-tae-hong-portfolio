@@ -6,11 +6,7 @@ import mongoose from "mongoose";
 const writeComment = (request: NextApiRequest, response: NextApiResponse) => {
     About.findOneAndUpdate({}, {
         $push: {
-            comments: {
-                comment: request.body.comment,
-                date: request.body.date,
-                secret: request.body.secret
-            }
+            comments: request.body
         }
     }, {
         _id: false
