@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { NextPage } from "next";
 import Image from "next/image";
 
@@ -23,8 +23,10 @@ const About: NextPage = () => {
             metadata.splice(removeIndex, 1);
             dispatch({ type: "SET_ABOUT_METADATA", payload: { metadata } });
             fetch("/api/admin/about/setMetadata", {
-                method: "delete",
-                headers: { "Content-Type": "application/json" },
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                },
                 body: JSON.stringify(metadata)
             });
         }
@@ -38,8 +40,27 @@ const About: NextPage = () => {
     const [editBirth, setEditBirth] = useState(false);
     const [editInfo, setEditInfo] = useState(false);
 
+    const [metadata, setMetadata] = useState(aboutState.metadata.concat());
+    const [editMetadata, setEditMetadata] = useState(aboutState.metadata.map(() => false));
+
     const [imgFile, setImgFile] = useState(null);
     const [editImg, setEditImg] = useState(false);
+
+    useEffect(() => setMetadata(aboutState.metadata.concat()), [aboutState]);
+
+    const commitMetadata = useCallback((_id: string, metadata: { label: string, value: string }[]) => {
+        fetch("/api/admin/about/setMetadata", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                _id,
+                metadata
+            })
+        });
+        dispatch({ type: "SET_ABOUT_METADATA", payload: { metadata } });
+    }, [dispatch]);
 
     const commitImgFile = useCallback((_id: string, img: { filename: string, width: number, height: number }, file: File) => {
         fetch("/api/admin/about/setImgFile", {
@@ -54,7 +75,6 @@ const About: NextPage = () => {
         });
         useImgUpload(file);
         dispatch({ type: "SET_ABOUT_DATA", payload: { img } });
-        setEditImg(false);
     }, [dispatch]);
 
     const postComment = useCallback(() => {
@@ -72,8 +92,6 @@ const About: NextPage = () => {
             type: "ADD_ABOUT_COMMENT",
             payload
         });
-        setComment("");
-        setWriteComment(false);
     }, [dispatch, comment, secret]);
 
     const aboutImg = useMemo(() =>
@@ -132,10 +150,58 @@ const About: NextPage = () => {
                             <tbody>
                                 {aboutState.metadata.map((obj: any, i: number) => (
                                     <tr key={i}>
-                                        <td className="font-smoothing">{obj.label}.</td>
-                                        <td className="font-smoothing">{obj.value}</td>
+                                        <td className="font-smoothing">
+                                            {editMetadata[i] ?
+                                                <input type="text" defaultValue={obj.label} onKeyUp={(e: any) => {
+                                                    if (e.key === "Enter") {
+                                                        commitMetadata(aboutState._id, metadata);
+                                                        const _editMetadata = editMetadata.concat();
+                                                        _editMetadata[i] = false;
+                                                        setEditMetadata(_editMetadata);
+                                                    } else {
+                                                        const _metadata = metadata.concat();
+                                                        _metadata[i].label = e.target.value;
+                                                        setMetadata(_metadata);
+                                                    }
+                                                }} /> :
+                                                `${obj.label}.`}
+                                        </td>
+                                        <td className="font-smoothing">
+                                            {editMetadata[i] ?
+                                                <input type="text" defaultValue={obj.value} onKeyUp={(e: any) => {
+                                                    if (e.key === "Enter") {
+                                                        commitMetadata(aboutState._id, metadata);
+                                                        const _editMetadata = editMetadata.concat();
+                                                        _editMetadata[i] = false;
+                                                        setEditMetadata(_editMetadata);
+                                                    } else {
+                                                        const _metadata = metadata.concat();
+                                                        _metadata[i].value = e.target.value;
+                                                        setMetadata(_metadata);
+                                                    }
+                                                }} /> :
+                                                obj.value}
+                                        </td>
                                         <td>
-                                            <FontAwesomeIcon size="1x" icon={faPen} />
+                                            {editMetadata[i] ?
+                                                <>
+                                                    <input type="button" defaultValue="등록" onClick={() => {
+                                                        commitMetadata(aboutState._id, metadata);
+                                                        const _editMetadata = editMetadata.concat();
+                                                        _editMetadata[i] = false;
+                                                        setEditMetadata(_editMetadata);
+                                                    }} />
+                                                    <input type="button" defaultValue="취소" onClick={() => {
+                                                        const _editMetadata = editMetadata.concat();
+                                                        _editMetadata[i] = false;
+                                                        setEditMetadata(_editMetadata);
+                                                    }} />
+                                                </> :
+                                                <FontAwesomeIcon size="1x" icon={faPen} onClick={() => {
+                                                    const _editMetadata = editMetadata.concat();
+                                                    _editMetadata[i] = true;
+                                                    setEditMetadata(_editMetadata);
+                                                }} />}
                                             <FontAwesomeIcon size="1x" icon={faMinus} onClick={() => removeMetadata(i)} />
                                         </td>
                                     </tr>
@@ -181,13 +247,20 @@ const About: NextPage = () => {
                         </div>
                         <div>
                             <input type="text" placeholder="댓글을 입력하세요." onKeyUp={(e: any) => {
-                                if (e.key === "Enter") postComment();
-                                else setComment(e.target.value);
+                                if (e.key === "Enter") {
+                                    postComment();
+                                    setComment("");
+                                    setWriteComment(false);
+                                } else setComment(e.target.value);
                             }} autoFocus={true} />
                         </div>
                         <div>
                             <input type="button" value="취소" onClick={() => setWriteComment(false)} />
-                            <input type="button" value="등록" onClick={postComment} />
+                            <input type="button" value="등록" onClick={() => {
+                                postComment();
+                                setComment("");
+                                setWriteComment(false);
+                            }} />
                         </div>
                     </div>
                 ) : null}
