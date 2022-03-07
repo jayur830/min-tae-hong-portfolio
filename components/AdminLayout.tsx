@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { NextPage } from "next";
@@ -15,6 +15,8 @@ import { useInitApi } from "../hooks";
 import * as Icons from "@fortawesome/free-brands-svg-icons";
 
 const AdminLayout: NextPage = ({ children }) => {
+    // require("../hooks").useAuthenticate();
+
     const dispatch = useDispatch();
     const router = useRouter();
 
