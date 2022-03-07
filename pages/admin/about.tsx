@@ -17,21 +17,6 @@ const About: NextPage = () => {
     const aboutState = useSelector((state: any) => state.about);
     const dispatch = useDispatch();
 
-    const removeMetadata = useCallback(removeIndex => {
-        if (confirm("삭제하시겠습니까?")) {
-            const metadata = aboutState.metadata.concat();
-            metadata.splice(removeIndex, 1);
-            dispatch({ type: "SET_ABOUT_METADATA", payload: { metadata } });
-            fetch("/api/admin/about/setMetadata", {
-                method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(metadata)
-            });
-        }
-    }, [aboutState, dispatch]);
-
     const [writeComment, setWriteComment] = useState(false);
     const [comment, setComment] = useState("");
     const [secret, setSecret] = useState(false);
@@ -42,6 +27,7 @@ const About: NextPage = () => {
 
     const [metadata, setMetadata] = useState(aboutState.metadata.concat());
     const [editMetadata, setEditMetadata] = useState(aboutState.metadata.map(() => false));
+    const [newMetadataItem, setNewMetadataItem] = useState<{ label: string, value: string } | null>(null);
 
     const [imgFile, setImgFile] = useState(null);
     const [editImg, setEditImg] = useState(false);
@@ -61,6 +47,14 @@ const About: NextPage = () => {
         });
         dispatch({ type: "SET_ABOUT_METADATA", payload: { metadata } });
     }, [dispatch]);
+
+    const removeMetadata = useCallback(removeIndex => {
+        if (confirm("삭제하시겠습니까?")) {
+            const _metadata = metadata.concat();
+            _metadata.splice(removeIndex, 1);
+            commitMetadata(aboutState._id, _metadata);
+        }
+    }, [aboutState, metadata, commitMetadata]);
 
     const commitImgFile = useCallback((_id: string, img: { filename: string, width: number, height: number }, file: File) => {
         fetch("/api/admin/about/setImgFile", {
@@ -206,11 +200,53 @@ const About: NextPage = () => {
                                         </td>
                                     </tr>
                                 ))}
-                                <tr>
-                                    <td colSpan={3}>
-                                        <FontAwesomeIcon size="1x" icon={faPlus} />
-                                    </td>
-                                </tr>
+                                {newMetadataItem ?
+                                    <tr>
+                                        <td className="font-smoothing">
+                                            <input type="text" onKeyUp={(e: any) => {
+                                                if (e.key === "Enter" && confirm("작성한 내용으로 등록하시겠습니까?")) {
+                                                    commitMetadata(aboutState._id, metadata.concat(newMetadataItem));
+                                                    setNewMetadataItem(null);
+                                                } else {
+                                                    const item = { ...newMetadataItem };
+                                                    item.label = e.target.value;
+                                                    setNewMetadataItem(item);
+                                                }
+                                            }} />
+                                        </td>
+                                        <td className="font-smoothing">
+                                            <input type="text" onKeyUp={(e: any) => {
+                                                if (e.key === "Enter" && confirm("작성한 내용으로 등록하시겠습니까?")) {
+                                                    commitMetadata(aboutState._id, metadata.concat(newMetadataItem));
+                                                    setNewMetadataItem(null);
+                                                } else {
+                                                    const item = { ...newMetadataItem };
+                                                    item.value = e.target.value;
+                                                    setNewMetadataItem(item);
+                                                }
+                                            }} />
+                                        </td>
+                                        <td>
+                                            <input type="button" defaultValue="등록" onClick={() => {
+                                                if (confirm("작성한 내용으로 등록하시겠습니까?")) {
+                                                    commitMetadata(aboutState._id, metadata.concat(newMetadataItem));
+                                                    setNewMetadataItem(null);
+                                                }
+                                            }} />
+                                            <input type="button" defaultValue="취소" onClick={() => setNewMetadataItem(null)} />
+                                        </td>
+                                    </tr> : null}
+                                {newMetadataItem ? null :
+                                    <tr>
+                                        <td colSpan={3}>
+                                            <FontAwesomeIcon size="1x" icon={faPlus} onClick={() => {
+                                                setNewMetadataItem({
+                                                    label: "",
+                                                    value: ""
+                                                });
+                                            }} />
+                                        </td>
+                                    </tr>}
                             </tbody>
                         </table>
                     </div>
