@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { AppContext, AppInitialProps, AppProps } from "next/app";
 
 import wrapper from "../store";
@@ -10,10 +10,6 @@ import AppLayout from "../components/AppLayout";
 import { useRouter } from "next/router";
 
 const App = ({ Component, pageProps }: AppProps) => {
-    useEffect(() => {
-        fetch("/api/dbConnect");
-    }, []);
-
     return useRouter().pathname.indexOf("/admin") !== -1 ? (
         <AdminLayout>
             <Component {...pageProps} />
