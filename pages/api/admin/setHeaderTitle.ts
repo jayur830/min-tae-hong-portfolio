@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 import mongoose from "mongoose";
-import { commonCollection } from "../../../assets/ts/db";
+import Common from "../../../models/common";
 
 const setHeaderTitle = (request: NextApiRequest, response: NextApiResponse) => {
-    commonCollection.findOneAndUpdate({
+    Common.findOneAndUpdate({
         _id: new mongoose.Types.ObjectId(request.query._id as string)
     }, {
         $set: {

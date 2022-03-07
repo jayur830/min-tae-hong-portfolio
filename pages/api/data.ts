@@ -1,15 +1,13 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-import {
-    commonCollection,
-    homeCollection,
-    aboutCollection,
-    moviesCollection,
-    dramaCollection,
-    theaterCollection,
-    contactCollection,
-    footerCollection
-} from "../../assets/ts/db";
+import Common from "../../models/common";
+import Home from "../../models/home";
+import About from "../../models/about";
+import Movies from "../../models/movies";
+import Dramas from "../../models/dramas";
+import Theaters from "../../models/theaters";
+import Contact from "../../models/contact";
+import Footer from "../../models/footer";
 
 const getData = (request: NextApiRequest, response: NextApiResponse) => {
     (async () => {
@@ -22,23 +20,50 @@ const getData = (request: NextApiRequest, response: NextApiResponse) => {
             theater: null,
             contact: null,
             footer: null
-        };
-        data.common = await commonCollection.find().toArray();
-        data.home = await homeCollection.find().toArray();
-        data.about = await aboutCollection.find().toArray();
-        data.movies = await moviesCollection.find().toArray();
-        data.drama = await dramaCollection.find().toArray();
-        data.theater = await theaterCollection.find().toArray();
-        data.contact = await contactCollection.find().toArray();
-        data.footer = await footerCollection.find().toArray();
-        if (data.common.length === 1) data.common = data.common[0];
-        if (data.home.length === 1) data.home = data.home[0];
-        if (data.about.length === 1) data.about = data.about[0];
-        if (data.movies.length === 1) data.movies = data.movies[0];
-        if (data.drama.length === 1) data.drama = data.drama[0];
-        if (data.theater.length === 1) data.theater = data.theater[0];
-        if (data.contact.length === 1) data.contact = data.contact[0];
-        if (data.footer.length === 1) data.footer = data.footer[0];
+        }, count = 0;
+        (async () => {
+            data.common = await Common.find({}).exec();
+            if (data.common.length === 1) data.common = data.common[0];
+            ++count;
+        })();
+        (async () => {
+            data.home = await Home.find({}).exec();
+            if (data.home.length === 1) data.home = data.home[0];
+            ++count;
+        })();
+        (async () => {
+            data.about = await About.find({}).exec();
+            if (data.about.length === 1) data.about = data.about[0];
+            ++count;
+        })();
+        (async () => {
+            data.movies = await Movies.find({}).exec();
+            if (data.movies.length === 1) data.movies = data.movies[0];
+            ++count;
+        })();
+        (async () => {
+            data.drama = await Dramas.find({}).exec();
+            if (data.drama.length === 1) data.drama = data.drama[0];
+            ++count;
+        })();
+        (async () => {
+            data.theater = await Theaters.find({}).exec();
+            if (data.theater.length === 1) data.theater = data.theater[0];
+            ++count;
+        })();
+        (async () => {
+            data.contact = await Contact.find({}).exec();
+            if (data.contact.length === 1) data.contact = data.contact[0];
+            ++count;
+        })();
+        (async () => {
+            data.footer = await Footer.find({}).exec();
+            if (data.footer.length === 1) data.footer = data.footer[0];
+            ++count;
+        })();
+        while (count < 8) {
+            await new Promise(resolve => setTimeout(resolve, 10));
+        }
         response.json(data);
     })();
 };

@@ -1,5 +1,7 @@
 FROM node
+RUN npm i -g npm
 RUN mkdir app
-COPY dist/* app
+COPY . app
 WORKDIR app
-ENTRYPOINT ["node", "index.js"]
+RUN npm i
+ENTRYPOINT ["npm", "run", "start"]
