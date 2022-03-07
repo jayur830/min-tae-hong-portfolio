@@ -26,7 +26,7 @@ const Movies: NextPage = () => {
                 <YearBlock key={i} year={year}>
                     {(moviesState[year] as any[]).map((obj: any, j: number) => (
                         <div key={j} className="movies-block">
-                            {obj.img.filename ? <Image src={"/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} /> : null}
+                            {obj.img.filename ? <Image src={"/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="Movies Content Image" /> : null}
                             <div>
                                 {obj.video ? <input type="button" className="video-btn" value="VIDEO" /> : null}
                                 <h3 className="font-smoothing">{obj.title}</h3>

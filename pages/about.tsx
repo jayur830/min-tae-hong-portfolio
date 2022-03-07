@@ -36,9 +36,9 @@ const About: NextPage = () => {
         });
         setComment("");
         setWriteComment(false);
-    }, []);
+    }, [comment, dispatch, secret]);
 
-    const aboutImg = <div><Image src={"/" + aboutState.img.filename} width={aboutState.img.width} height={aboutState.img.height} draggable={false} /></div>;
+    const aboutImg = <div><Image src={"/" + aboutState.img.filename} width={aboutState.img.width} height={aboutState.img.height} draggable={false} alt="About" /></div>;
 
     return (
         <section className="about">

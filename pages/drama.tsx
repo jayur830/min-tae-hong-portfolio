@@ -21,7 +21,7 @@ const Drama: NextPage = () => {
         const years = Object.keys(dramaState);
         years.sort((a, b) => a < b ? 1 : -1);
         return years;
-    }, []);
+    }, [dramaState]);
 
     return (
         <section className="drama">
@@ -29,7 +29,7 @@ const Drama: NextPage = () => {
                 <YearBlock key={i} year={year}>
                     {(dramaState[year] as any[]).map((obj: any, j: number) => (
                         <div key={j} className="drama-block">
-                            {obj.img.filename ? <Image src={"/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} /> : null}
+                            {obj.img.filename ? <Image src={"/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="Drama Content Image" /> : null}
                             <div>
                                 <h3 className="font-smoothing">{obj.title}</h3>
                                 <div className="font-smoothing">연출: {obj.director}</div>

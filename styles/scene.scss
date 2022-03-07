@@ -50,7 +50,7 @@ div.scene-background {
                         display: table-cell;
                         vertical-align: middle;
                         width: 20px;
-                        padding: 0 10px;
+                        padding: 0 40px;
 
                         svg {
                             width: 20px;
@@ -138,6 +138,10 @@ div.scene-background {
     div.scene-background > div > div {
         width: calc(100% - 20px);
         height: 450px;
+
+        .left, .right {
+            padding: 0 10px !important;
+        }
 
         img {
             &.horizontal {

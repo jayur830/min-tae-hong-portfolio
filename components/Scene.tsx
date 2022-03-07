@@ -45,7 +45,8 @@ const Scene: (props: {
                                 className={scenes[index].width > scenes[index].height ? "horizontal" : "vertical"}
                                 width={scenes[index].width}
                                 height={scenes[index].height}
-                                draggable={false} />
+                                draggable={false}
+                                alt="Scene Image" />
                         </div>
                         <div className="right">
                             <FontAwesomeIcon

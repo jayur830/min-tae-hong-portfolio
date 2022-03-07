@@ -48,7 +48,7 @@ const Contact: NextPage = () => {
         });
         dispatch({ type: "SET_CONTACT_DATA", payload: { img } });
         setEditImg(false);
-    }, [dispatch, setImgFile]);
+    }, [dispatch]);
 
     return (
         <section className="contact">
@@ -149,7 +149,7 @@ const Contact: NextPage = () => {
             </div>
             <div>
                 <div>
-                    <Image src={"/" + contactState.img.filename} width={contactState.img.width} height={contactState.img.height} draggable={false} />
+                    <Image src={"/" + contactState.img.filename} width={contactState.img.width} height={contactState.img.height} draggable={false} alt="Contact" />
                     <br />
                     {editImg ?
                         <>

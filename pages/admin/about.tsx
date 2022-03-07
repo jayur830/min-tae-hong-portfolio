@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { NextPage } from "next";
 import Image from "next/image";
 
@@ -26,7 +26,7 @@ const About: NextPage = () => {
                 body: JSON.stringify(metadata)
             });
         }
-    }, [aboutState]);
+    }, [aboutState, dispatch]);
 
     const [writeComment, setWriteComment] = useState(false);
     const [comment, setComment] = useState("");
@@ -36,7 +36,7 @@ const About: NextPage = () => {
     const [editBirth, setEditBirth] = useState(false);
     const [editInfo, setEditInfo] = useState(false);
 
-    const postComment = () => {
+    const postComment = useCallback(() => {
         const payload = {
             comment,
             date: dayjs().format("YYYY.MM.DD HH:mm"),
@@ -53,9 +53,9 @@ const About: NextPage = () => {
         });
         setComment("");
         setWriteComment(false);
-    };
+    }, [comment, dispatch, secret]);
 
-    const aboutImg = <div><Image src={"/" + aboutState.img.filename} width={aboutState.img.width} height={aboutState.img.height} draggable={false} /></div>;
+    const aboutImg = useMemo(() => <div><Image src={"/" + aboutState.img.filename} width={aboutState.img.width} height={aboutState.img.height} draggable={false} alt="About" /></div>, [aboutState]);
 
     return (
         <section className="about admin">

@@ -19,9 +19,7 @@ const imgUploader = nextConnect({
     }
 });
 
-imgUploader.post(upload.single("file"), (request, response) => {
-    console.log(request.body);
-});
+imgUploader.post(upload.single("file"));
 
 export default imgUploader;
 
