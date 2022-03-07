@@ -11,8 +11,10 @@ const Contact: NextPage = () => {
 
     const [email, setEmail] = useState(contactState.email);
     const [tel, setTel] = useState(contactState.tel);
+    const [imgFile, setImgFile] = useState(null);
     const [editEmail, setEditEmail] = useState(false);
     const [editTel, setEditTel] = useState(false);
+    const [editImg, setEditImg] = useState(false);
 
     const commitEmail = useCallback((_id: string, email: string) => {
         fetch(`/api/admin/contact/setEmail?_id=${_id}&email=${email}`);
@@ -25,6 +27,28 @@ const Contact: NextPage = () => {
         dispatch({ type: "SET_CONTACT_DATA", payload: { tel } });
         setEditTel(false);
     }, [dispatch, setEditTel]);
+
+    const commitImgFile = useCallback((_id: string, img: { filename: string, width: number, height: number }, file: File) => {
+        fetch("/api/admin/contact/setImgFile", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                _id,
+                img
+            })
+        });
+        const formData = new FormData();
+        formData.append("file", file);
+        fetch("/api/admin/uploadImg", {
+            method: "POST",
+            headers: {},
+            body: formData
+        });
+        dispatch({ type: "SET_CONTACT_DATA", payload: { img } });
+        setEditImg(false);
+    }, [dispatch, setImgFile]);
 
     return (
         <section className="contact">
@@ -126,6 +150,44 @@ const Contact: NextPage = () => {
             <div>
                 <div>
                     <Image src={"/" + contactState.img.filename} width={contactState.img.width} height={contactState.img.height} draggable={false} />
+                    <br />
+                    {editImg ?
+                        <>
+                            <input type="file" onChange={e => {
+                                if (e.target.files && e.target.files.length > 0)
+                                    setImgFile(e.target.files[0] as any);
+                            }} />
+                            <br />
+                            <input type="button" defaultValue="등록" onClick={() => {
+                                const _URL = window.URL || window.webkitURL;
+                                const img = new window.Image();
+                                const src = _URL.createObjectURL(imgFile as any);
+                                img.onload = () => {
+                                    _URL.revokeObjectURL(src);
+                                    let [width, height] = [img.width, img.height];
+                                    if (width > 500) {
+                                        height = Math.round(height * 500 / width);
+                                        width = 500;
+                                    } else if (height > 600) {
+                                        width = Math.round(width * 600 / height);
+                                        height = 600;
+                                    }
+                                    commitImgFile(contactState._id, {
+                                        filename: (imgFile as any).name,
+                                        width,
+                                        height
+                                    }, imgFile as any);
+                                    setEditImg(false);
+                                };
+                                img.src = src;
+                            }} />
+                            <input type="button" defaultValue="취소" onClick={() => {
+                                setImgFile(null);
+                                setEditImg(false);
+                            }} />
+                        </> :
+                        <input type="button" defaultValue="편집" onClick={() => setEditImg(true)} />
+                    }
                 </div>
             </div>
         </section>
