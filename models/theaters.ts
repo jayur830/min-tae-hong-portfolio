@@ -13,6 +13,7 @@ export default models.Theaters ? models.Theaters : model("Theaters", new Schema(
     },
     scenes: [
         {
+            _id: false,
             filename: String,
             width: Number,
             height: Number

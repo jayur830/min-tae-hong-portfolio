@@ -21,6 +21,7 @@ const About: NextPage = () => {
 
     const postComment = useCallback(() => {
         const payload = {
+            _id: aboutState._id,
             comment,
             date: dayjs().format("YYYY.MM.DD HH:mm"),
             secret
@@ -36,7 +37,7 @@ const About: NextPage = () => {
         });
         setComment("");
         setWriteComment(false);
-    }, [comment, dispatch, secret]);
+    }, [aboutState, dispatch, comment, secret]);
 
     const aboutImg = <div><Image src={"/" + aboutState.img.filename} width={aboutState.img.width} height={aboutState.img.height} draggable={false} alt="About" /></div>;
 

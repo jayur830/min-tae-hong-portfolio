@@ -7,6 +7,7 @@ export default models.About ? models.About : model("About", new Schema({
     info: String,
     metadata: [
         {
+            _id: false,
             label: String,
             value: String
         }
@@ -18,6 +19,7 @@ export default models.About ? models.About : model("About", new Schema({
     },
     comments: [
         {
+            _id: false,
             comment: String,
             date: String,
             secret: Boolean

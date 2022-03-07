@@ -14,6 +14,7 @@ export default models.Dramas ? models.Dramas : model("Dramas", new Schema({
     },
     scenes: [
         {
+            _id: false,
             filename: String,
             width: Number,
             height: Number

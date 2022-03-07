@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus, faPen, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import Line from "../../components/Line";
+import about from "../../models/about";
 
 const About: NextPage = () => {
     const commonState = useSelector((state: any) => state.common);
@@ -38,6 +39,7 @@ const About: NextPage = () => {
 
     const postComment = useCallback(() => {
         const payload = {
+            _id: aboutState._id,
             comment,
             date: dayjs().format("YYYY.MM.DD HH:mm"),
             secret
@@ -53,7 +55,7 @@ const About: NextPage = () => {
         });
         setComment("");
         setWriteComment(false);
-    }, [comment, dispatch, secret]);
+    }, [aboutState, dispatch, comment, secret]);
 
     const aboutImg = useMemo(() => <div><Image src={"/" + aboutState.img.filename} width={aboutState.img.width} height={aboutState.img.height} draggable={false} alt="About" /></div>, [aboutState]);
 
