@@ -1,16 +1,13 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-import mongoose from "mongoose";
-import { footerCollection } from "../../../../assets/ts/db";
+import Footer from "../../../../models/footer";
 
 const setSns = (request: NextApiRequest, response: NextApiResponse) => {
-    footerCollection.findOneAndUpdate({
-        _id: new mongoose.Types.ObjectId(request.body._id as string)
-    }, {
+    Footer.findOneAndUpdate({}, {
         $set: {
             sns: request.body.sns
         }
-    });
+    }).exec();
 };
 
 export default setSns;

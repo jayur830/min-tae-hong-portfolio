@@ -12,6 +12,7 @@ import DarkModeButton from "./DarkModeButton";
 import AppTemplate from "./AppTemplate";
 
 import { useInitApi } from "../hooks";
+import * as Icons from "@fortawesome/free-brands-svg-icons";
 
 const AdminLayout: NextPage = ({ children }) => {
     const dispatch = useDispatch();
@@ -53,9 +54,23 @@ const AdminLayout: NextPage = ({ children }) => {
                 sns
             })
         });
-        dispatch({ type: "SET_FOOTER_DATA", payload: { sns } });
+        dispatch({ type: "SET_FOOTER_SNS_LIST", payload: { sns } });
         setEditSnsList(false);
-    }, [dispatch, setEditSnsList]);
+        setSnsList(sns);
+        setIconsHtml(sns.map((obj: { name: string, url: string }, i: number) => {
+            switch (obj.name) {
+            case "instagram": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={Icons.faInstagram} /></a>;
+            case "facebook": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={Icons.faFacebook} /></a>;
+            case "twitter": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={Icons.faTwitter} /></a>;
+            case "line": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={Icons.faLine} /></a>;
+            case "youtube": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={Icons.faYoutube} /></a>;
+            case "pinterest": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={Icons.faPinterest} /></a>;
+            case "tiktok": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={Icons.faTiktok} /></a>;
+            case "snapchat": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={Icons.faSnapchat} /></a>;
+            default: return <a key={i} href="#" />;
+            }
+        }));
+    }, [dispatch, setEditSnsList, setSnsList, setIconsHtml]);
 
     const linkList = useMemo(() => [
         "about",
@@ -156,9 +171,13 @@ const AdminLayout: NextPage = ({ children }) => {
                                         </td>
                                         <td>
                                             <input type="text" defaultValue={sns.url} onKeyUp={(e: any) => {
-                                                const _snsList = snsList.concat();
-                                                _snsList[i].url = e.target.value;
-                                                setSnsList(_snsList);
+                                                if (e.key === "Enter")
+                                                    commitFooterSnsList(footerState._id, snsList.filter((obj: { name: string, url: string }) => obj.url !== ""));
+                                                else {
+                                                    const _snsList = snsList.concat();
+                                                    _snsList[i].url = e.target.value;
+                                                    setSnsList(_snsList);
+                                                }
                                             }} />
                                         </td>
                                         <td>
@@ -169,7 +188,6 @@ const AdminLayout: NextPage = ({ children }) => {
                                 <tr>
                                     <td colSpan={3}>
                                         <FontAwesomeIcon icon={SolidIcons.faPlus} onClick={() => {
-                                            console.log(snsList);
                                             setSnsList(snsList.concat({
                                                 name: "instagram",
                                                 url: ""
@@ -181,7 +199,7 @@ const AdminLayout: NextPage = ({ children }) => {
                             <tfoot>
                             <tr>
                                 <td colSpan={3}>
-                                    <input type="button" value="등록" onClick={() => commitFooterSnsList(footerState._id, snsList)} />
+                                    <input type="button" value="등록" onClick={() => commitFooterSnsList(footerState._id, snsList.filter((obj: { name: string, url: string }) => obj.url !== ""))} />
                                     <input type="button" value="취소" onClick={() => {
                                         setSnsList(footerState.sns.concat());
                                         setEditSnsList(false);
