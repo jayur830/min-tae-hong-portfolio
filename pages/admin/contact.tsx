@@ -2,6 +2,7 @@ import React, { useCallback, useState } from "react";
 import { NextPage } from "next";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
+import { useImgUpload } from "../../hooks";
 
 const Contact: NextPage = () => {
     const commonState = useSelector((state: any) => state.common);
@@ -39,13 +40,7 @@ const Contact: NextPage = () => {
                 img
             })
         });
-        const formData = new FormData();
-        formData.append("file", file);
-        fetch("/api/admin/uploadImg", {
-            method: "POST",
-            headers: {},
-            body: formData
-        });
+        useImgUpload(file);
         dispatch({ type: "SET_CONTACT_DATA", payload: { img } });
         setEditImg(false);
     }, [dispatch]);

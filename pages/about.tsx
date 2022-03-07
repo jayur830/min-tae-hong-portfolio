@@ -1,4 +1,4 @@
-import React, { BaseSyntheticEvent, SyntheticEvent, useCallback, useState } from "react";
+import React, { BaseSyntheticEvent, SyntheticEvent, useCallback, useMemo, useState } from "react";
 import { NextPage } from "next";
 import Image from "next/image";
 
@@ -38,7 +38,15 @@ const About: NextPage = () => {
         setWriteComment(false);
     }, [dispatch, comment, secret]);
 
-    const aboutImg = <div><Image src={"/" + aboutState.img.filename} width={aboutState.img.width} height={aboutState.img.height} draggable={false} alt="About" /></div>;
+    const aboutImg = useMemo(() =>
+        <div>
+            <Image
+                src={"/" + aboutState.img.filename}
+                width={aboutState.img.width}
+                height={aboutState.img.height}
+                draggable={false}
+                alt="About" />
+        </div>, []);
 
     return (
         <section className="about">

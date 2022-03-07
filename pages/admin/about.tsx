@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus, faPen, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import Line from "../../components/Line";
 import about from "../../models/about";
+import { useImgUpload } from "../../hooks";
 
 const About: NextPage = () => {
     const commonState = useSelector((state: any) => state.common);
@@ -37,6 +38,25 @@ const About: NextPage = () => {
     const [editBirth, setEditBirth] = useState(false);
     const [editInfo, setEditInfo] = useState(false);
 
+    const [imgFile, setImgFile] = useState(null);
+    const [editImg, setEditImg] = useState(false);
+
+    const commitImgFile = useCallback((_id: string, img: { filename: string, width: number, height: number }, file: File) => {
+        fetch("/api/admin/about/setImgFile", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                _id,
+                img
+            })
+        });
+        useImgUpload(file);
+        dispatch({ type: "SET_ABOUT_DATA", payload: { img } });
+        setEditImg(false);
+    }, [dispatch]);
+
     const postComment = useCallback(() => {
         const payload = {
             comment,
@@ -56,7 +76,51 @@ const About: NextPage = () => {
         setWriteComment(false);
     }, [dispatch, comment, secret]);
 
-    const aboutImg = useMemo(() => <div><Image src={"/" + aboutState.img.filename} width={aboutState.img.width} height={aboutState.img.height} draggable={false} alt="About" /></div>, [aboutState]);
+    const aboutImg = useMemo(() =>
+        <div>
+            <Image
+                src={"/" + aboutState.img.filename}
+                width={aboutState.img.width}
+                height={aboutState.img.height}
+                draggable={false}
+                alt="About" />
+            <br />
+            {editImg ?
+                <>
+                    <input type="file" onChange={e => {
+                        if (e.target.files && e.target.files.length > 0)
+                            setImgFile(e.target.files[0] as any);
+                    }} /><br />
+                    <input type="button" defaultValue="등록" onClick={() => {
+                        const _URL = window.URL || window.webkitURL;
+                        const img = new window.Image();
+                        const src = _URL.createObjectURL(imgFile as any);
+                        img.onload = () => {
+                            _URL.revokeObjectURL(src);
+                            let [width, height] = [img.width, img.height];
+                            if (width > 450) {
+                                height = Math.round(height * 450 / width);
+                                width = 450;
+                            } else if (height > 660) {
+                                width = Math.round(width * 660 / height);
+                                height = 660;
+                            }
+                            commitImgFile(aboutState._id, {
+                                filename: (imgFile as any).name,
+                                width,
+                                height
+                            }, imgFile as any);
+                            setEditImg(false);
+                        };
+                        img.src = src;
+                    }} />
+                    <input type="button" defaultValue="취소" onClick={() => {
+                        setImgFile(null);
+                        setEditImg(false);
+                    }} />
+                </> :
+                <input type="button" defaultValue="편집" onClick={() => setEditImg(true)} />}
+        </div>, [aboutState, editImg, setEditImg, imgFile, setImgFile]);
 
     return (
         <section className="about admin">
