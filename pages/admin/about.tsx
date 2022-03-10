@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus, faPen, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import Line from "../../components/Line";
 import about from "../../models/about";
-import { useImgUpload } from "../../hooks";
+import { useImgUpload } from "../../hooks/useImgUpload";
 
 const About: NextPage = () => {
     const commonState = useSelector((state: any) => state.common);

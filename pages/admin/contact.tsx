@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import { NextPage } from "next";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import { useImgUpload } from "../../hooks";
+import { useImgUpload } from "../../hooks/useImgUpload";
 
 const Contact: NextPage = () => {
     const commonState = useSelector((state: any) => state.common);

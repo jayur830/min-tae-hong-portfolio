@@ -3,8 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as Icons from "@fortawesome/free-brands-svg-icons";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
-import crypto from "crypto";
-import { useRouter } from "next/router";
 
 export const useInitCommon = (payload: any, dispatch: Dispatch<any>) => {
     dispatch({
@@ -148,34 +146,4 @@ export const useInitApi = (setIconsHtml: any, setSnsList?: any) => {
             payload: { windowWidth: window.innerWidth }
         }));
     }, []);
-};
-
-export const useAuthenticate = () => {
-    const router = useRouter();
-
-    useEffect(() => {
-        (async () => {
-            const authTime = sessionStorage.getItem("auth_tm");
-            // After 30 minutes, Re-authenticate
-            if (authTime == null || Math.abs(new Date().getTime() - +authTime) > 30 * 60 * 1000) {
-                const password = prompt("비밀번호를 입력하세요.") as string;
-                if (password == null) router.back();
-                const { isAuthenticated } = await fetch("/api/admin/auth?__r_pw=" + crypto.createHash("sha256").update(password).digest("hex")).then((response: any) => response.json());
-                if (!isAuthenticated) {
-                    alert("권한이 없습니다.");
-                    router.back();
-                } else sessionStorage.setItem("auth_tm", new Date().getTime().toString());
-            } else sessionStorage.setItem("auth_tm", new Date().getTime().toString());
-        })();
-    }, [router]);
-};
-
-export const useImgUpload = (file: File) => {
-    const formData = new FormData();
-    formData.append("file", file);
-    fetch("/api/admin/uploadImg", {
-        method: "POST",
-        headers: {},
-        body: formData
-    });
 };

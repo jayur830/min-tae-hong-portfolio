@@ -11,11 +11,11 @@ import * as SolidIcons from "@fortawesome/free-solid-svg-icons";
 import DarkModeButton from "./DarkModeButton";
 import AppTemplate from "./AppTemplate";
 
-import { useInitApi } from "../hooks";
+import { useInitApi } from "../hooks/useInitApi";
 import * as Icons from "@fortawesome/free-brands-svg-icons";
 
 const AdminLayout: NextPage = ({ children }) => {
-    // require("../hooks").useAuthenticate();
+    // require("../hooks/useAuthenticate").useAuthenticate();
 
     const dispatch = useDispatch();
     const router = useRouter();

@@ -11,7 +11,7 @@ import YearBlock from "../../components/YearBlock";
 import SceneSlide from "../../components/SceneSlide";
 import ContentEdit from "../../components/ContentEdit";
 import SceneTodoList from "../../components/SceneTodoList";
-import { useImgUpload } from "../../hooks";
+import { useImgUpload } from "../../hooks/useImgUpload";
 
 type TheaterData = {
     _id: string,
@@ -116,8 +116,6 @@ const Theater: NextPage = () => {
                             year: contentData.year
                         })
                     }).then(response => response.text()).then(_id => {
-                        console.log("_id:", _id);
-
                         const dispatchData = contentData.year in theaterState ? theaterState[contentData.year].map((obj: any) => ({ ...obj })) : [];
                         dispatchData.push({
                             ...payload,
