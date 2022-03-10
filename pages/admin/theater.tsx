@@ -121,7 +121,7 @@ const Theater: NextPage = () => {
                             ...payload,
                             _id,
                             scenePage: 0,
-                            scenePages: 0,
+                            scenePages: contentData.scenes.length,
                             sceneIndex: -1
                         });
                         dispatch({ type: "SET_THEATER_DATA", payload: { [contentData.year]: dispatchData } });
@@ -131,7 +131,7 @@ const Theater: NextPage = () => {
                 return true;
             }
         } else return false;
-    }, [contentData, dispatch]);
+    }, [contentData, dispatch, theaterState]);
 
     return (
         <section className="theater">
@@ -247,17 +247,17 @@ const Theater: NextPage = () => {
                                         let [width, height] = [img.width, img.height];
                                         if (width > 650 && height > 860) {
                                             if (width > height) {
-                                                height *= Math.round(650 / width);
+                                                height = Math.round(height * 650 / width);
                                                 width = 650;
                                             } else {
-                                                width *= Math.round(860 / height);
+                                                width = Math.round(width * 860 / height);
                                                 height = 860;
                                             }
                                         } else if (width > 650) {
-                                            height *= Math.round(650 / width);
+                                            height = Math.round(height * 650 / width);
                                             width = 650;
                                         } else if (height > 860) {
-                                            width *= Math.round(860 / height);
+                                            width = Math.round(width * 860 / height);
                                             height = 860;
                                         }
                                         _editContentData["img"] = {
