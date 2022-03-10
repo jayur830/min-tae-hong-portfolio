@@ -8,6 +8,7 @@ const setHeaderTitle = (request: NextApiRequest, response: NextApiResponse) => {
             headerTitle: request.query.headerTitle
         }
     }).exec();
+    response.send(200);
 };
 
 export default setHeaderTitle;

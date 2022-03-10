@@ -11,6 +11,7 @@ const writeComment = (request: NextApiRequest, response: NextApiResponse) => {
     }, {
         _id: false
     }).exec();
+    response.send(200);
 };
 
 export default writeComment;

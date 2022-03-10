@@ -14,12 +14,16 @@ const upload = multer({
 
 const imgUploader = nextConnect({
     onError(error, request, response) {
+        console.log("Error:", error);
     },
     onNoMatch(request, response) {
+
     }
 });
 
-imgUploader.post(upload.single("file"));
+imgUploader.post(upload.single("file"), (request, response) => {
+    response.send(200);
+});
 
 export default imgUploader;
 

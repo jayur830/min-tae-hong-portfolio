@@ -7,7 +7,8 @@ const setImgFile = (request: NextApiRequest, response: NextApiResponse) => {
         $set: {
             img: request.body.img
         }
-    });
+    }).exec();
+    response.send(200);
 };
 
 export default setImgFile;

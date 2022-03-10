@@ -7,7 +7,8 @@ const setEmail = (request: NextApiRequest, response: NextApiResponse) => {
         $set: {
             email: request.query.email
         }
-    });
+    }).exec();
+    response.send(200);
 };
 
 export default setEmail;

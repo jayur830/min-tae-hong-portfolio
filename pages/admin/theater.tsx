@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { NextPage } from "next";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 
 import Scene from "../../components/Scene";
@@ -8,8 +8,10 @@ import YearBlock from "../../components/YearBlock";
 import SceneSlide from "../../components/SceneSlide";
 import ContentEdit from "../../components/ContentEdit";
 import SceneTodoList from "../../components/SceneTodoList";
+import { useImgUpload } from "../../hooks";
 
 type TheaterData = {
+    _id: string,
     title: string,
     theater: string,
     year: number,
@@ -29,6 +31,7 @@ type TheaterData = {
 }
 
 const Theater: NextPage = () => {
+    const dispatch = useDispatch();
     const theaterState = useSelector((state: any) => state.theater);
 
     const [theaterScene, setTheaterScene] = useState({
@@ -43,46 +46,99 @@ const Theater: NextPage = () => {
     years.sort((a, b) => a < b ? 1 : -1);
 
     const commitContentData = useCallback(() => {
-        console.log(editContentData);
-        fetch("/api/admin/theaters/editData", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(editContentData)
-        });
-        alert("수정되었습니다.");
-    }, [editContentData]);
+        if (editContentData) {
+            if (editContentData.title === "") {
+                alert("제목을 입력해주세요.");
+                return false;
+            } else if (editContentData.theater === "") {
+                alert("극장명을 입력해주세요.");
+                return false;
+            } else if (editContentData.schedule === "") {
+                alert("일정을 입력해주세요.");
+                return false;
+            } else if (editContentData.img == null || editContentData.img.filename === "") {
+                alert("작품의 대표 이미지를 선택해주세요.");
+                return false;
+            } else {
+                const payload = {
+                    _id: editContentData._id,
+                    title: editContentData.title,
+                    theater: editContentData.theater,
+                    schedule: editContentData.schedule,
+                    img: {
+                        filename: editContentData.img?.filename,
+                        width: editContentData.img?.width,
+                        height: editContentData.img?.height
+                    },
+                    scenes: editContentData.scenes == null || editContentData.scenes.length === 0 ? [] : editContentData.scenes.map((obj: any) => ({
+                        filename: obj.filename,
+                        width: obj.width,
+                        height: obj.height
+                    }))
+                };
+                fetch("/api/admin/theaters/edit", {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        ...payload,
+                        year: editContentData.year
+                    })
+                });
+                useImgUpload(editContentData.img?.file as File);
+                editContentData?.scenes.forEach((scene: any) => useImgUpload(scene.file));
+
+                const dispatchData = theaterState[editContentData.year].map((obj: any) => ({ ...obj }));
+                const index = dispatchData.findIndex((obj: any) => obj._id === editContentData._id);
+                if (index !== -1)
+                    dispatchData[index] = {
+                        ...payload,
+                        scenePage: dispatchData[index].scenePage,
+                        scenePages: dispatchData[index].scenePages,
+                        sceneIndex: dispatchData[index].sceneIndex
+                    };
+                dispatch({ type: "SET_THEATER_DATA", payload: { [editContentData.year]: dispatchData } });
+                alert("수정되었습니다.");
+                return true;
+            }
+        } else return false;
+    }, [editContentData, dispatch]);
 
     return (
         <section className="theater">
             {years.map((year, i) => (
                 <YearBlock key={i} year={year}>
                     {(theaterState[year] as any[]).map((obj: any, j: number) => (
-                        <div key={j} className="theater-block">
-                            {obj.img.filename ? <Image src={"/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="Theater Content Image" /> : null}
-                            <div>
-                                <h3 className="font-smoothing">{obj.title}</h3>
-                                <div className="font-smoothing">장소: {obj.theater}</div>
-                                <div className="font-smoothing">{obj.schedule}</div>
+                        <>
+                            <div key={j} className="theater-block">
+                                {obj.img.filename ? <Image src={"/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="Theater Content Image" /> : null}
+                                <div>
+                                    <h3 className="font-smoothing">{obj.title}</h3>
+                                    <div className="font-smoothing">장소: {obj.theater}</div>
+                                    <div className="font-smoothing">{obj.schedule}</div>
+                                </div>
+                                {obj.scenes.length === 0 ? null :
+                                    <SceneSlide
+                                        type="theater"
+                                        year={year}
+                                        i={j}
+                                        scenePage={obj.scenePage}
+                                        scenes={obj.scenes}
+                                        setScene={setTheaterScene} />}
                             </div>
-                            {obj.scenes.length === 0 ? null :
-                                <SceneSlide
-                                    type="theater"
-                                    year={year}
-                                    i={j}
-                                    scenePage={obj.scenePage}
-                                    scenes={obj.scenes}
-                                    setScene={setTheaterScene} />}
                             <input type="button" defaultValue="편집" onClick={() => {
                                 setEditContentData({
+                                    _id: obj._id,
                                     title: obj.title,
                                     theater: obj.theater,
                                     year: +year,
                                     schedule: obj.schedule,
-                                    img: { ...obj.img, file: null },
-                                    scenes: obj.scenes.map((scene: { filename: string, width: number, height: number }) => ({ ...scene }))
+                                    img: null,
+                                    scenes: []
                                 });
                             }} />
-                        </div>
+                        </>
                     ))}
                 </YearBlock>
             ))}
@@ -124,10 +180,26 @@ const Theater: NextPage = () => {
                                     img.src = _e.target.result;
                                     img.onload = function () {
                                         const _editContentData = { ...editContentData };
-                                        _editContentData.img = {
+                                        let [width, height] = [img.width, img.height];
+                                        if (width > 650 && height > 860) {
+                                            if (width > height) {
+                                                height *= 650 / width;
+                                                width = 650;
+                                            } else {
+                                                width *= 860 / height;
+                                                height = 860;
+                                            }
+                                        } else if (width > 650) {
+                                            height *= 650 / width;
+                                            width = 650;
+                                        } else if (height > 860) {
+                                            width *= 860 / height;
+                                            height = 860;
+                                        }
+                                        _editContentData["img"] = {
                                             filename: e.target.files[0].name,
-                                            width: img.width,
-                                            height: img.height,
+                                            width,
+                                            height,
                                             file: e.target.files[0]
                                         };
                                         setEditContentData(_editContentData);

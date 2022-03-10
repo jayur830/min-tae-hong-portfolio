@@ -33,6 +33,7 @@ export const useInitMovie = (payload: any, dispatch: Dispatch<any>) => {
         const year = obj.year.toString();
         if (!(year in _data)) _data[year] = [];
         _data[year].push({
+            _id: obj._id,
             title: obj.title,
             director: obj.director,
             actors: Object.freeze(obj.actors),
@@ -57,6 +58,7 @@ export const useInitDrama = (payload: any, dispatch: Dispatch<any>) => {
         const year = obj.year.toString();
         if (!(year in _data)) _data[year] = [];
         _data[year].push({
+            _id: obj._id,
             title: obj.title,
             director: obj.director,
             actors: Object.freeze(obj.actors),
@@ -80,6 +82,7 @@ export const useInitTheater = (payload: any, dispatch: Dispatch<any>) => {
         const year = obj.year.toString();
         if (!(year in _data)) _data[year] = [];
         _data[year].push({
+            _id: obj._id,
             title: obj.title,
             theater: obj.theater,
             schedule: obj.schedule,

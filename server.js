@@ -19,6 +19,9 @@ app.prepare()
         const server = express();
 
         server.get("*", handle);
+        server.post("*", handle);
+        server.put("/api/*", handle);
+        server.delete("/api/*", handle);
         server.listen(3000, error => {
             if (error) throw error;
             console.log("started server on 3000 port.");

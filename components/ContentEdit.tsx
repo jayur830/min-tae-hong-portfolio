@@ -5,7 +5,7 @@ type ContentEditProps = {
         label: string,
         component: JSX.Element | JSX.Element[]
     }[],
-    onSubmit: () => void,
+    onSubmit: () => boolean,
     onClose: () => void
 };
 
@@ -13,7 +13,7 @@ const ContentEdit: (props: ContentEditProps) => JSX.Element = ({ contents, onSub
     const [animateClass, setAnimateClass] = useState("fadeIn");
 
     return (
-        <div className={"content-editData animate__animated animate__" + animateClass}>
+        <div className={"content-edit animate__animated animate__" + animateClass}>
             <div className="container">
                 <span className="times" onClick={() => {
                     setAnimateClass("fadeOut");
@@ -35,9 +35,10 @@ const ContentEdit: (props: ContentEditProps) => JSX.Element = ({ contents, onSub
                 </table>
                 <div className="btn-wrap">
                     <input type="button" defaultValue="등록" onClick={() => {
-                        onSubmit();
-                        setAnimateClass("fadeOut");
-                        setTimeout(onClose, 500);
+                        if (onSubmit()) {
+                            setAnimateClass("fadeOut");
+                            setTimeout(onClose, 500);
+                        }
                     }} />
                     <input type="button" defaultValue="취소" onClick={() => {
                         setAnimateClass("fadeOut");

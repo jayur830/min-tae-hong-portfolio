@@ -7,7 +7,8 @@ const setTel = (request: NextApiRequest, response: NextApiResponse) => {
         $set: {
             tel: request.query.tel
         }
-    });
+    }).exec();
+    response.send(200);
 };
 
 export default setTel;

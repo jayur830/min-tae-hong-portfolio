@@ -8,6 +8,7 @@ const setSns = (request: NextApiRequest, response: NextApiResponse) => {
             sns: request.body.sns
         }
     }).exec();
+    response.send(200);
 };
 
 export default setSns;

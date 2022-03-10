@@ -8,6 +8,7 @@ const setMetadata = (request: NextApiRequest, response: NextApiResponse) => {
             metadata: request.body.metadata
         }
     }).exec();
+    response.send(200);
 };
 
 export default setMetadata;

@@ -7,7 +7,8 @@ const setTitle = (request: NextApiRequest, response: NextApiResponse) => {
         $set: {
             title: request.query.title
         }
-    });
+    }).exec();
+    response.send(200);
 };
 
 export default setTitle;
