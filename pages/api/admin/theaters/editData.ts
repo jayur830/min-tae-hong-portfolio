@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 // import Theaters from "../../../../models/theaters";
 
-const edit = (request: NextApiRequest, response: NextApiResponse) => {
+const editData = (request: NextApiRequest, response: NextApiResponse) => {
     console.log(request.body);
     response.status(200);
 
@@ -13,4 +13,4 @@ const edit = (request: NextApiRequest, response: NextApiResponse) => {
     // }).exec();
 };
 
-export default edit;
+export default editData;
