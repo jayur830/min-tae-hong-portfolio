@@ -157,6 +157,26 @@ section.drama {
             }
         }
     }
+
+    .content-add-btn {
+        text-align: center;
+        margin: 100px 0 50px 0;
+
+        svg {
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            transition: color 0.2s;
+
+            &:hover {
+                color: #a5a5a5;
+            }
+
+            &:active {
+                color: #505050;
+            }
+        }
+    }
 }
 
 .dark-mode section.drama div.year-block div.drama-block .scenes svg {

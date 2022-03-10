@@ -28,6 +28,10 @@ const theaterReducer = (state: TheaterState = initialState, action: any) => {
             ...state,
             ...action.payload
         };
+    case "REMOVE_THEATER_YEAR":
+        const data = { ...state };
+        delete data[action.payload.year];
+        return data;
     case "INCREASE_THEATER_SCENE_PAGE": {
         const _state = { ...state };
         const { year, i } = action.payload;

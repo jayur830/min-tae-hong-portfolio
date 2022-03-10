@@ -3,6 +3,9 @@ import { NextPage } from "next";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+
 import Scene from "../../components/Scene";
 import YearBlock from "../../components/YearBlock";
 import SceneSlide from "../../components/SceneSlide";
@@ -40,78 +43,105 @@ const Theater: NextPage = () => {
         sceneIndex: -1,
         max: -1
     });
-    const [editContentData, setEditContentData] = useState<TheaterData | null>(null);
+    const [contentData, setContentData] = useState<TheaterData | null>(null);
 
     const years = Object.keys(theaterState);
     years.sort((a, b) => a < b ? 1 : -1);
 
     const commitTheaterData = useCallback(() => {
-        if (editContentData) {
-            if (editContentData.title === "") {
+        if (contentData) {
+            if (contentData.title === "") {
                 alert("제목을 입력해주세요.");
                 return false;
-            } else if (editContentData.theater === "") {
+            } else if (contentData.theater === "") {
                 alert("극장명을 입력해주세요.");
                 return false;
-            } else if (editContentData.schedule === "") {
+            } else if (contentData.schedule === "") {
                 alert("일정을 입력해주세요.");
                 return false;
-            } else if (editContentData.img == null || editContentData.img.filename === "") {
+            } else if (contentData.img == null || contentData.img.filename === "") {
                 alert("작품의 대표 이미지를 선택해주세요.");
                 return false;
             } else {
                 const payload = {
-                    _id: editContentData._id,
-                    title: editContentData.title,
-                    theater: editContentData.theater,
-                    schedule: editContentData.schedule,
+                    _id: contentData._id,
+                    title: contentData.title,
+                    theater: contentData.theater,
+                    schedule: contentData.schedule,
                     img: {
-                        filename: editContentData.img?.filename,
-                        width: editContentData.img?.width,
-                        height: editContentData.img?.height
+                        filename: contentData.img?.filename,
+                        width: contentData.img?.width,
+                        height: contentData.img?.height
                     },
-                    scenes: editContentData.scenes == null || editContentData.scenes.length === 0 ? [] : editContentData.scenes.map((obj: any) => ({
+                    scenes: contentData.scenes == null || contentData.scenes.length === 0 ? [] : contentData.scenes.map((obj: any) => ({
                         filename: obj.filename,
                         width: obj.width,
                         height: obj.height
                     }))
                 };
-                fetch("/api/admin/theaters/edit", {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        ...payload,
-                        year: editContentData.year
-                    })
-                });
-                useImgUpload(editContentData.img?.file as File);
-                editContentData?.scenes.forEach((scene: any) => useImgUpload(scene.file));
 
-                const dispatchData = theaterState[editContentData.year].map((obj: any) => ({ ...obj }));
-                const index = dispatchData.findIndex((obj: any) => obj._id === editContentData._id);
-                if (index !== -1)
-                    dispatchData[index] = {
-                        ...payload,
-                        scenePage: dispatchData[index].scenePage,
-                        scenePages: dispatchData[index].scenePages,
-                        sceneIndex: dispatchData[index].sceneIndex
-                    };
-                dispatch({ type: "SET_THEATER_DATA", payload: { [editContentData.year]: dispatchData } });
+                useImgUpload(contentData.img?.file as File);
+                contentData?.scenes.forEach((scene: any) => useImgUpload(scene.file));
+
+                if (contentData._id !== "") {
+                    fetch("/api/admin/theaters/edit", {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            ...payload,
+                            year: contentData.year
+                        })
+                    });
+
+                    const dispatchData = theaterState[contentData.year].map((obj: any) => ({ ...obj }));
+                    const index = dispatchData.findIndex((obj: any) => obj._id === contentData._id);
+                    if (index !== -1)
+                        dispatchData[index] = {
+                            ...payload,
+                            scenePage: dispatchData[index].scenePage,
+                            scenePages: dispatchData[index].scenePages,
+                            sceneIndex: dispatchData[index].sceneIndex
+                        };
+                    dispatch({ type: "SET_THEATER_DATA", payload: { [contentData.year]: dispatchData } });
+                } else {
+                    fetch("/api/admin/theaters/create", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            ...payload,
+                            year: contentData.year
+                        })
+                    }).then(response => response.text()).then(_id => {
+                        console.log("_id:", _id);
+
+                        const dispatchData = contentData.year in theaterState ? theaterState[contentData.year].map((obj: any) => ({ ...obj })) : [];
+                        dispatchData.push({
+                            ...payload,
+                            _id,
+                            scenePage: 0,
+                            scenePages: 0,
+                            sceneIndex: -1
+                        });
+                        dispatch({ type: "SET_THEATER_DATA", payload: { [contentData.year]: dispatchData } });
+                    });
+                }
                 alert("수정되었습니다.");
                 return true;
             }
         } else return false;
-    }, [editContentData, dispatch]);
+    }, [contentData, dispatch]);
 
     return (
         <section className="theater">
             {years.map((year, i) => (
                 <YearBlock key={i} year={year}>
                     {(theaterState[year] as any[]).map((obj: any, j: number) => (
-                        <>
-                            <div key={j} className="theater-block">
+                        <React.Fragment key={j}>
+                            <div className="theater-block">
                                 {obj.img.filename ? <Image src={"/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="Theater Content Image" /> : null}
                                 <div>
                                     <h3 className="font-smoothing">{obj.title}</h3>
@@ -129,7 +159,7 @@ const Theater: NextPage = () => {
                             </div>
                             <div>
                                 <input type="button" defaultValue="편집" onClick={() => {
-                                    setEditContentData({
+                                    setContentData({
                                         _id: obj._id,
                                         title: obj.title,
                                         theater: obj.theater,
@@ -143,22 +173,30 @@ const Theater: NextPage = () => {
                                     if (confirm("정말로 삭제하시겠습니까?")) {
                                         const data = theaterState[year].map((_obj: any) => ({ ..._obj }));
                                         data.splice(j, 1);
-                                        fetch("/api/admin/theaters/remove", {
-                                            method: "DELETE",
-                                            headers: {
-                                                "Content-Type": "application/json"
-                                            },
-                                            body: JSON.stringify({ _id: obj._id })
-                                        });
-                                        dispatch({ type: "SET_THEATER_DATA", payload: { [year]: data } });
+                                        fetch("/api/admin/theaters/remove?_id=" + obj._id);
+                                        if (data.length > 0) dispatch({ type: "SET_THEATER_DATA", payload: { [year]: data } });
+                                        else dispatch({ type: "REMOVE_THEATER_YEAR", payload: { year } });
                                         alert("삭제되었습니다.");
                                     }
                                 }} />
                             </div>
-                        </>
+                        </React.Fragment>
                     ))}
                 </YearBlock>
             ))}
+            <div className="content-add-btn">
+                <FontAwesomeIcon size="2x" icon={faPlus} onClick={() => {
+                    setContentData({
+                        _id: "",
+                        title: "",
+                        theater: "",
+                        year: new Date().getFullYear(),
+                        schedule: "",
+                        img: null,
+                        scenes: []
+                    });
+                }} />
+            </div>
             {theaterScene.year !== ""
                 && theaterScene.theaterIndex !== -1
                 && theaterScene.sceneIndex !== -1
@@ -174,19 +212,30 @@ const Theater: NextPage = () => {
                             max: -1
                         })} /> :
                     null}
-            {editContentData != null ?
+            {contentData != null ?
                 <ContentEdit
                     contents={[
                         {
                             label: "연도",
-                            component: <input type="number" defaultValue={editContentData.year} onChange={(e: any) => {
-                                if (e.target.value === "Enter") commitTheaterData();
-                                else {
-                                    const _editContentData = { ...editContentData };
-                                    _editContentData.year = +e.target.value;
-                                    setEditContentData(_editContentData);
-                                }
-                            }} />
+                            component: <input
+                                type="number"
+                                defaultValue={contentData.year}
+                                onKeyUp={(e: any) => {
+                                    if (e.key === "Enter") commitTheaterData();
+                                    else {
+                                        const _editContentData = { ...contentData };
+                                        _editContentData.year = +e.target.value;
+                                        setContentData(_editContentData);
+                                    }
+                                }}
+                                onChange={(e: any) => {
+                                    if (e.key === "Enter") commitTheaterData();
+                                    else {
+                                        const _editContentData = { ...contentData };
+                                        _editContentData.year = +e.target.value;
+                                        setContentData(_editContentData);
+                                    }
+                                }} />
                         },
                         {
                             label: "이미지",
@@ -196,7 +245,7 @@ const Theater: NextPage = () => {
                                     const img = new window.Image();
                                     img.src = _e.target.result;
                                     img.onload = function () {
-                                        const _editContentData = { ...editContentData };
+                                        const _editContentData = { ...contentData };
                                         let [width, height] = [img.width, img.height];
                                         if (width > 650 && height > 860) {
                                             if (width > height) {
@@ -219,7 +268,7 @@ const Theater: NextPage = () => {
                                             height,
                                             file: e.target.files[0]
                                         };
-                                        setEditContentData(_editContentData);
+                                        setContentData(_editContentData);
                                     };
                                 };
                                 fileReader.readAsDataURL(e.target.files[0]);
@@ -227,41 +276,41 @@ const Theater: NextPage = () => {
                         },
                         {
                             label: "제목",
-                            component: <input type="text" defaultValue={editContentData.title} onChange={(e: any) => {
-                                if (e.target.value === "Enter") commitTheaterData();
+                            component: <input type="text" defaultValue={contentData.title} onKeyUp={(e: any) => {
+                                if (e.key === "Enter") commitTheaterData();
                                 else {
-                                    const _editContentData = { ...editContentData };
+                                    const _editContentData = { ...contentData };
                                     _editContentData.title = e.target.value;
-                                    setEditContentData(_editContentData);
+                                    setContentData(_editContentData);
                                 }
                             }} />
                         },
                         {
                             label: "장소",
-                            component: <input type="text" defaultValue={editContentData.theater} onChange={(e: any) => {
-                                if (e.target.value === "Enter") commitTheaterData();
+                            component: <input type="text" defaultValue={contentData.theater} onKeyUp={(e: any) => {
+                                if (e.key === "Enter") commitTheaterData();
                                 else {
-                                    const _editContentData = { ...editContentData };
+                                    const _editContentData = { ...contentData };
                                     _editContentData.theater = e.target.value;
-                                    setEditContentData(_editContentData);
+                                    setContentData(_editContentData);
                                 }
                             }} />
                         },
                         {
                             label: "일정",
-                            component: <input type="text" defaultValue={editContentData.schedule} onChange={(e: any) => {
-                                if (e.target.value === "Enter") commitTheaterData();
+                            component: <input type="text" defaultValue={contentData.schedule} onKeyUp={(e: any) => {
+                                if (e.key === "Enter") commitTheaterData();
                                 else {
-                                    const _editContentData = { ...editContentData };
+                                    const _editContentData = { ...contentData };
                                     _editContentData.schedule = e.target.value;
-                                    setEditContentData(_editContentData);
+                                    setContentData(_editContentData);
                                 }
                             }} />
                         },
                         {
                             label: "씬",
-                            component: <SceneTodoList scenes={editContentData.scenes} onSetScene={async sceneImgFiles => {
-                                const _editContentData = { ...editContentData };
+                            component: <SceneTodoList scenes={contentData.scenes} onSetScene={async sceneImgFiles => {
+                                const _editContentData = { ...contentData };
                                 const files = sceneImgFiles.filter(file => file != null);
                                 _editContentData.scenes = files.map(() => null);
 
@@ -287,12 +336,12 @@ const Theater: NextPage = () => {
                                 while (readCount < files.length)
                                     await new Promise(resolve => setTimeout(resolve, 0));
 
-                                setEditContentData(_editContentData);
+                                setContentData(_editContentData);
                             }} />
                         }
                     ]}
                     onSubmit={commitTheaterData}
-                    onClose={() => setEditContentData(null)} /> :
+                    onClose={() => setContentData(null)} /> :
                 null}
         </section>
     );

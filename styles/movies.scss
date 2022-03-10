@@ -157,6 +157,26 @@ section.movies {
             }
         }
     }
+
+    .content-add-btn {
+        text-align: center;
+        margin: 100px 0 50px 0;
+
+        svg {
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            transition: color 0.2s;
+
+            &:hover {
+                color: #a5a5a5;
+            }
+
+            &:active {
+                color: #505050;
+            }
+        }
+    }
 }
 
 .dark-mode section.movies div.year-block div.movies-block .scenes svg {
