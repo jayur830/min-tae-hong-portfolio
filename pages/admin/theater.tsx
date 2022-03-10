@@ -45,7 +45,7 @@ const Theater: NextPage = () => {
     const years = Object.keys(theaterState);
     years.sort((a, b) => a < b ? 1 : -1);
 
-    const commitContentData = useCallback(() => {
+    const commitTheaterData = useCallback(() => {
         if (editContentData) {
             if (editContentData.title === "") {
                 alert("제목을 입력해주세요.");
@@ -127,17 +127,34 @@ const Theater: NextPage = () => {
                                         scenes={obj.scenes}
                                         setScene={setTheaterScene} />}
                             </div>
-                            <input type="button" defaultValue="편집" onClick={() => {
-                                setEditContentData({
-                                    _id: obj._id,
-                                    title: obj.title,
-                                    theater: obj.theater,
-                                    year: +year,
-                                    schedule: obj.schedule,
-                                    img: null,
-                                    scenes: []
-                                });
-                            }} />
+                            <div>
+                                <input type="button" defaultValue="편집" onClick={() => {
+                                    setEditContentData({
+                                        _id: obj._id,
+                                        title: obj.title,
+                                        theater: obj.theater,
+                                        year: +year,
+                                        schedule: obj.schedule,
+                                        img: null,
+                                        scenes: []
+                                    });
+                                }} />
+                                <input type="button" defaultValue="삭제" onClick={() => {
+                                    if (confirm("정말로 삭제하시겠습니까?")) {
+                                        const data = theaterState[year].map((_obj: any) => ({ ..._obj }));
+                                        data.splice(j, 1);
+                                        fetch("/api/admin/theaters/remove", {
+                                            method: "DELETE",
+                                            headers: {
+                                                "Content-Type": "application/json"
+                                            },
+                                            body: JSON.stringify({ _id: obj._id })
+                                        });
+                                        dispatch({ type: "SET_THEATER_DATA", payload: { [year]: data } });
+                                        alert("삭제되었습니다.");
+                                    }
+                                }} />
+                            </div>
                         </>
                     ))}
                 </YearBlock>
@@ -163,7 +180,7 @@ const Theater: NextPage = () => {
                         {
                             label: "연도",
                             component: <input type="number" defaultValue={editContentData.year} onChange={(e: any) => {
-                                if (e.target.value === "Enter") commitContentData();
+                                if (e.target.value === "Enter") commitTheaterData();
                                 else {
                                     const _editContentData = { ...editContentData };
                                     _editContentData.year = +e.target.value;
@@ -183,17 +200,17 @@ const Theater: NextPage = () => {
                                         let [width, height] = [img.width, img.height];
                                         if (width > 650 && height > 860) {
                                             if (width > height) {
-                                                height *= 650 / width;
+                                                height *= Math.round(650 / width);
                                                 width = 650;
                                             } else {
-                                                width *= 860 / height;
+                                                width *= Math.round(860 / height);
                                                 height = 860;
                                             }
                                         } else if (width > 650) {
-                                            height *= 650 / width;
+                                            height *= Math.round(650 / width);
                                             width = 650;
                                         } else if (height > 860) {
-                                            width *= 860 / height;
+                                            width *= Math.round(860 / height);
                                             height = 860;
                                         }
                                         _editContentData["img"] = {
@@ -211,7 +228,7 @@ const Theater: NextPage = () => {
                         {
                             label: "제목",
                             component: <input type="text" defaultValue={editContentData.title} onChange={(e: any) => {
-                                if (e.target.value === "Enter") commitContentData();
+                                if (e.target.value === "Enter") commitTheaterData();
                                 else {
                                     const _editContentData = { ...editContentData };
                                     _editContentData.title = e.target.value;
@@ -222,7 +239,7 @@ const Theater: NextPage = () => {
                         {
                             label: "장소",
                             component: <input type="text" defaultValue={editContentData.theater} onChange={(e: any) => {
-                                if (e.target.value === "Enter") commitContentData();
+                                if (e.target.value === "Enter") commitTheaterData();
                                 else {
                                     const _editContentData = { ...editContentData };
                                     _editContentData.theater = e.target.value;
@@ -233,7 +250,7 @@ const Theater: NextPage = () => {
                         {
                             label: "일정",
                             component: <input type="text" defaultValue={editContentData.schedule} onChange={(e: any) => {
-                                if (e.target.value === "Enter") commitContentData();
+                                if (e.target.value === "Enter") commitTheaterData();
                                 else {
                                     const _editContentData = { ...editContentData };
                                     _editContentData.schedule = e.target.value;
@@ -274,7 +291,7 @@ const Theater: NextPage = () => {
                             }} />
                         }
                     ]}
-                    onSubmit={commitContentData}
+                    onSubmit={commitTheaterData}
                     onClose={() => setEditContentData(null)} /> :
                 null}
         </section>
