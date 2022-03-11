@@ -66,12 +66,6 @@ const Movies: NextPage = () => {
             } else if (contentData.director === "") {
                 alert("감독 이름을 입력해주세요.");
                 return false;
-            } else if (contentData.actors.filter(actor => actor != null && actor !== "").length === 0) {
-                alert("출연진을 1명 이상 입력해주세요.");
-                return false;
-            } else if (contentData.img == null || contentData.img.filename === "") {
-                alert("작품의 대표 이미지를 선택해주세요.");
-                return false;
             } else {
                 const payload = {
                     _id: contentData._id,
@@ -331,7 +325,7 @@ const Movies: NextPage = () => {
                             label: "출연진",
                             component: <TextTodoList _texts={contentData.actors} onSetText={actorList => {
                                 const _contentData = { ...contentData };
-                                _contentData.actors = actorList.filter(actor => actor != null) as string[];
+                                _contentData.actors = actorList.filter(actor => actor != null && actor !== "") as string[];
                                 setContentData(_contentData);
                             }} />
                         },
@@ -339,7 +333,7 @@ const Movies: NextPage = () => {
                             label: "수상이력",
                             component: <TextTodoList _texts={contentData.awards} onSetText={awardList => {
                                 const _contentData = { ...contentData };
-                                _contentData.awards = awardList.filter(award => award != null) as string[];
+                                _contentData.awards = awardList.filter(award => award != null && award !== "") as string[];
                                 setContentData(_contentData);
                             }} />
                         },

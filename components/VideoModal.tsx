@@ -21,7 +21,7 @@ const VideoModal: (props: VideoModalProps) => JSX.Element = ({ src, onClose }) =
                 }}>
                     &times;
                 </span>
-                <video autoPlay controls style={{ width: src.width, height: src.height }}>
+                <video autoPlay controls>
                     <source src={"/" + src.filename} />
                 </video>
             </div>

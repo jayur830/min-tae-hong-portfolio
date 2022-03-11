@@ -54,6 +54,7 @@ section.movies {
                         border: 1px solid black;
                         padding: 5px 20px;
                         cursor: pointer;
+                        z-index: 90;
                         transition: background-color 0.15s, color 0.15s;
 
                         &:hover {
@@ -195,7 +196,7 @@ section.movies {
     }
 }
 
-@media screen and (max-width: 1120px){
+@media screen and (max-width: 1120px) {
     section.movies div.year-block {
         width: 100%;
         padding: 0 20px;
