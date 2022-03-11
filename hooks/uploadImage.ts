@@ -1,4 +1,4 @@
-export const useImgUpload = (file: File) => {
+export const uploadImage = (file: File) => {
     const formData = new FormData();
     formData.append("file", file);
     fetch("/api/admin/uploadImg", {

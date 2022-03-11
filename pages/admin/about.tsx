@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus, faPen, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import Line from "../../components/Line";
 import about from "../../models/about";
-import { useImgUpload } from "../../hooks/useImgUpload";
+import { uploadImage } from "../../hooks/uploadImage";
 import BlackButton from "../../components/BlackButton";
 
 const About: NextPage = () => {
@@ -68,7 +68,7 @@ const About: NextPage = () => {
                 img
             })
         });
-        useImgUpload(file);
+        uploadImage(file);
         dispatch({ type: "SET_ABOUT_DATA", payload: { img } });
     }, [dispatch]);
 
@@ -133,7 +133,7 @@ const About: NextPage = () => {
                     }}>취소</BlackButton>
                 </> :
                 <BlackButton onClick={() => setEditImg(true)}>편집</BlackButton>}
-        </div>, [aboutState, editImg, setEditImg, imgFile, setImgFile]);
+        </div>, [aboutState, editImg, setEditImg, imgFile, setImgFile, commitImgFile]);
 
     return (
         <section className="about admin">

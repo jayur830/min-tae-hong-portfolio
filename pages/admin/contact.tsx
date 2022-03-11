@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import { NextPage } from "next";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import { useImgUpload } from "../../hooks/useImgUpload";
+import { uploadImage } from "../../hooks/uploadImage";
 import BlackButton from "../../components/BlackButton";
 
 const Contact: NextPage = () => {
@@ -33,7 +33,7 @@ const Contact: NextPage = () => {
                 img
             })
         });
-        useImgUpload(file);
+        uploadImage(file);
         dispatch({ type: "SET_CONTACT_DATA", payload: { img } });
         setEditImg(false);
     }, [dispatch]);
