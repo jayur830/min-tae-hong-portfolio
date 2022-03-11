@@ -6,6 +6,8 @@ import Image from "next/image";
 import Scene from "../components/Scene";
 import YearBlock from "../components/YearBlock";
 import SceneSlide from "../components/SceneSlide";
+import BlackButton from "../components/BlackButton";
+import VideoModal from "../components/VideoModal";
 
 const Movies: NextPage = () => {
     const moviesState = useSelector((state: any) => state.movies);
@@ -16,6 +18,7 @@ const Movies: NextPage = () => {
         sceneIndex: -1,
         max: -1
     });
+    const [moviesVideo, setMoviesVideo] = useState<{ filename: string, width: number, height: number } | null>(null);
 
     const years = useMemo(() => {
         const years = Object.keys(moviesState);
@@ -29,9 +32,9 @@ const Movies: NextPage = () => {
                 <YearBlock key={i} year={year}>
                     {(moviesState[year] as any[]).map((obj: any, j: number) => (
                         <div key={j} className="movies-block">
-                            {obj.img.filename ? <Image src={"/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="Movies Content Image" /> : null}
+                            {obj.img && obj.img.filename !== "" ? <Image src={"/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="Movies Content Image" /> : null}
                             <div>
-                                {obj.video ? <input type="button" className="video-btn" value="VIDEO" /> : null}
+                                {obj.video ? <BlackButton onClick={() => setMoviesVideo({ ...obj.video })}>VIDEO</BlackButton> : null}
                                 <h3 className="font-smoothing">{obj.title}</h3>
                                 <div className="font-smoothing">감독: {obj.director}</div>
                                 {obj.actors.length === 0 ? null : <div className="font-smoothing">출연: {obj.actors.join(", ")}</div>}
@@ -64,6 +67,7 @@ const Movies: NextPage = () => {
                         max: -1
                     })} /> :
                 null}
+            {moviesVideo ? <VideoModal src={moviesVideo} onClose={() => setMoviesVideo(null)} /> : null}
         </section>
     );
 };

@@ -18,10 +18,6 @@ const Contact: NextPage = () => {
                                     <td className="font-smoothing">EMAIL.</td>
                                     <td className="font-smoothing">{contactState.email}</td>
                                 </tr>
-                                <tr>
-                                    <td className="font-smoothing">TEL.</td>
-                                    <td className="font-smoothing">{contactState.tel}</td>
-                                </tr>
                             </tbody>
                         ): (
                             <tbody>
@@ -29,12 +25,6 @@ const Contact: NextPage = () => {
                                     <td className="font-smoothing">
                                         EMAIL.<br />
                                         {contactState.email}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="font-smoothing">
-                                        TEL.<br />
-                                        {contactState.tel}
                                     </td>
                                 </tr>
                             </tbody>

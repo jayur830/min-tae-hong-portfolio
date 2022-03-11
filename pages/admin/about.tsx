@@ -11,6 +11,7 @@ import { faPlus, faMinus, faPen, faUserCircle } from "@fortawesome/free-solid-sv
 import Line from "../../components/Line";
 import about from "../../models/about";
 import { useImgUpload } from "../../hooks/useImgUpload";
+import BlackButton from "../../components/BlackButton";
 
 const About: NextPage = () => {
     const commonState = useSelector((state: any) => state.common);
@@ -103,7 +104,7 @@ const About: NextPage = () => {
                         if (e.target.files && e.target.files.length > 0)
                             setImgFile(e.target.files[0] as any);
                     }} /><br />
-                    <input type="button" defaultValue="등록" onClick={() => {
+                    <BlackButton onClick={() => {
                         const _URL = window.URL || window.webkitURL;
                         const img = new window.Image();
                         const src = _URL.createObjectURL(imgFile as any);
@@ -125,13 +126,13 @@ const About: NextPage = () => {
                             setEditImg(false);
                         };
                         img.src = src;
-                    }} />
-                    <input type="button" defaultValue="취소" onClick={() => {
+                    }}>등록</BlackButton>
+                    <BlackButton onClick={() => {
                         setImgFile(null);
                         setEditImg(false);
-                    }} />
+                    }}>취소</BlackButton>
                 </> :
-                <input type="button" defaultValue="편집" onClick={() => setEditImg(true)} />}
+                <BlackButton onClick={() => setEditImg(true)}>편집</BlackButton>}
         </div>, [aboutState, editImg, setEditImg, imgFile, setImgFile]);
 
     return (
@@ -179,24 +180,26 @@ const About: NextPage = () => {
                                         <td>
                                             {editMetadata[i] ?
                                                 <>
-                                                    <input type="button" defaultValue="등록" onClick={() => {
+                                                    <BlackButton onClick={() => {
                                                         commitMetadata(aboutState._id, metadata);
                                                         const _editMetadata = editMetadata.concat();
                                                         _editMetadata[i] = false;
                                                         setEditMetadata(_editMetadata);
-                                                    }} />
-                                                    <input type="button" defaultValue="취소" onClick={() => {
+                                                    }}>등록</BlackButton>
+                                                    <BlackButton onClick={() => {
                                                         const _editMetadata = editMetadata.concat();
                                                         _editMetadata[i] = false;
                                                         setEditMetadata(_editMetadata);
-                                                    }} />
+                                                    }}>취소</BlackButton>
                                                 </> :
-                                                <FontAwesomeIcon size="1x" icon={faPen} onClick={() => {
-                                                    const _editMetadata = editMetadata.concat();
-                                                    _editMetadata[i] = true;
-                                                    setEditMetadata(_editMetadata);
-                                                }} />}
-                                            <FontAwesomeIcon size="1x" icon={faMinus} onClick={() => removeMetadata(i)} />
+                                                <>
+                                                    <FontAwesomeIcon size="1x" icon={faPen} onClick={() => {
+                                                        const _editMetadata = editMetadata.concat();
+                                                        _editMetadata[i] = true;
+                                                        setEditMetadata(_editMetadata);
+                                                    }} />
+                                                    <FontAwesomeIcon size="1x" icon={faMinus} onClick={() => removeMetadata(i)} />
+                                                </>}
                                         </td>
                                     </tr>
                                 ))}
@@ -227,13 +230,13 @@ const About: NextPage = () => {
                                             }} />
                                         </td>
                                         <td>
-                                            <input type="button" defaultValue="등록" onClick={() => {
+                                            <BlackButton onClick={() => {
                                                 if (confirm("작성한 내용으로 등록하시겠습니까?")) {
                                                     commitMetadata(aboutState._id, metadata.concat(newMetadataItem));
                                                     setNewMetadataItem(null);
                                                 }
-                                            }} />
-                                            <input type="button" defaultValue="취소" onClick={() => setNewMetadataItem(null)} />
+                                            }}>등록</BlackButton>
+                                            <BlackButton onClick={() => setNewMetadataItem(null)}>취소</BlackButton>
                                         </td>
                                     </tr> : null}
                                 {newMetadataItem ? null :
@@ -291,12 +294,12 @@ const About: NextPage = () => {
                             }} autoFocus={true} />
                         </div>
                         <div>
-                            <input type="button" value="취소" onClick={() => setWriteComment(false)} />
-                            <input type="button" value="등록" onClick={() => {
+                            <BlackButton onClick={() => setWriteComment(false)}>취소</BlackButton>
+                            <BlackButton onClick={() => {
                                 postComment();
                                 setComment("");
                                 setWriteComment(false);
-                            }} />
+                            }}>등록</BlackButton>
                         </div>
                     </div>
                 ) : null}

@@ -12,6 +12,7 @@ import SceneSlide from "../../components/SceneSlide";
 import ContentEdit from "../../components/ContentEdit";
 import SceneTodoList from "../../components/SceneTodoList";
 import { useImgUpload } from "../../hooks/useImgUpload";
+import BlackButton from "../../components/BlackButton";
 
 type TheatersData = {
     _id: string,
@@ -68,11 +69,11 @@ const Theater: NextPage = () => {
                     title: contentData.title,
                     theater: contentData.theater,
                     schedule: contentData.schedule,
-                    img: {
-                        filename: contentData.img?.filename,
-                        width: contentData.img?.width,
-                        height: contentData.img?.height
-                    },
+                    img: contentData.img ? {
+                        filename: contentData.img.filename,
+                        width: contentData.img.width,
+                        height: contentData.img.height
+                    } : null,
                     scenes: contentData.scenes == null || contentData.scenes.length === 0 ? [] : contentData.scenes.map((obj: any) => ({
                         filename: obj.filename,
                         width: obj.width,
@@ -143,7 +144,7 @@ const Theater: NextPage = () => {
                     {(theaterState[year] as any[]).map((obj: any, j: number) => (
                         <React.Fragment key={j}>
                             <div className="theater-block">
-                                {obj.img.filename ? <Image src={"/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="Theater Content Image" /> : null}
+                                {obj.img && obj.img.filename !== "" ? <Image src={"/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="Theater Content Image" /> : null}
                                 <div>
                                     <h3 className="font-smoothing">{obj.title}</h3>
                                     <div className="font-smoothing">장소: {obj.theater}</div>
@@ -159,7 +160,7 @@ const Theater: NextPage = () => {
                                         setScene={setTheaterScene} />}
                             </div>
                             <div>
-                                <input type="button" defaultValue="편집" onClick={() => {
+                                <BlackButton onClick={() => {
                                     setContentData({
                                         _id: obj._id,
                                         title: obj.title,
@@ -169,8 +170,8 @@ const Theater: NextPage = () => {
                                         img: null,
                                         scenes: []
                                     });
-                                }} />
-                                <input type="button" defaultValue="삭제" onClick={() => {
+                                }}>편집</BlackButton>
+                                <BlackButton onClick={() => {
                                     if (confirm("정말로 삭제하시겠습니까?")) {
                                         const data = theaterState[year].map((_obj: any) => ({ ..._obj }));
                                         data.splice(j, 1);
@@ -179,7 +180,7 @@ const Theater: NextPage = () => {
                                         else dispatch({ type: "REMOVE_THEATERS_YEAR", payload: { year } });
                                         alert("삭제되었습니다.");
                                     }
-                                }} />
+                                }}>삭제</BlackButton>
                             </div>
                         </React.Fragment>
                     ))}

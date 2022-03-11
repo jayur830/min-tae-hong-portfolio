@@ -22,9 +22,12 @@ app.prepare()
         server.post("*", handle);
         server.put("/api/*", handle);
         server.delete("/api/*", handle);
-        server.listen(3000, error => {
+
+        const port = 3002;
+
+        server.listen(port, error => {
             if (error) throw error;
-            console.log("started server on 3000 port.");
+            console.log(`started server on ${port} port.`);
         });
     }).catch(e => {
         console.log(e.stack);

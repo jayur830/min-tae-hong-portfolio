@@ -13,6 +13,8 @@ import AppTemplate from "./AppTemplate";
 
 import { useInitApi } from "../hooks/useInitApi";
 import * as Icons from "@fortawesome/free-brands-svg-icons";
+import BlackButton from "./BlackButton";
+import WhiteButton from "./WhiteButton";
 
 const AdminLayout: NextPage = ({ children }) => {
     // require("../hooks/useAuthenticate").useAuthenticate();
@@ -108,14 +110,15 @@ const AdminLayout: NextPage = ({ children }) => {
                         if (e.key === "Enter") commitTitle(commonState._id, e.target.value);
                         else setTItle(e.target.value);
                     }} />
-                    <input type="button" value="등록" onClick={() => commitTitle(commonState._id, title)} />
-                    <input type="button" value="취소" onClick={() => setEditTitle(false)} />
+                    <BlackButton onClick={() => commitTitle(commonState._id, title)}>등록</BlackButton>
+                    <BlackButton onClick={() => setEditTitle(false)}>취소</BlackButton>
                 </article>
             ) : (
                 <article className="title">
                     <h4>페이지 타이틀.</h4>
                     <span>{commonState.title}</span>
-                    <input type="button" value="편집" onClick={() => setEditTitle(true)} />
+                    {/*<BlackButton onClick={() => setEditTitle(true)}>편집</BlackButton>*/}
+                    <button onClick={() => setEditTitle(true)}>편집</button>
                 </article>
             )}
             <header className="app-header">
@@ -126,14 +129,15 @@ const AdminLayout: NextPage = ({ children }) => {
                             if (e.key === "Enter") commitHeaderTitle(commonState._id, e.target.value);
                             else setHeaderTItle(e.target.value);
                         }} /></h1>
-                        <input type="button" value="등록" onClick={() => commitHeaderTitle(commonState._id, headerTitle)} />
-                        <input type="button" value="취소" onClick={() => setEditHeaderTitle(false)} />
+                        <BlackButton onClick={() => commitHeaderTitle(commonState._id, headerTitle)}>등록</BlackButton>
+                        <BlackButton onClick={() => setEditHeaderTitle(false)}>취소</BlackButton>
                     </div> :
                     <div>
                         <Link href="/admin" passHref>
                             <h1>{commonState.headerTitle}</h1>
                         </Link>
-                        <input type="button" value="편집" onClick={() => setEditHeaderTitle(true)} />
+                        {/*<BlackButton onClick={() => setEditHeaderTitle(true)}>편집</BlackButton>*/}
+                        <button onClick={() => setEditHeaderTitle(true)}>편집</button>
                     </div>}
                 {commonState.windowWidth > 1120 ? (
                     <nav>
@@ -201,11 +205,11 @@ const AdminLayout: NextPage = ({ children }) => {
                             <tfoot>
                             <tr>
                                 <td colSpan={3}>
-                                    <input type="button" value="등록" onClick={() => commitFooterSnsList(footerState._id, snsList.filter((obj: { name: string, url: string }) => obj.url !== ""))} />
-                                    <input type="button" value="취소" onClick={() => {
+                                    <WhiteButton onClick={() => commitFooterSnsList(footerState._id, snsList.filter((obj: { name: string, url: string }) => obj.url !== ""))}>등록</WhiteButton>
+                                    <WhiteButton onClick={() => {
                                         setSnsList(footerState.sns.concat());
                                         setEditSnsList(false);
-                                    }} />
+                                    }}>취소</WhiteButton>
                                 </td>
                             </tr>
                             </tfoot>
@@ -214,7 +218,8 @@ const AdminLayout: NextPage = ({ children }) => {
                 ) : (
                     <>
                         {iconsHtml}
-                        <input type="button" value="편집" onClick={() => setEditSnsList(true)} />
+                        {/*<WhiteButton onClick={() => setEditSnsList(true)}>편집</WhiteButton>*/}
+                        <input type="button" defaultValue="편집" onClick={() => setEditSnsList(true)} />
                     </>
                 )}
             </footer>

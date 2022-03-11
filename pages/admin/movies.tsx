@@ -14,6 +14,7 @@ import TextTodoList from "../../components/TextTodoList";
 import SceneTodoList from "../../components/SceneTodoList";
 import { useImgUpload } from "../../hooks/useImgUpload";
 import VideoModal from "../../components/VideoModal";
+import BlackButton from "../../components/BlackButton";
 
 type MoviesData = {
     _id: string,
@@ -73,16 +74,16 @@ const Movies: NextPage = () => {
                     director: contentData.director,
                     actors: contentData.actors.concat(),
                     awards: contentData.awards.concat(),
-                    img: {
-                        filename: contentData.img?.filename,
-                        width: contentData.img?.width,
-                        height: contentData.img?.height
-                    },
-                    video: {
-                        filename: contentData.video?.filename,
-                        width: contentData.video?.width,
-                        height: contentData.video?.height
-                    },
+                    img: contentData.img ? {
+                        filename: contentData.img.filename,
+                        width: contentData.img.width,
+                        height: contentData.img.height
+                    } : null,
+                    video: contentData.video ? {
+                        filename: contentData.video.filename,
+                        width: contentData.video.width,
+                        height: contentData.video.height
+                    } : null,
                     scenes: contentData.scenes == null || contentData.scenes.length === 0 ? [] : contentData.scenes.map((obj: any) => ({
                         filename: obj.filename,
                         width: obj.width,
@@ -154,15 +155,9 @@ const Movies: NextPage = () => {
                     {(moviesState[year] as any[]).map((obj: any, j: number) => (
                         <React.Fragment key={j}>
                             <div key={j} className="movies-block">
-                                {obj.img.filename ? <Image src={"/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="Movies Content Image" /> : null}
+                                {obj.img && obj.img.filename !== "" ? <Image src={"/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="Movies Content Image" /> : null}
                                 <div>
-                                    {obj.video ?
-                                        <input
-                                            type="button"
-                                            className="video-btn"
-                                            value="VIDEO"
-                                            onClick={() => setMoviesVideo({ ...obj.video })} /> :
-                                        null}
+                                    {obj.video ? <BlackButton onClick={() => setMoviesVideo({ ...obj.video })}>VIDEO</BlackButton> : null}
                                     <h3 className="font-smoothing">{obj.title}</h3>
                                     <div className="font-smoothing">감독: {obj.director}</div>
                                     {obj.actors.length === 0 ? null : <div className="font-smoothing">출연: {obj.actors.join(", ")}</div>}
@@ -178,7 +173,7 @@ const Movies: NextPage = () => {
                                         setScene={setMoviesScene} />}
                             </div>
                             <div>
-                                <input type="button" defaultValue="편집" onClick={() => {
+                                <BlackButton onClick={() => {
                                     setContentData({
                                         _id: obj._id,
                                         title: obj.title,
@@ -190,8 +185,8 @@ const Movies: NextPage = () => {
                                         video: null,
                                         scenes: []
                                     });
-                                }} />
-                                <input type="button" defaultValue="삭제" onClick={() => {
+                                }}>편집</BlackButton>
+                                <BlackButton onClick={() => {
                                     if (confirm("정말로 삭제하시겠습니까?")) {
                                         const data = moviesState[year].map((_obj: any) => ({ ..._obj }));
                                         data.splice(j, 1);
@@ -200,7 +195,7 @@ const Movies: NextPage = () => {
                                         else dispatch({ type: "REMOVE_MOVIES_YEAR", payload: { year } });
                                         alert("삭제되었습니다.");
                                     }
-                                }} />
+                                }}>삭제</BlackButton>
                             </div>
                         </React.Fragment>
                     ))}

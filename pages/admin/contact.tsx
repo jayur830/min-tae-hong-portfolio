@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { useImgUpload } from "../../hooks/useImgUpload";
+import BlackButton from "../../components/BlackButton";
 
 const Contact: NextPage = () => {
     const commonState = useSelector((state: any) => state.common);
@@ -11,10 +12,8 @@ const Contact: NextPage = () => {
     const dispatch = useDispatch();
 
     const [email, setEmail] = useState(contactState.email);
-    const [tel, setTel] = useState(contactState.tel);
     const [imgFile, setImgFile] = useState(null);
     const [editEmail, setEditEmail] = useState(false);
-    const [editTel, setEditTel] = useState(false);
     const [editImg, setEditImg] = useState(false);
 
     const commitEmail = useCallback((_id: string, email: string) => {
@@ -22,12 +21,6 @@ const Contact: NextPage = () => {
         dispatch({ type: "SET_CONTACT_DATA", payload: { email } });
         setEditEmail(false);
     }, [dispatch, setEditEmail]);
-
-    const commitTel = useCallback((_id: string, tel: string) => {
-        fetch(`/api/admin/contact/setTel?_id=${_id}&tel=${tel}`);
-        dispatch({ type: "SET_CONTACT_DATA", payload: { tel } });
-        setEditTel(false);
-    }, [dispatch, setEditTel]);
 
     const commitImgFile = useCallback((_id: string, img: { filename: string, width: number, height: number }, file: File) => {
         fetch("/api/admin/contact/setImgFile", {
@@ -62,36 +55,15 @@ const Contact: NextPage = () => {
                                             }} />
                                         </td>
                                         <td className="font-smoothing">
-                                            <input type="button" value="등록" onClick={() => commitEmail(contactState._id, email)} />
-                                            <input type="button" value="취소" onClick={() => setEditEmail(false)} />
+                                            <BlackButton onClick={() => commitEmail(contactState._id, email)}>등록</BlackButton>
+                                            <BlackButton onClick={() => setEditEmail(false)}>취소</BlackButton>
                                         </td>
                                     </tr> :
                                     <tr>
                                         <td className="font-smoothing">EMAIL.</td>
                                         <td className="font-smoothing">{contactState.email}</td>
                                         <td className="font-smoothing">
-                                            <input type="button" value="편집" onClick={() => setEditEmail(true)} />
-                                        </td>
-                                    </tr>}
-                                {editTel ?
-                                    <tr>
-                                        <td className="font-smoothing">TEL.</td>
-                                        <td className="font-smoothing">
-                                            <input type="text" defaultValue={contactState.tel} onKeyUp={(e: any) => {
-                                                if (e.key === "Enter") commitTel(contactState._id, e.target.value);
-                                                else setTel(e.target.value);
-                                            }} />
-                                        </td>
-                                        <td className="font-smoothing">
-                                            <input type="button" value="등록" onClick={() => commitTel(contactState._id, tel)} />
-                                            <input type="button" value="취소" onClick={() => setEditTel(false)} />
-                                        </td>
-                                    </tr> :
-                                    <tr>
-                                        <td className="font-smoothing">TEL.</td>
-                                        <td className="font-smoothing">{contactState.tel}</td>
-                                        <td className="font-smoothing">
-                                            <input type="button" value="편집" onClick={() => setEditTel(true)} />
+                                            <BlackButton onClick={() => setEditEmail(true)}>편집</BlackButton>
                                         </td>
                                     </tr>}
                             </tbody>
@@ -106,35 +78,15 @@ const Contact: NextPage = () => {
                                                 else setEmail(e.target.value);
                                             }} />
                                             <br />
-                                            <input type="button" value="등록" onClick={() => commitEmail(contactState._id, email)} />
-                                            <input type="button" value="취소" onClick={() => setEditEmail(false)} />
+                                            <BlackButton onClick={() => commitEmail(contactState._id, email)}>등록</BlackButton>
+                                            <BlackButton onClick={() => setEditEmail(false)}>취소</BlackButton>
                                         </td>
                                     </tr> :
                                     <tr>
                                         <td className="font-smoothing">
                                             EMAIL.<br />
                                             {contactState.email}<br />
-                                            <input type="button" value="편집" onClick={() => setEditEmail(true)} />
-                                        </td>
-                                    </tr>}
-                                {editTel ?
-                                    <tr>
-                                        <td className="font-smoothing">
-                                            TEL.<br />
-                                            <input type="text" defaultValue={contactState.tel} onKeyUp={(e: any) => {
-                                                if (e.key === "Enter") commitTel(contactState._id, e.target.value);
-                                                else setTel(e.target.value);
-                                            }} />
-                                            <br />
-                                            <input type="button" value="등록" onClick={() => commitTel(contactState._id, tel)} />
-                                            <input type="button" value="취소" onClick={() => setEditTel(false)} />
-                                        </td>
-                                    </tr> :
-                                    <tr>
-                                        <td className="font-smoothing">
-                                            TEL.<br />
-                                            {contactState.tel}<br />
-                                            <input type="button" value="편집" onClick={() => setEditTel(true)} />
+                                            <BlackButton onClick={() => setEditEmail(true)}>편집</BlackButton>
                                         </td>
                                     </tr>}
                             </tbody>
@@ -153,7 +105,7 @@ const Contact: NextPage = () => {
                                     setImgFile(e.target.files[0] as any);
                             }} />
                             <br />
-                            <input type="button" defaultValue="등록" onClick={() => {
+                            <BlackButton onClick={() => {
                                 const _URL = window.URL || window.webkitURL;
                                 const img = new window.Image();
                                 const src = _URL.createObjectURL(imgFile as any);
@@ -175,14 +127,14 @@ const Contact: NextPage = () => {
                                     setEditImg(false);
                                 };
                                 img.src = src;
-                            }} />
-                            <input type="button" defaultValue="취소" onClick={() => {
+                            }}>등록</BlackButton>
+                            <BlackButton onClick={() => {
                                 setImgFile(null);
                                 setEditImg(false);
-                            }} />
+                            }}>취소</BlackButton>
                         </> :
-                        <input type="button" defaultValue="편집" onClick={() => setEditImg(true)} />
-                    }
+                        <input type="button" defaultValue="편집" onClick={() => setEditImg(true)} />}
+                        {/*<BlackButton onClick={() => setEditImg(true)}>편집</BlackButton>}*/}
                 </div>
             </div>
         </section>

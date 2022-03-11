@@ -1,6 +1,5 @@
 export type ContactState = {
     email: string,
-    tel: string,
     img: {
         filename: string,
         width: number,
@@ -10,7 +9,6 @@ export type ContactState = {
 
 const initialState: ContactState = {
     email: "",
-    tel: "",
     img: {
         filename: "",
         width: 0,

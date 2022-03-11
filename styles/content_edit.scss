@@ -55,6 +55,8 @@ div.content-edit {
                     font: 16px 'HeirofLight Regular';
                     width: 100%;
                     min-width: 500px;
+                    border: none;
+                    border-bottom: 1px solid #3d3d3d;
                     padding: 2px;
                 }
             }
@@ -63,10 +65,41 @@ div.content-edit {
         .btn-wrap {
             text-align: center;
             padding: 20px;
+        }
+    }
+}
 
-            input[type=button] {
-                margin: 0 10px;
+@media screen and (max-width: 1120px) {
+    div.content-edit .container {
+        width: calc(100% - 20px);
+        padding: 40px 10px 10px 10px;
+
+        .times {
+            font-size: 36px;
+            height: 20px;
+        }
+
+        .content {
+            width: 100%;
+
+            tbody td {
+                font-size: 14px;
+                padding: 7px !important;
+
+                &:first-child {
+                    width: 60px;
+                }
+
+                input {
+                    font-size: 14px;
+                    width: 100%;
+                    min-width: 0;
+                }
             }
+        }
+
+        .btn-wrap button {
+            font-size: 14px;
         }
     }
 }

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import BlackButton from "./BlackButton";
 
 type ContentEditProps = {
     contents: {
@@ -34,16 +35,16 @@ const ContentEdit: (props: ContentEditProps) => JSX.Element = ({ contents, onSub
                     </tbody>
                 </table>
                 <div className="btn-wrap">
-                    <input type="button" defaultValue="등록" onClick={() => {
+                    <BlackButton onClick={() => {
                         if (onSubmit()) {
                             setAnimateClass("fadeOut");
                             setTimeout(onClose, 500);
                         }
-                    }} />
-                    <input type="button" defaultValue="취소" onClick={() => {
+                    }}>등록</BlackButton>
+                    <BlackButton onClick={() => {
                         setAnimateClass("fadeOut");
                         setTimeout(onClose, 500);
-                    }} />
+                    }}>취소</BlackButton>
                 </div>
             </div>
         </div>
