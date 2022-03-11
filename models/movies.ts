@@ -12,7 +12,11 @@ export default models.Movies ? models.Movies : model("Movies", new Schema({
         width: Number,
         height: Number
     },
-    video: String,
+    video: {
+        filename: String,
+        width: Number,
+        height: Number
+    },
     scenes: [
         {
             _id: false,

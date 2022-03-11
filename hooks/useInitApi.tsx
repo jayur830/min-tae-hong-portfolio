@@ -69,7 +69,7 @@ export const useInitDrama = (payload: any, dispatch: Dispatch<any>) => {
         });
     });
     dispatch({
-        type: "SET_DRAMA_DATA",
+        type: "SET_DRAMAS_DATA",
         payload: _data
     });
 };
@@ -92,7 +92,7 @@ export const useInitTheater = (payload: any, dispatch: Dispatch<any>) => {
         });
     });
     dispatch({
-        type: "SET_THEATER_DATA",
+        type: "SET_THEATERS_DATA",
         payload: _data
     });
 };

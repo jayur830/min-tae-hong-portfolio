@@ -13,7 +13,7 @@ import ContentEdit from "../../components/ContentEdit";
 import SceneTodoList from "../../components/SceneTodoList";
 import { useImgUpload } from "../../hooks/useImgUpload";
 
-type TheaterData = {
+type TheatersData = {
     _id: string,
     title: string,
     theater: string,
@@ -43,7 +43,7 @@ const Theater: NextPage = () => {
         sceneIndex: -1,
         max: -1
     });
-    const [contentData, setContentData] = useState<TheaterData | null>(null);
+    const [contentData, setContentData] = useState<TheatersData | null>(null);
 
     const years = Object.keys(theaterState);
     years.sort((a, b) => a < b ? 1 : -1);
@@ -80,8 +80,9 @@ const Theater: NextPage = () => {
                     }))
                 };
 
-                useImgUpload(contentData.img?.file as File);
-                contentData?.scenes.forEach((scene: any) => useImgUpload(scene.file));
+                if (contentData.img) useImgUpload(contentData.img.file as File);
+                if (contentData.scenes && contentData.scenes.length > 0)
+                    contentData?.scenes.forEach((scene: any) => useImgUpload(scene.file));
 
                 if (contentData._id !== "") {
                     fetch("/api/admin/theaters/edit", {
@@ -104,7 +105,8 @@ const Theater: NextPage = () => {
                             scenePages: dispatchData[index].scenePages,
                             sceneIndex: dispatchData[index].sceneIndex
                         };
-                    dispatch({ type: "SET_THEATER_DATA", payload: { [contentData.year]: dispatchData } });
+                    dispatch({ type: "SET_THEATERS_DATA", payload: { [contentData.year]: dispatchData } });
+                    alert("수정되었습니다.");
                 } else {
                     fetch("/api/admin/theaters/create", {
                         method: "POST",
@@ -124,10 +126,11 @@ const Theater: NextPage = () => {
                             scenePages: contentData.scenes.length,
                             sceneIndex: -1
                         });
-                        dispatch({ type: "SET_THEATER_DATA", payload: { [contentData.year]: dispatchData } });
+                        dispatch({ type: "SET_THEATERS_DATA", payload: { [contentData.year]: dispatchData } });
+                        alert("데이터가 추가되었습니다.");
                     });
                 }
-                alert("수정되었습니다.");
+
                 return true;
             }
         } else return false;
@@ -172,8 +175,8 @@ const Theater: NextPage = () => {
                                         const data = theaterState[year].map((_obj: any) => ({ ..._obj }));
                                         data.splice(j, 1);
                                         fetch("/api/admin/theaters/remove?_id=" + obj._id);
-                                        if (data.length > 0) dispatch({ type: "SET_THEATER_DATA", payload: { [year]: data } });
-                                        else dispatch({ type: "REMOVE_THEATER_YEAR", payload: { year } });
+                                        if (data.length > 0) dispatch({ type: "SET_THEATERS_DATA", payload: { [year]: data } });
+                                        else dispatch({ type: "REMOVE_THEATERS_YEAR", payload: { year } });
                                         alert("삭제되었습니다.");
                                     }
                                 }} />
@@ -221,17 +224,17 @@ const Theater: NextPage = () => {
                                 onKeyUp={(e: any) => {
                                     if (e.key === "Enter") commitTheaterData();
                                     else {
-                                        const _editContentData = { ...contentData };
-                                        _editContentData.year = +e.target.value;
-                                        setContentData(_editContentData);
+                                        const _contentData = { ...contentData };
+                                        _contentData.year = +e.target.value;
+                                        setContentData(_contentData);
                                     }
                                 }}
                                 onChange={(e: any) => {
                                     if (e.key === "Enter") commitTheaterData();
                                     else {
-                                        const _editContentData = { ...contentData };
-                                        _editContentData.year = +e.target.value;
-                                        setContentData(_editContentData);
+                                        const _contentData = { ...contentData };
+                                        _contentData.year = +e.target.value;
+                                        setContentData(_contentData);
                                     }
                                 }} />
                         },
@@ -243,7 +246,7 @@ const Theater: NextPage = () => {
                                     const img = new window.Image();
                                     img.src = _e.target.result;
                                     img.onload = function () {
-                                        const _editContentData = { ...contentData };
+                                        const _contentData = { ...contentData };
                                         let [width, height] = [img.width, img.height];
                                         if (width > 650 && height > 860) {
                                             if (width > height) {
@@ -260,13 +263,13 @@ const Theater: NextPage = () => {
                                             width = Math.round(width * 860 / height);
                                             height = 860;
                                         }
-                                        _editContentData["img"] = {
+                                        _contentData["img"] = {
                                             filename: e.target.files[0].name,
                                             width,
                                             height,
                                             file: e.target.files[0]
                                         };
-                                        setContentData(_editContentData);
+                                        setContentData(_contentData);
                                     };
                                 };
                                 fileReader.readAsDataURL(e.target.files[0]);
@@ -277,9 +280,9 @@ const Theater: NextPage = () => {
                             component: <input type="text" defaultValue={contentData.title} onKeyUp={(e: any) => {
                                 if (e.key === "Enter") commitTheaterData();
                                 else {
-                                    const _editContentData = { ...contentData };
-                                    _editContentData.title = e.target.value;
-                                    setContentData(_editContentData);
+                                    const _contentData = { ...contentData };
+                                    _contentData.title = e.target.value;
+                                    setContentData(_contentData);
                                 }
                             }} />
                         },
@@ -288,9 +291,9 @@ const Theater: NextPage = () => {
                             component: <input type="text" defaultValue={contentData.theater} onKeyUp={(e: any) => {
                                 if (e.key === "Enter") commitTheaterData();
                                 else {
-                                    const _editContentData = { ...contentData };
-                                    _editContentData.theater = e.target.value;
-                                    setContentData(_editContentData);
+                                    const _contentData = { ...contentData };
+                                    _contentData.theater = e.target.value;
+                                    setContentData(_contentData);
                                 }
                             }} />
                         },
@@ -299,18 +302,18 @@ const Theater: NextPage = () => {
                             component: <input type="text" defaultValue={contentData.schedule} onKeyUp={(e: any) => {
                                 if (e.key === "Enter") commitTheaterData();
                                 else {
-                                    const _editContentData = { ...contentData };
-                                    _editContentData.schedule = e.target.value;
-                                    setContentData(_editContentData);
+                                    const _contentData = { ...contentData };
+                                    _contentData.schedule = e.target.value;
+                                    setContentData(_contentData);
                                 }
                             }} />
                         },
                         {
                             label: "씬",
                             component: <SceneTodoList scenes={contentData.scenes} onSetScene={async sceneImgFiles => {
-                                const _editContentData = { ...contentData };
+                                const _contentData = { ...contentData };
                                 const files = sceneImgFiles.filter(file => file != null);
-                                _editContentData.scenes = files.map(() => null);
+                                _contentData.scenes = files.map(() => null);
 
                                 let readCount = 0;
 
@@ -320,7 +323,7 @@ const Theater: NextPage = () => {
                                         const img = new window.Image();
                                         img.src = e.target.result;
                                         img.onload = () => {
-                                            _editContentData.scenes[i] = {
+                                            _contentData.scenes[i] = {
                                                 filename: file.name,
                                                 width: img.width,
                                                 height: img.height,
@@ -334,7 +337,7 @@ const Theater: NextPage = () => {
                                 while (readCount < files.length)
                                     await new Promise(resolve => setTimeout(resolve, 0));
 
-                                setContentData(_editContentData);
+                                setContentData(_contentData);
                             }} />
                         }
                     ]}

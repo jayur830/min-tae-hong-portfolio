@@ -38,6 +38,10 @@ const moviesReducer = (state: MoviesState = initialState, action: any) => {
             ...state,
             ...action.payload
         };
+    case "REMOVE_MOVIES_YEAR":
+        const data = { ...state };
+        delete data[action.payload.year];
+        return data;
     case "INCREASE_MOVIES_SCENE_PAGE": {
         const _state = { ...state };
         const { year, i } = action.payload;
