@@ -44,3 +44,4 @@ yarn-error.log*
 **/public/*.gif
 **/public/*.mp4
 **/public/*.avi
+**/references/
