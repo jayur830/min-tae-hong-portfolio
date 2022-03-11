@@ -386,10 +386,18 @@ body {
 
 @media screen and (max-width: 1120px) {
     footer.app-footer {
-        padding: 30px 20px !important;
+        padding: 20px 10px !important;
 
         > div {
             font-size: 7px !important;
+        }
+
+        table {
+            width: 100%;
+
+            input[type=text] {
+                width: 100% !important;
+            }
         }
     }
 }
@@ -401,4 +409,7 @@ body {
 @import "scene";
 @import "theater";
 @import "contact";
+@import "content_edit";
+@import "scene_todo_list";
+@import "video_modal";
 @import "~animate.css";

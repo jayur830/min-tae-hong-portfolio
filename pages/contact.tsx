@@ -18,10 +18,6 @@ const Contact: NextPage = () => {
                                     <td className="font-smoothing">EMAIL.</td>
                                     <td className="font-smoothing">{contactState.email}</td>
                                 </tr>
-                                <tr>
-                                    <td className="font-smoothing">TEL.</td>
-                                    <td className="font-smoothing">{contactState.tel}</td>
-                                </tr>
                             </tbody>
                         ): (
                             <tbody>
@@ -31,12 +27,6 @@ const Contact: NextPage = () => {
                                         {contactState.email}
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td className="font-smoothing">
-                                        TEL.<br />
-                                        {contactState.tel}
-                                    </td>
-                                </tr>
                             </tbody>
                         )}
                     </table>
@@ -44,7 +34,7 @@ const Contact: NextPage = () => {
             </div>
             <div>
                 <div>
-                    <Image src={"/" + contactState.img.filename} width={contactState.img.width} height={contactState.img.height} draggable={false} />
+                    <Image src={"/" + contactState.img.filename} width={contactState.img.width} height={contactState.img.height} draggable={false} alt="Contact" />
                 </div>
             </div>
         </section>

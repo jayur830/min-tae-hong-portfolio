@@ -54,6 +54,7 @@ section.movies {
                         border: 1px solid black;
                         padding: 5px 20px;
                         cursor: pointer;
+                        z-index: 90;
                         transition: background-color 0.15s, color 0.15s;
 
                         &:hover {
@@ -157,6 +158,26 @@ section.movies {
             }
         }
     }
+
+    .content-add-btn {
+        text-align: center;
+        margin: 100px 0 50px 0;
+
+        svg {
+            width: 70px;
+            height: 70px;
+            cursor: pointer;
+            transition: color 0.2s;
+
+            &:hover {
+                color: #a5a5a5;
+            }
+
+            &:active {
+                color: #505050;
+            }
+        }
+    }
 }
 
 .dark-mode section.movies div.year-block div.movies-block .scenes svg {
@@ -175,7 +196,7 @@ section.movies {
     }
 }
 
-@media screen and (max-width: 1120px){
+@media screen and (max-width: 1120px) {
     section.movies div.year-block {
         width: 100%;
         padding: 0 20px;
@@ -216,9 +237,7 @@ section.movies {
 
                         li {
                             width: calc(100% / 3) !important;
-
-                            img {
-                            }
+                            padding: 0 3px;
                         }
                     }
                 }

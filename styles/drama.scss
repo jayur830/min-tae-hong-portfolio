@@ -157,6 +157,26 @@ section.drama {
             }
         }
     }
+
+    .content-add-btn {
+        text-align: center;
+        margin: 100px 0 50px 0;
+
+        svg {
+            width: 70px;
+            height: 70px;
+            cursor: pointer;
+            transition: color 0.2s;
+
+            &:hover {
+                color: #a5a5a5;
+            }
+
+            &:active {
+                color: #505050;
+            }
+        }
+    }
 }
 
 .dark-mode section.drama div.year-block div.drama-block .scenes svg {
@@ -175,7 +195,7 @@ section.drama {
     }
 }
 
-@media screen and (max-width: 1120px){
+@media screen and (max-width: 1120px) {
     section.drama div.year-block {
         width: 100%;
         padding: 0 20px;
@@ -218,9 +238,7 @@ section.drama {
 
                         li {
                             width: calc(100% / 3) !important;
-
-                            img {
-                            }
+                            padding: 0 3px;
                         }
                     }
                 }

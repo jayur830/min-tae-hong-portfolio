@@ -12,13 +12,21 @@ section.contact {
                 vertical-align: middle;
 
                 table {
-                    width: 100px;
-                    margin: 0 250px 0 auto;
+                    width: 520px;
+                    margin: 0 100px 0 auto;
 
                     td {
                         font-size: 18px;
                         text-align: left;
                         padding: 30px 20px;
+
+                        input {
+                            width: 100%;
+                        }
+
+                        &:last-child {
+                            width: 200px;
+                        }
                     }
                 }
             }

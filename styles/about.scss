@@ -22,6 +22,18 @@ section.about {
                                 font-size: 18px;
                                 text-align: left;
                                 padding: 10px 20px;
+
+                                &:nth-child(3) {
+                                    width: 120px;
+
+                                    svg {
+                                        margin: 0 5px;
+                                    }
+
+                                    button {
+                                        margin: 5px 0;
+                                    }
+                                }
                             }
                         }
                     }
@@ -161,13 +173,19 @@ section.about {
                                     height: 200px;
                                 }
 
-                                &:last-child svg {
-                                    width: 20px;
-                                    cursor: pointer;
-                                    transition: color 0.15s ease;
+                                &:last-child {
+                                    svg {
+                                        width: 20px;
+                                        cursor: pointer;
+                                        transition: color 0.15s ease;
 
-                                    &:hover {
-                                        color: #898989;
+                                        &:hover {
+                                            color: #898989;
+                                        }
+
+                                        &:active {
+                                            color: #4e4e4e;
+                                        }
                                     }
                                 }
                             }
@@ -227,31 +245,86 @@ section.about {
 
         > div {
             &.content {
-                display: block;
+                display: block !important;
                 width: 100%;
 
                 > div {
-                    flex: 1 !important;
+                    display: block;
+
+                    &:first-child {
+                        margin: 0 auto !important;
+                        padding: 10px;
+
+                        img {
+                            width: calc(100% - 50px);
+                            height: auto;
+                        }
+                    }
 
                     &:last-child {
                         table {
                             width: 100% !important;
                             margin: 0 auto !important;
 
-                            tbody td {
-                                font-size: 13px;
-                                width: calc(50% - 60px);
-                                padding: 10px 30px;
+                            tbody tr {
+                                td {
+                                    font-size: 13px;
+                                    width: calc(50% - 60px);
+                                    padding: 5px;
+
+                                    &:first-child {
+                                        width: 130px !important;
+                                    }
+
+                                    &:nth-child(3) {
+                                        width: 70px;
+
+                                        svg {
+                                            width: 15px;
+                                            height: 15px;
+                                            margin: 0 5px;
+                                            cursor: pointer;
+                                            transition: color .15s ease;
+
+                                            &:hover {
+                                                color: #898989;
+                                            }
+
+                                            &:active {
+                                                color: #4e4e4e;
+                                            }
+                                        }
+
+                                        button {
+                                            margin: 3px 0;
+                                        }
+                                    }
+
+                                    input {
+                                        width: 100%;
+                                    }
+                                }
+
+                                &:last-child td {
+                                    text-align: center;
+                                    padding: 30px;
+
+                                    svg {
+                                        width: 20px;
+                                        height: 20px;
+                                        cursor: pointer;
+                                        transition: color .15s ease;
+
+                                        &:hover {
+                                            color: #898989;
+                                        }
+
+                                        &:active {
+                                            color: #4e4e4e;
+                                        }
+                                    }
+                                }
                             }
-                        }
-                    }
-
-                    &:first-child {
-                        margin: 0 auto !important;
-
-                        img {
-                            width: calc(100% - 50px);
-                            height: auto;
                         }
                     }
                 }

@@ -1,13 +1,17 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-import fs from "fs";
+import About from "../../models/about";
+import mongoose from "mongoose";
 
 const writeComment = (request: NextApiRequest, response: NextApiResponse) => {
-    fs.readFile("assets/data/data.json", "utf8", (error, data) => {
-        const _data = JSON.parse(data);
-        _data.about.comments = _data.about.comments.concat(request.body);
-        fs.writeFile("assets/data/data.json", JSON.stringify(_data, null, 2), "utf8", () => null);
-    });
+    About.findOneAndUpdate({}, {
+        $push: {
+            comments: request.body
+        }
+    }, {
+        _id: false
+    }).exec();
+    response.send(200);
 };
 
 export default writeComment;

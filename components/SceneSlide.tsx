@@ -42,7 +42,7 @@ const SceneSlide: (props: Props) => JSX.Element = ({ type, year, i, scenePage, s
                                     sceneIndex: scenePage * (commonState.windowWidth > 1120 ? 5 : 3) + k,
                                     max: scenes.length
                                 })}
-                            />
+                                alt="Scene Slide Image" />
                         </li>
                     ))}
                 </ul>

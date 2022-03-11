@@ -13,15 +13,15 @@ const Index: NextPage = () => {
                     <tbody>
                         <tr>
                             <td colSpan={2}>
-                                <Image src="/photo1.png" width={1000} height={667} draggable={false} />
+                                <Image src="/photo1.png" width={1000} height={667} draggable={false} alt="" />
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <Image src="/photo2.png" width={498} height={747} draggable={false} />
+                                <Image src="/photo2.png" width={498} height={747} draggable={false} alt="" />
                             </td>
                             <td>
-                                <Image src="/photo3.png" width={498} height={747} draggable={false} />
+                                <Image src="/photo3.png" width={498} height={747} draggable={false} alt="" />
                             </td>
                         </tr>
                     </tbody>
@@ -30,17 +30,17 @@ const Index: NextPage = () => {
                     <tbody>
                         <tr>
                             <td colSpan={2}>
-                                <Image src="/photo1.png" width={1000} height={667} draggable={false} />
+                                <Image src="/photo1.png" width={1000} height={667} draggable={false} alt="" />
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <Image src="/photo2.png" width={1000} height={1500} draggable={false} />
+                                <Image src="/photo2.png" width={1000} height={1500} draggable={false} alt="" />
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <Image src="/photo3.png" width={1000} height={1500} draggable={false} />
+                                <Image src="/photo3.png" width={1000} height={1500} draggable={false} alt="" />
                             </td>
                         </tr>
                     </tbody>

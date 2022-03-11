@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import DarkModeButton from "./DarkModeButton";
 import AppTemplate from "./AppTemplate";
 
-import { useInitApi } from "../hooks";
+import { useInitApi } from "../hooks/useInitApi";
 
 const AppLayout: NextPage = ({ children }) => {
     const dispatch = useDispatch();

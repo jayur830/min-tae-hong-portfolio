@@ -25,6 +25,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
+**/.env
 .env.local
 .env.development.local
 .env.test.local
@@ -37,3 +38,10 @@ yarn-error.log*
 *.tsbuildinfo
 
 **/.idea
+**/public/*.jpg
+**/public/*.jpeg
+**/public/*.png
+**/public/*.gif
+**/public/*.mp4
+**/public/*.avi
+**/references/
