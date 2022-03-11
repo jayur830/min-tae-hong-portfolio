@@ -46,7 +46,7 @@ const About: NextPage = () => {
                 height={aboutState.img.height}
                 draggable={false}
                 alt="About" />
-        </div>, []);
+        </div>, [aboutState]);
 
     return (
         <section className="about">

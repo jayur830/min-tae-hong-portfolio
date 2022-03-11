@@ -11,7 +11,7 @@ import YearBlock from "../../components/YearBlock";
 import SceneSlide from "../../components/SceneSlide";
 import ContentEdit from "../../components/ContentEdit";
 import SceneTodoList from "../../components/SceneTodoList";
-import { useImgUpload } from "../../hooks/useImgUpload";
+import { uploadImage } from "../../hooks/uploadImage";
 import TextTodoList from "../../components/TextTodoList";
 import BlackButton from "../../components/BlackButton";
 
@@ -84,9 +84,9 @@ const Drama: NextPage = () => {
                     }))
                 };
 
-                if (contentData.img) useImgUpload(contentData.img.file as File);
+                if (contentData.img) uploadImage(contentData.img.file as File);
                 if (contentData.scenes && contentData.scenes.length > 0)
-                    contentData?.scenes.forEach((scene: any) => useImgUpload(scene.file));
+                    contentData?.scenes.forEach((scene: any) => uploadImage(scene.file));
 
                 if (contentData._id !== "") {
                     fetch("/api/admin/dramas/edit", {
