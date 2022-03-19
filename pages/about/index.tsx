@@ -8,7 +8,7 @@ import dayjs from "dayjs";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import Line from "../components/Line";
+import Line from "../../components/Line";
 
 const About: NextPage = () => {
     const commonState = useSelector((state: any) => state.common);
@@ -45,7 +45,7 @@ const About: NextPage = () => {
                 width={aboutState.img.width}
                 height={aboutState.img.height}
                 draggable={false}
-                alt="About" />
+                alt="Index" />
         </div>, [aboutState]);
 
     return (

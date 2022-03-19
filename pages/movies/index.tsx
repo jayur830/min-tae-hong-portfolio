@@ -3,11 +3,11 @@ import { NextPage } from "next";
 import { useSelector } from "react-redux";
 import Image from "next/image";
 
-import Scene from "../components/Scene";
-import YearBlock from "../components/YearBlock";
-import SceneSlide from "../components/SceneSlide";
-import BlackButton from "../components/BlackButton";
-import VideoModal from "../components/VideoModal";
+import Scene from "../../components/Scene";
+import YearBlock from "../../components/YearBlock";
+import SceneSlide from "../../components/SceneSlide";
+import BlackButton from "../../components/BlackButton";
+import VideoModal from "../../components/VideoModal";
 
 const Movies: NextPage = () => {
     const moviesState = useSelector((state: any) => state.movies);
@@ -32,7 +32,7 @@ const Movies: NextPage = () => {
                 <YearBlock key={i} year={year}>
                     {(moviesState[year] as any[]).map((obj: any, j: number) => (
                         <div key={j} className="movies-block">
-                            {obj.img && obj.img.filename !== "" ? <Image src={"/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="Movies Content Image" /> : null}
+                            {obj.img && obj.img.filename !== "" ? <Image src={"/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="Index Content Image" /> : null}
                             <div>
                                 {obj.video ? <BlackButton onClick={() => setMoviesVideo({ ...obj.video })}>VIDEO</BlackButton> : null}
                                 <h3 className="font-smoothing">{obj.title}</h3>

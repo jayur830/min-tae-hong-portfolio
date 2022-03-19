@@ -3,9 +3,9 @@ import { NextPage } from "next";
 import { useSelector } from "react-redux";
 import Image from "next/image";
 
-import Scene from "../components/Scene";
-import YearBlock from "../components/YearBlock";
-import SceneSlide from "../components/SceneSlide";
+import Scene from "../../components/Scene";
+import YearBlock from "../../components/YearBlock";
+import SceneSlide from "../../components/SceneSlide";
 
 const Drama: NextPage = () => {
     const dramaState = useSelector((state: any) => state.drama);
@@ -29,7 +29,7 @@ const Drama: NextPage = () => {
                 <YearBlock key={i} year={year}>
                     {(dramaState[year] as any[]).map((obj: any, j: number) => (
                         <div key={j} className="drama-block">
-                            {obj.img && obj.img.filename !== "" ? <Image src={"/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="Drama Content Image" /> : null}
+                            {obj.img && obj.img.filename !== "" ? <Image src={"/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="Index Content Image" /> : null}
                             <div>
                                 <h3 className="font-smoothing">{obj.title}</h3>
                                 <div className="font-smoothing">연출: {obj.director}</div>
