@@ -8,13 +8,13 @@ import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as SolidIcons from "@fortawesome/free-solid-svg-icons";
 
-import DarkModeButton from "./DarkModeButton";
-import AppTemplate from "./AppTemplate";
+import DarkModeButton from "../DarkModeButton";
+import AppTemplate from "../AppTemplate";
 
-import { useInitApi } from "../hooks/useInitApi";
+import { useInitApi } from "../../hooks/useInitApi";
 import * as Icons from "@fortawesome/free-brands-svg-icons";
-import BlackButton from "./BlackButton";
-import WhiteButton from "./WhiteButton";
+import BlackButton from "../BlackButton";
+import WhiteButton from "../WhiteButton";
 
 const AdminLayout: NextPage = ({ children }) => {
     // require("../hooks/useAuthenticate").useAuthenticate();

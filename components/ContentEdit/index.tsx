@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import BlackButton from "./BlackButton";
+import BlackButton from "../BlackButton";
 
 type ContentEditProps = {
     contents: {
