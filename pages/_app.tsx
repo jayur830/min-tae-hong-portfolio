@@ -8,16 +8,21 @@ import "../styles/globals.scss";
 import AdminLayout from "../components/AdminLayout";
 import AppLayout from "../components/AppLayout";
 import { useRouter } from "next/router";
+import { Provider } from "./Provider";
 
 const App = ({ Component, pageProps }: AppProps) => {
-    return useRouter().pathname.indexOf("/admin") !== -1 ? (
-        <AdminLayout>
-            <Component {...pageProps} />
-        </AdminLayout>
-    ) : (
-        <AppLayout>
-            <Component {...pageProps} />
-        </AppLayout>
+    return (
+        <Provider>
+            {useRouter().pathname.indexOf("/admin") !== -1 ? (
+                <AdminLayout>
+                    <Component {...pageProps} />
+                </AdminLayout>
+            ) : (
+                <AppLayout>
+                    <Component {...pageProps} />
+                </AppLayout>
+            )}
+        </Provider>
     );
 };
 

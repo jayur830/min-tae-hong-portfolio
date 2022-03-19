@@ -7,7 +7,7 @@ import Scene from "../../components/Scene";
 import YearBlock from "../../components/YearBlock";
 import SceneSlide from "../../components/SceneSlide";
 
-const Drama: NextPage = () => {
+const Dramas: NextPage = () => {
     const dramaState = useSelector((state: any) => state.drama);
 
     const [dramaScene, setDramaScene] = useState({
@@ -67,4 +67,4 @@ const Drama: NextPage = () => {
     );
 };
 
-export default Drama;
+export default Dramas;

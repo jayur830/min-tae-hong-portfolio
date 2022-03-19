@@ -1,76 +1,53 @@
-import React, { BaseSyntheticEvent, SyntheticEvent, useCallback, useMemo, useState } from "react";
+import React from "react";
 import { NextPage } from "next";
-import Image from "next/image";
-
-import { useDispatch, useSelector } from "react-redux";
-
-import dayjs from "dayjs";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import Line from "../../components/Line";
+import {
+    Provider,
+    useAbout,
+    useAboutImg,
+    usePostComment,
+    useSetComment,
+    useSetWriteComment,
+    useWriteComment
+} from "./Provider";
+import { useCommon } from "../Provider";
+import { About, Common } from "../../types";
 
 const About: NextPage = () => {
-    const commonState = useSelector((state: any) => state.common);
-    const aboutState = useSelector((state: any) => state.about);
-    const dispatch = useDispatch();
-
-    const [writeComment, setWriteComment] = useState(false);
-    const [comment, setComment] = useState("");
-    const [secret, setSecret] = useState(false);
-
-    const postComment = useCallback(() => {
-        const payload = {
-            comment,
-            date: dayjs().format("YYYY.MM.DD HH:mm"),
-            secret
-        };
-        fetch("/api/writeComment", {
-            method: "post",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
-        });
-        dispatch({
-            type: "ADD_ABOUT_COMMENT",
-            payload
-        });
-        setComment("");
-        setWriteComment(false);
-    }, [dispatch, comment, secret]);
-
-    const aboutImg = useMemo(() =>
-        <div>
-            <Image
-                src={"/" + aboutState.img.filename}
-                width={aboutState.img.width}
-                height={aboutState.img.height}
-                draggable={false}
-                alt="Index" />
-        </div>, [aboutState]);
+    const common = useCommon() as Common;
+    const about = useAbout() as About;
+    const writeComment = useWriteComment();
+    const setWriteComment = useSetWriteComment();
+    const setComment = useSetComment();
+    const postComment = usePostComment();
+    const aboutImg = useAboutImg();
 
     return (
         <section className="about">
             <div className="content">
-                {commonState.windowWidth <= 1120 ? aboutImg : null}
+                {common.windowWidth <= 1120 ? aboutImg : null}
                 <div>
                     <div>
                         <table>
                             <tbody>
-                                {aboutState.metadata.map((obj: any, i: number) => (
+                                {about ? about.metadata.map((obj: any, i: number) => (
                                     <tr key={i}>
                                         <td className="font-smoothing">{obj.label}.</td>
                                         <td className="font-smoothing">{obj.value}</td>
                                     </tr>
-                                ))}
+                                )) : null}
                             </tbody>
                         </table>
                     </div>
                 </div>
-                {commonState.windowWidth > 1120 ? aboutImg : null}
+                {common.windowWidth > 1120 ? aboutImg : null}
             </div>
             <div className="comment">
                 <h2>Comments</h2>
-                {aboutState.comments.map((obj: { comment: string, date: string, secret: boolean }, i: number) => (
+                {about ? about.comments.map((obj: { comment: string, date: string, secret: boolean }, i: number) => (
                     <div key={`comment-${i}`} className="comment-block">
                         <div>
                             <FontAwesomeIcon size="1x" icon={faUserCircle} style={{
@@ -85,7 +62,7 @@ const About: NextPage = () => {
                             {obj.secret ? "비밀 댓글입니다." : obj.comment}
                         </div>
                     </div>
-                ))}
+                )) : null}
                 {writeComment ? (
                     <div key="comment-new" className="comment-block">
                         <div>
@@ -114,4 +91,8 @@ const About: NextPage = () => {
     );
 };
 
-export default About;
+export default () => (
+    <Provider>
+        <About />
+    </Provider>
+);
