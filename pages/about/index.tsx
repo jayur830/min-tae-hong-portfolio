@@ -14,11 +14,10 @@ import {
     useWriteComment
 } from "./Provider";
 import { useCommon } from "../Provider";
-import { About, Common } from "../../types";
 
 const About: NextPage = () => {
-    const common = useCommon() as Common;
-    const about = useAbout() as About;
+    const common = useCommon();
+    const about = useAbout();
     const writeComment = useWriteComment();
     const setWriteComment = useSetWriteComment();
     const setComment = useSetComment();
@@ -33,12 +32,12 @@ const About: NextPage = () => {
                     <div>
                         <table>
                             <tbody>
-                                {about ? about.metadata.map((obj: any, i: number) => (
+                                {about.metadata.map((obj: any, i: number) => (
                                     <tr key={i}>
                                         <td className="font-smoothing">{obj.label}.</td>
                                         <td className="font-smoothing">{obj.value}</td>
                                     </tr>
-                                )) : null}
+                                ))}
                             </tbody>
                         </table>
                     </div>
@@ -47,7 +46,7 @@ const About: NextPage = () => {
             </div>
             <div className="comment">
                 <h2>Comments</h2>
-                {about ? about.comments.map((obj: { comment: string, date: string, secret: boolean }, i: number) => (
+                {about.comments.map((obj: { comment: string, date: string, secret: boolean }, i: number) => (
                     <div key={`comment-${i}`} className="comment-block">
                         <div>
                             <FontAwesomeIcon size="1x" icon={faUserCircle} style={{
@@ -62,7 +61,7 @@ const About: NextPage = () => {
                             {obj.secret ? "비밀 댓글입니다." : obj.comment}
                         </div>
                     </div>
-                )) : null}
+                ))}
                 {writeComment ? (
                     <div key="comment-new" className="comment-block">
                         <div>

@@ -3,7 +3,7 @@ import { Common } from "../types";
 import constate from "constate";
 
 const AppContext = () => {
-    const [common, setCommon] = useState<Common | null>({
+    const [common, setCommon] = useState<Common>({
         title: "",
         headerTitle: "",
         darkMode: false,

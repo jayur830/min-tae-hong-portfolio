@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import type { NextPage } from "next";
 import Image from "next/image";
-import { useSelector } from "react-redux";
+import { useCommon } from "./Provider";
 
-const Index: NextPage = () => {
-    const commonState = useSelector((state: any) => state.common);
+const Home: NextPage = () => {
+    const common = useCommon();
 
     return (
         <section className="home">
-            {commonState.windowWidth > 1120 ?
+            {common.windowWidth > 1120 ?
                 <table>
                     <tbody>
                         <tr>
@@ -49,4 +49,4 @@ const Index: NextPage = () => {
     );
 };
 
-export default Index;
+export default Home;

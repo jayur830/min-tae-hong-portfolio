@@ -5,7 +5,29 @@ import dayjs from "dayjs";
 import Image from "next/image";
 
 const AboutContext = () => {
-    const [about, setAbout] = useState<About | null>(null);
+    const [about, setAbout] = useState<About>({
+        name: "",
+        birth: "",
+        info: "",
+        metadata: [
+            {
+                label: "",
+                value: ""
+            }
+        ],
+        img: {
+            filename: "",
+            width: 0,
+            height: 0
+        },
+        comments: [
+            {
+                comment: "",
+                date: "",
+                secret: false
+            }
+        ]
+    });
     useEffect(() => {
         fetch("/api/about/data")
             .then(response => response.json())
