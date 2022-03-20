@@ -8,29 +8,28 @@ import YearBlock from "../../components/YearBlock";
 import SceneSlide from "../../components/SceneSlide";
 import BlackButton from "../../components/BlackButton";
 import VideoModal from "../../components/VideoModal";
+import {
+    Provider,
+    useMovies,
+    useMoviesScene,
+    useMoviesVideo,
+    useSetMoviesScene,
+    useSetMoviesVideo, useYears
+} from "./Provider";
 
 const Movies: NextPage = () => {
-    const moviesState = useSelector((state: any) => state.movies);
-
-    const [moviesScene, setMoviesScene] = useState({
-        year: "",
-        moviesIndex: -1,
-        sceneIndex: -1,
-        max: -1
-    });
-    const [moviesVideo, setMoviesVideo] = useState<{ filename: string, width: number, height: number } | null>(null);
-
-    const years = useMemo(() => {
-        const years = Object.keys(moviesState);
-        years.sort((a, b) => a < b ? 1 : -1);
-        return years;
-    }, [moviesState]);
+    const movies = useMovies();
+    const moviesScene = useMoviesScene();
+    const setMoviesScene = useSetMoviesScene();
+    const moviesVideo = useMoviesVideo();
+    const setMoviesVideo = useSetMoviesVideo();
+    const years = useYears();
 
     return (
         <section className="movies">
             {years.map((year, i) => (
                 <YearBlock key={i} year={year}>
-                    {(moviesState[year] as any[]).map((obj: any, j: number) => (
+                    {(movies[year] as any[]).map((obj: any, j: number) => (
                         <div key={j} className="movies-block">
                             {obj.img && obj.img.filename !== "" ? <Image src={"/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="Index Content Image" /> : null}
                             <div>
@@ -57,7 +56,7 @@ const Movies: NextPage = () => {
                 && moviesScene.sceneIndex !== -1
                 && moviesScene.max !== -1 ?
                 <Scene
-                    scenes={moviesState[moviesScene.year][moviesScene.moviesIndex].scenes}
+                    scenes={movies[moviesScene.year][moviesScene.moviesIndex].scenes}
                     sceneIndex={moviesScene.sceneIndex}
                     max={moviesScene.max}
                     onClose={() => setMoviesScene({
@@ -72,4 +71,8 @@ const Movies: NextPage = () => {
     );
 };
 
-export default Movies;
+export default () => (
+    <Provider>
+        <Movies />
+    </Provider>
+);

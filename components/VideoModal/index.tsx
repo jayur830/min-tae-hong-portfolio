@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { Provider, useAnimateClass, useSetAnimateClass } from "./Provider";
 
 type VideoModalProps = {
     src: {
@@ -10,7 +11,8 @@ type VideoModalProps = {
 }
 
 const VideoModal: (props: VideoModalProps) => JSX.Element = ({ src, onClose }) => {
-    const [animateClass, setAnimateClass] = useState("fadeIn");
+    const animateClass = useAnimateClass();
+    const setAnimateClass = useSetAnimateClass();
 
     return (
         <div className={"video-modal-wrap animate__animated animate__" + animateClass}>
@@ -29,4 +31,8 @@ const VideoModal: (props: VideoModalProps) => JSX.Element = ({ src, onClose }) =
     );
 };
 
-export default VideoModal;
+export default (props: VideoModalProps) => (
+    <Provider>
+        <VideoModal {...props} />
+    </Provider>
+);

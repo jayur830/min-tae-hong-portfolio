@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Common } from "../types";
 import constate from "constate";
 
-const AppContext = () => {
+const useApp = () => {
     const [common, setCommon] = useState<Common>({
         title: "",
         headerTitle: "",
@@ -22,12 +22,24 @@ const AppContext = () => {
             });
     }, [setCommon]);
 
-    return { common };
+    return {
+        common,
+        setCommon
+    };
 };
 
-const [Provider, useCommon] = constate(
-    AppContext,
-    value => value.common
+const [
+    Provider,
+    useCommon,
+    useSetCommon
+] = constate(
+    useApp,
+    value => value.common,
+    value => value.setCommon
 );
 
-export { Provider, useCommon };
+export {
+    Provider,
+    useCommon,
+    useSetCommon
+};

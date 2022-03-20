@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { Props, Provider, useProps, useSetTexts, useTexts } from "./Provider";
 
-const TextTodoList: (props: { _texts: string[], onSetText: (sceneImgFiles: (string | null)[]) => void }) => JSX.Element = ({ _texts, onSetText }) => {
-    const [texts, setTexts] = useState<string[]>(_texts);
+const TextTodoList = () => {
+    const { onSetText } = useProps();
+    const texts = useTexts();
+    const setTexts = useSetTexts();
 
     return (
         <div className="scene-todo-list">
@@ -36,4 +39,8 @@ const TextTodoList: (props: { _texts: string[], onSetText: (sceneImgFiles: (stri
     );
 };
 
-export default TextTodoList;
+export default (props: Props) => (
+    <Provider {...props}>
+        <TextTodoList />
+    </Provider>
+);

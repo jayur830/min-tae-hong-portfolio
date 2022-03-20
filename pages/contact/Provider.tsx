@@ -17,13 +17,24 @@ const ContactContext = () => {
             .then(setContact);
     }, [setContact]);
 
-    return { contact, setContact };
+    return {
+        contact,
+        setContact
+    };
 };
 
-const [Provider, useContact, useSetContact] = constate(
+const [
+    Provider,
+    useContact,
+    useSetContact
+] = constate(
     ContactContext,
     value => value.contact,
     value => value.setContact
 );
 
-export { Provider, useContact, useSetContact };
+export {
+    Provider,
+    useContact,
+    useSetContact
+};

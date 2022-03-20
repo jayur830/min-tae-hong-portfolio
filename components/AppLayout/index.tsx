@@ -1,36 +1,30 @@
-import React, { useMemo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-
+import React from "react";
 import { NextPage } from "next";
 import Link from "next/link";
-import { useRouter } from "next/router";
 
 import DarkModeButton from "../DarkModeButton";
 import AppTemplate from "../AppTemplate";
 
 import { useInitApi } from "../../hooks/useInitApi";
+import { useCommon } from "../../pages/Provider";
+import {
+    Provider,
+    useIconsHtml,
+    useLinkList,
+    useOpenSideMenu,
+    useSetIconsHtml,
+    useSetOpenSideMenu,
+} from "./Provider";
 
 const AppLayout: NextPage = ({ children }) => {
-    const dispatch = useDispatch();
-    const router = useRouter();
+    const common = useCommon();
+    const iconsHtml = useIconsHtml();
+    const setIconsHtml = useSetIconsHtml();
+    const openSideMenu = useOpenSideMenu();
+    const setOpenSideMenu = useSetOpenSideMenu();
+    const linkList = useLinkList();
 
-    const commonState = useSelector((state: any) => state.common);
-    const [iconsHtml, setIconsHtml] = useState([<React.Fragment key={0} />]);
-    const [openSideMenu, setOpenSideMenu] = useState(false);
-
-    const linkList = useMemo(() => [
-        "about",
-        "movies",
-        "drama",
-        "theater",
-        "contact"].map((val, i) =>
-        <li key={i} className={router.pathname === "/" + val ? "on" : ""}>
-            <Link scroll={false} href={"/" + val} passHref>
-                <h4>{val.toUpperCase()}</h4>
-            </Link>
-        </li>), [router]);
-
-    useInitApi(setIconsHtml);
+    // useInitApi(setIconsHtml);
 
     return (
         <AppTemplate>
@@ -38,10 +32,10 @@ const AppLayout: NextPage = ({ children }) => {
                 <DarkModeButton />
                 <div>
                     <Link href="/" passHref>
-                        <h1>{commonState.headerTitle}</h1>
+                        <h1>{common.headerTitle}</h1>
                     </Link>
                 </div>
-                {commonState.windowWidth > 1120 ? (
+                {common.windowWidth > 1120 ? (
                     <nav>
                         <ul>{linkList}</ul>
                     </nav>
@@ -63,11 +57,15 @@ const AppLayout: NextPage = ({ children }) => {
             {children}
             <footer className="app-footer">
                 <div className="font-smoothing">©Copyright 2021. All Rights Reserved.</div>
-                {commonState.windowWidth > 1120 ? null : <br />}
+                {common.windowWidth > 1120 ? null : <br />}
                 {iconsHtml}
             </footer>
         </AppTemplate>
     );
 };
 
-export default AppLayout;
+export default (props: any) => (
+    <Provider>
+        <AppLayout {...props} />
+    </Provider>
+);

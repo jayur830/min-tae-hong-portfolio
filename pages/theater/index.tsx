@@ -1,33 +1,23 @@
-import React, { useMemo, useState } from "react";
+import React from "react";
 import { NextPage } from "next";
-import { useSelector } from "react-redux";
 import Image from "next/image";
 
 import Scene from "../../components/Scene";
 import YearBlock from "../../components/YearBlock";
 import SceneSlide from "../../components/SceneSlide";
+import { Provider, useSetTheaterScene, useTheaters, useTheaterScene, useYears } from "./Provider";
 
 const Theaters: NextPage = () => {
-    const theaterState = useSelector((state: any) => state.theater);
-
-    const [theaterScene, setTheaterScene] = useState({
-        year: "",
-        theaterIndex: -1,
-        sceneIndex: -1,
-        max: -1
-    });
-
-    const years = useMemo(() => {
-        const years = Object.keys(theaterState);
-        years.sort((a, b) => a < b ? 1 : -1);
-        return years;
-    }, [theaterState]);
+    const theaters = useTheaters();
+    const theaterScene = useTheaterScene();
+    const setTheaterScene = useSetTheaterScene();
+    const years = useYears();
 
     return (
         <section className="theater">
             {years.map((year, i) => (
                 <YearBlock key={i} year={year}>
-                    {(theaterState[year] as any[]).map((obj: any, j: number) => (
+                    {(theaters[year] as any[]).map((obj: any, j: number) => (
                         <div key={j} className="theater-block">
                             {obj.img && obj.img.filename !== "" ? <Image src={"/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="Index Content Image" /> : null}
                             <div>
@@ -52,7 +42,7 @@ const Theaters: NextPage = () => {
                 && theaterScene.sceneIndex !== -1
                 && theaterScene.max !== -1 ?
                     <Scene
-                        scenes={theaterState[theaterScene.year][theaterScene.theaterIndex].scenes}
+                        scenes={theaters[theaterScene.year][theaterScene.theaterIndex].scenes}
                         sceneIndex={theaterScene.sceneIndex}
                         max={theaterScene.max}
                         onClose={() => setTheaterScene({
@@ -66,4 +56,8 @@ const Theaters: NextPage = () => {
     );
 };
 
-export default Theaters;
+export default () => (
+    <Provider>
+        <Theaters />
+    </Provider>
+);

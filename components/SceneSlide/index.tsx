@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
+import { useCommon } from "../../pages/Provider";
 
 type Props = {
     type: "movies" | "drama" | "theater",
@@ -15,7 +16,7 @@ type Props = {
 
 const SceneSlide: (props: Props) => JSX.Element = ({ type, year, i, scenePage, scenes, setScene }) => {
     const dispatch = useDispatch();
-    const commonState = useSelector((state: any) => state.common);
+    const common = useCommon();
 
     return (
         <div className="scenes">
@@ -30,7 +31,7 @@ const SceneSlide: (props: Props) => JSX.Element = ({ type, year, i, scenePage, s
                         })} />
                 </div>
                 <ul className="no-scrollbar">
-                    {scenes.slice(scenePage * (commonState.windowWidth > 1120 ? 5 : 3), Math.min((scenePage + 1) * (commonState.windowWidth > 1120 ? 5 : 3), scenes.length)).map((scene: any, k: number) => (
+                    {scenes.slice(scenePage * (common.windowWidth > 1120 ? 5 : 3), Math.min((scenePage + 1) * (common.windowWidth > 1120 ? 5 : 3), scenes.length)).map((scene: any, k: number) => (
                         <li key={k}>
                             <Image
                                 src={"/" + scene.filename}
@@ -39,7 +40,7 @@ const SceneSlide: (props: Props) => JSX.Element = ({ type, year, i, scenePage, s
                                 onClick={() => setScene({
                                     year,
                                     [`${type}Index`]: i,
-                                    sceneIndex: scenePage * (commonState.windowWidth > 1120 ? 5 : 3) + k,
+                                    sceneIndex: scenePage * (common.windowWidth > 1120 ? 5 : 3) + k,
                                     max: scenes.length
                                 })}
                                 alt="Scene Slide Image" />
@@ -49,8 +50,8 @@ const SceneSlide: (props: Props) => JSX.Element = ({ type, year, i, scenePage, s
                 <div>
                     <FontAwesomeIcon
                         icon={faChevronRight}
-                        className={scenePage === Math.ceil(scenes.length / (commonState.windowWidth > 1120 ? 5 : 3)) - 1 ? "disable" : ""}
-                        onClick={() => scenePage === Math.ceil(scenes.length / (commonState.windowWidth > 1120 ? 5 : 3)) - 1 ? null : dispatch({
+                        className={scenePage === Math.ceil(scenes.length / (common.windowWidth > 1120 ? 5 : 3)) - 1 ? "disable" : ""}
+                        onClick={() => scenePage === Math.ceil(scenes.length / (common.windowWidth > 1120 ? 5 : 3)) - 1 ? null : dispatch({
                             type: `INCREASE_${type.toUpperCase()}_SCENE_PAGE`,
                             payload: { year, i }
                         })} />

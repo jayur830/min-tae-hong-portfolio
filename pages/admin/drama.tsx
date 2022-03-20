@@ -357,7 +357,9 @@ const Drama: NextPage = () => {
                         }
                     ]}
                     onSubmit={commitDramasData}
-                    onClose={() => setContentData(null)} /> :
+                    onClose={() => {
+                        setContentData(null);
+                    }} /> :
                 null}
         </section>
     );

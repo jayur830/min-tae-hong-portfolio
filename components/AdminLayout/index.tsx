@@ -1,9 +1,6 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-
+import React from "react";
 import { NextPage } from "next";
 import Link from "next/link";
-import { useRouter } from "next/router";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as SolidIcons from "@fortawesome/free-solid-svg-icons";
@@ -11,112 +8,77 @@ import * as SolidIcons from "@fortawesome/free-solid-svg-icons";
 import DarkModeButton from "../DarkModeButton";
 import AppTemplate from "../AppTemplate";
 
-import { useInitApi } from "../../hooks/useInitApi";
-import * as Icons from "@fortawesome/free-brands-svg-icons";
 import BlackButton from "../BlackButton";
 import WhiteButton from "../WhiteButton";
 
+import { useCommon, useSetCommon } from "../../pages/Provider";
+import {
+    Provider,
+    useFooter,
+    useSetFooter,
+    useIconsHtml,
+    useSetIconsHtml,
+    useOpenSideMenu,
+    useSetOpenSideMenu,
+    useEditTitle,
+    useSetEditTitle,
+    useEditHeaderTitle,
+    useSetEditHeaderTitle,
+    useEditSnsList,
+    useSetEditSnsList,
+    useTitle,
+    useSetTItle,
+    useHeaderTitle,
+    useSetHeaderTItle,
+    useSnsList,
+    useSetSnsList,
+    useCommitTitle,
+    useCommitHeaderTitle,
+    useCommitFooterSnsList,
+    useLinkList,
+    useSnsOptions
+} from "./Provider";
+
 const AdminLayout: NextPage = ({ children }) => {
-    // require("../hooks/useAuthenticate").useAuthenticate();
-
-    const dispatch = useDispatch();
-    const router = useRouter();
-
-    const commonState = useSelector((state: any) => state.common);
-    const footerState = useSelector((state: any) => state.footer);
-    const [iconsHtml, setIconsHtml] = useState([<React.Fragment key={0} />]);
-    const [openSideMenu, setOpenSideMenu] = useState(false);
-
-    const [editTitle, setEditTitle] = useState(false);
-    const [editHeaderTitle, setEditHeaderTitle] = useState(false);
-    const [editSnsList, setEditSnsList] = useState(false);
-
-    const [title, setTItle] = useState(commonState.title);
-    const [headerTitle, setHeaderTItle] = useState(commonState.headerTitle);
-    const [snsList, setSnsList] = useState(Object.freeze(footerState.sns.concat()));
-
-    const commitTitle = useCallback((_id: string, title: string) => {
-        fetch(`/api/admin/setTitle?_id=${_id}&title=${title}`);
-        dispatch({ type: "SET_COMMON_DATA", payload: { title } });
-        setEditTitle(false);
-    }, [dispatch, setEditTitle]);
-
-    const commitHeaderTitle = useCallback((_id: string, headerTitle: string) => {
-        fetch(`/api/admin/setHeaderTitle?_id=${_id}&headerTitle=${headerTitle}`);
-        dispatch({ type: "SET_COMMON_DATA", payload: { headerTitle } });
-        setEditHeaderTitle(false);
-    }, [dispatch, setEditHeaderTitle]);
-
-    const commitFooterSnsList = useCallback((_id: string, sns: { name: string, url: string }[]) => {
-        fetch("/api/admin/footer/setSns", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                _id,
-                sns
-            })
-        });
-        dispatch({ type: "SET_FOOTER_SNS_LIST", payload: { sns } });
-        setEditSnsList(false);
-        setSnsList(sns);
-        setIconsHtml(sns.map((obj: { name: string, url: string }, i: number) => {
-            switch (obj.name) {
-            case "instagram": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={Icons.faInstagram} /></a>;
-            case "facebook": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={Icons.faFacebook} /></a>;
-            case "twitter": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={Icons.faTwitter} /></a>;
-            case "line": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={Icons.faLine} /></a>;
-            case "youtube": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={Icons.faYoutube} /></a>;
-            case "pinterest": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={Icons.faPinterest} /></a>;
-            case "tiktok": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={Icons.faTiktok} /></a>;
-            case "snapchat": return <a key={i + "-" + obj.name} href={obj.url} target="_blank" rel="noreferrer"><FontAwesomeIcon size="1x" icon={Icons.faSnapchat} /></a>;
-            default: return <a key={i} href="#" />;
-            }
-        }));
-    }, [dispatch, setEditSnsList, setSnsList, setIconsHtml]);
-
-    const linkList = useMemo(() => [
-        "about",
-        "movies",
-        "drama",
-        "theater",
-        "contact"].map((val, i) =>
-        <li key={i} className={router.pathname === "/admin/" + val ? "on" : ""}>
-            <Link scroll={false} href={"/admin/" + val} passHref>
-                <h4>{val.toUpperCase()}</h4>
-            </Link>
-        </li>), [router]);
-
-    const snsOptions = useMemo(() => [
-        "Instagram",
-        "Facebook",
-        "Twitter",
-        "Line",
-        "Youtube",
-        "Pinterest",
-        "Tiktok",
-        "Snapchat"
-    ].map((sns, i) => <option key={i} value={sns.toLowerCase()}>{sns}</option>), []);
-
-    useInitApi(setIconsHtml, setSnsList);
+    const common = useCommon();
+    const footer = useFooter();
+    const iconsHtml = useIconsHtml();
+    const openSideMenu = useOpenSideMenu();
+    const setOpenSideMenu = useSetOpenSideMenu();
+    const editTitle = useEditTitle();
+    const setEditTitle = useSetEditTitle();
+    const editHeaderTitle = useEditHeaderTitle();
+    const setEditHeaderTitle = useSetEditHeaderTitle();
+    const editSnsList = useEditSnsList();
+    const setEditSnsList = useSetEditSnsList();
+    const title = useTitle();
+    const setTItle = useSetTItle();
+    const headerTitle = useHeaderTitle();
+    const setHeaderTItle = useSetHeaderTItle();
+    const snsList = useSnsList();
+    const setSnsList = useSetSnsList();
+    const commitTitle = useCommitTitle();
+    const commitHeaderTitle = useCommitHeaderTitle();
+    const commitFooterSnsList = useCommitFooterSnsList();
+    const linkList = useLinkList();
+    const snsOptions = useSnsOptions();
 
     return (
         <AppTemplate>
             {editTitle ? (
                 <article className="title">
                     <h4>페이지 타이틀.</h4>
-                    <input type="text" defaultValue={commonState.title} onKeyUp={(e: any) => {
-                        if (e.key === "Enter") commitTitle(commonState._id, e.target.value);
+                    <input type="text" defaultValue={common.title} onKeyUp={(e: any) => {
+                        if (e.key === "Enter") commitTitle(common._id as string, e.target.value);
                         else setTItle(e.target.value);
                     }} />
-                    <BlackButton onClick={() => commitTitle(commonState._id, title)}>등록</BlackButton>
+                    <BlackButton onClick={() => commitTitle(common._id as string, title)}>등록</BlackButton>
                     <BlackButton onClick={() => setEditTitle(false)}>취소</BlackButton>
                 </article>
             ) : (
                 <article className="title">
                     <h4>페이지 타이틀.</h4>
-                    <span>{commonState.title}</span>
+                    <span>{common.title}</span>
                     {/*<BlackButton onClick={() => setEditTitle(true)}>편집</BlackButton>*/}
                     <button onClick={() => setEditTitle(true)}>편집</button>
                 </article>
@@ -125,21 +87,21 @@ const AdminLayout: NextPage = ({ children }) => {
                 <DarkModeButton />
                 {editHeaderTitle ?
                     <div>
-                        <h1><input type="text" defaultValue={commonState.headerTitle} onKeyUp={(e: any) => {
-                            if (e.key === "Enter") commitHeaderTitle(commonState._id, e.target.value);
+                        <h1><input type="text" defaultValue={common.headerTitle} onKeyUp={(e: any) => {
+                            if (e.key === "Enter") commitHeaderTitle(common._id as string, e.target.value);
                             else setHeaderTItle(e.target.value);
                         }} /></h1>
-                        <BlackButton onClick={() => commitHeaderTitle(commonState._id, headerTitle)}>등록</BlackButton>
+                        <BlackButton onClick={() => commitHeaderTitle(common._id as string, headerTitle)}>등록</BlackButton>
                         <BlackButton onClick={() => setEditHeaderTitle(false)}>취소</BlackButton>
                     </div> :
                     <div>
                         <Link href="/admin" passHref>
-                            <h1>{commonState.headerTitle}</h1>
+                            <h1>{common.headerTitle}</h1>
                         </Link>
                         {/*<BlackButton onClick={() => setEditHeaderTitle(true)}>편집</BlackButton>*/}
                         <button onClick={() => setEditHeaderTitle(true)}>편집</button>
                     </div>}
-                {commonState.windowWidth > 1120 ? (
+                {common.windowWidth > 1120 ? (
                     <nav>
                         <ul>{linkList}</ul>
                     </nav>
@@ -161,7 +123,7 @@ const AdminLayout: NextPage = ({ children }) => {
             {children}
             <footer className="app-footer">
                 <div className="font-smoothing">©Copyright 2021. All Rights Reserved.</div>
-                {commonState.windowWidth > 1120 ? null : <br />}
+                {common.windowWidth > 1120 ? null : <br />}
                 {editSnsList ? (
                     <>
                         <table>
@@ -178,7 +140,7 @@ const AdminLayout: NextPage = ({ children }) => {
                                         <td>
                                             <input type="text" defaultValue={sns.url} onKeyUp={(e: any) => {
                                                 if (e.key === "Enter")
-                                                    commitFooterSnsList(footerState._id, snsList.filter((obj: { name: string, url: string }) => obj.url !== ""));
+                                                    commitFooterSnsList(footer._id as string, snsList.filter((obj: { name: string, url: string }) => obj.url !== ""));
                                                 else {
                                                     const _snsList = snsList.concat();
                                                     _snsList[i].url = e.target.value;
@@ -205,9 +167,9 @@ const AdminLayout: NextPage = ({ children }) => {
                             <tfoot>
                             <tr>
                                 <td colSpan={3}>
-                                    <WhiteButton onClick={() => commitFooterSnsList(footerState._id, snsList.filter((obj: { name: string, url: string }) => obj.url !== ""))}>등록</WhiteButton>
+                                    <WhiteButton onClick={() => commitFooterSnsList(footer._id as string, snsList.filter((obj: { name: string, url: string }) => obj.url !== ""))}>등록</WhiteButton>
                                     <WhiteButton onClick={() => {
-                                        setSnsList(footerState.sns.concat());
+                                        setSnsList(footer.sns.concat());
                                         setEditSnsList(false);
                                     }}>취소</WhiteButton>
                                 </td>
@@ -227,4 +189,10 @@ const AdminLayout: NextPage = ({ children }) => {
     );
 };
 
-export default AdminLayout;
+const _AdminLayout = (props: any) => (
+    <Provider>
+        <AdminLayout {...props} />
+    </Provider>
+);
+
+export default _AdminLayout;

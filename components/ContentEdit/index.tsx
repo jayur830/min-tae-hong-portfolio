@@ -1,17 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import BlackButton from "../BlackButton";
+import { ContentEditProps, Provider, useAnimateClass, useSetAnimateClass, useProps } from "./Provider";
 
-type ContentEditProps = {
-    contents: {
-        label: string,
-        component: JSX.Element | JSX.Element[]
-    }[],
-    onSubmit: () => boolean,
-    onClose: () => void
-};
-
-const ContentEdit: (props: ContentEditProps) => JSX.Element = ({ contents, onSubmit, onClose }) => {
-    const [animateClass, setAnimateClass] = useState("fadeIn");
+const ContentEdit = () => {
+    const { contents, onSubmit, onClose } = useProps();
+    const animateClass = useAnimateClass();
+    const setAnimateClass = useSetAnimateClass();
 
     return (
         <div className={"content-edit animate__animated animate__" + animateClass}>
@@ -51,4 +45,8 @@ const ContentEdit: (props: ContentEditProps) => JSX.Element = ({ contents, onSub
     );
 };
 
-export default ContentEdit;
+export default (props: ContentEditProps) => (
+    <Provider {...props}>
+        <ContentEdit />
+    </Provider>
+);

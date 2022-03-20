@@ -1,26 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { Props, Provider, useAnimateClass, useIndex, useProps, useSetAnimateClass, useSetIndex } from "./Provider";
 
-const Scene: (props: {
-    scenes: {
-        filename: string,
-        width: number,
-        height: number
-    }[],
-    sceneIndex: number,
-    max: number,
-    onClose: () => void
-}) => JSX.Element = ({
-    scenes,
-    sceneIndex,
-    max,
-    onClose
-}) => {
-    const [index, setIndex] = useState(sceneIndex);
-    const [animateClass, setAnimateClass] = useState("fadeIn");
+const Scene = () => {
+    const {
+        scenes,
+        max,
+        onClose
+    } = useProps();
+    const index = useIndex();
+    const setIndex = useSetIndex();
+    const animateClass = useAnimateClass();
+    const setAnimateClass = useSetAnimateClass();
 
     return (
         <div className={"scene-background animate__animated animate__" + animateClass}>
@@ -61,4 +55,8 @@ const Scene: (props: {
     );
 }
 
-export default Scene;
+export default (props: Props) => (
+    <Provider {...props}>
+        <Scene />
+    </Provider>
+);

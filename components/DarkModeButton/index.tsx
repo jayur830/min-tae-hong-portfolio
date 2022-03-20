@@ -1,14 +1,23 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useCommon, useSetCommon } from "../../pages/Provider";
+import { Common } from "../../types";
 
-const DarkModeButton: () => JSX.Element = () => {
-    const dispatch = useDispatch();
-    const commonState = useSelector((state: any) => state.common);
+const DarkModeButton = () => {
+    const common = useCommon();
+    const setCommon = useSetCommon();
 
     return (
         <div className="dark-mode-btn">
-            <span className="font-smoothing">{commonState.darkMode ? "Dark" : "Light"}</span>
-            <div className="font-smoothing"><span style={{ transform: `translateX(${commonState.darkMode ? 11 : -12}px)` }} onClick={() => dispatch({ type: "SET_DARK_MODE" })} /></div>
+            <span className="font-smoothing">{common.darkMode ? "Dark" : "Light"}</span>
+            <div className="font-smoothing">
+                <span
+                    style={{ transform: `translateX(${common.darkMode ? 11 : -12}px)` }}
+                    onClick={() => setCommon((state: Common) => {
+                        const _common = { ...state };
+                        _common.darkMode = !_common.darkMode;
+                        return _common;
+                    })} />
+            </div>
         </div>
     );
 };

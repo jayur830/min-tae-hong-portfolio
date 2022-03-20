@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { Props, Provider, useFiles, useProps, useSetFiles } from "./Provider";
 
-const SceneTodoList: (props: { scenes: any[], onSetScene: (sceneImgFiles: (File | null)[]) => void }) => JSX.Element = ({ scenes, onSetScene }) => {
-    const [files, setFiles] = useState<(File | null)[]>(scenes.map(() => null));
+const SceneTodoList = () => {
+    const { onSetScene } = useProps();
+    const files = useFiles();
+    const setFiles = useSetFiles();
 
     return (
         <div className="scene-todo-list">
@@ -36,4 +39,8 @@ const SceneTodoList: (props: { scenes: any[], onSetScene: (sceneImgFiles: (File 
     );
 };
 
-export default SceneTodoList;
+export default (props: Props) => (
+    <Provider {...props}>
+        <SceneTodoList />
+    </Provider>
+);

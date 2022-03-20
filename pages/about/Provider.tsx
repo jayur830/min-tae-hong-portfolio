@@ -4,7 +4,7 @@ import constate from "constate";
 import dayjs from "dayjs";
 import Image from "next/image";
 
-const AboutContext = () => {
+const _useAbout = () => {
     const [about, setAbout] = useState<About>({
         name: "",
         birth: "",
@@ -49,7 +49,7 @@ const AboutContext = () => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
         });
-        setAbout((state: About | null) => {
+        setAbout((state: About) => {
             if (state != null) {
                 state.comments.push(payload);
             }
@@ -98,7 +98,7 @@ const [
     usePostComment,
     useAboutImg
 ] = constate(
-    AboutContext,
+    _useAbout,
     value => value.about,
     value => value.setAbout,
     value => value.writeComment,

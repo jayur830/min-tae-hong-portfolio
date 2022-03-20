@@ -1,10 +1,11 @@
-type MediaMetadata = {
+export type MediaMetadata = {
     filename: string;
     width: number;
     height: number
 };
 
 export type Common = {
+    _id?: string;
     title: string;
     headerTitle: string,
     darkMode: boolean,
@@ -12,6 +13,7 @@ export type Common = {
 };
 
 export type About = {
+    _id?: string;
     name: string;
     birth: string;
     info: string;
@@ -28,11 +30,13 @@ export type About = {
 };
 
 export type Contact = {
+    _id?: string;
     email: string;
     img: MediaMetadata;
 };
 
 export type Footer = {
+    _id?: string;
     sns: {
         name: string;
         url: string;
@@ -40,17 +44,39 @@ export type Footer = {
 };
 
 export type Movies = {
-    title: string;
-    year: number;
-    director: string;
-    actors: string[];
-    awards: string[];
-    img: MediaMetadata;
-    video: MediaMetadata;
-    scenes: MediaMetadata[]
-}[];
+    [year: string]: {
+        _id?: string,
+        title: string,
+        director: string,
+        actors: string[],
+        awards: string[],
+        img: {
+            filename: string,
+            width: number,
+            height: number
+        },
+        video: {
+            filename: string,
+            width: number,
+            height: number
+        } | {
+            url: string,
+            width: number,
+            height: number
+        } | null,
+        scenes: {
+            filename: string,
+            width: number,
+            height: number
+        }[],
+        scenePage: number,
+        scenePages: number,
+        sceneIndex: number
+    }[]
+};
 
 export type Dramas = {
+    _id?: string;
     title: string;
     year: number;
     director: string;
@@ -61,14 +87,28 @@ export type Dramas = {
 }[];
 
 export type Theaters = {
-    title: string;
-    theater: string;
-    year: number;
-    schedule: string;
-    img: MediaMetadata;
-    scenes: MediaMetadata[]
-}[];
+    [year: string]: {
+        _id?: string,
+        title: string,
+        theater: string,
+        schedule: string,
+        img: {
+            filename: string,
+            width: number,
+            height: number
+        },
+        scenes: {
+            filename: string,
+            width: number,
+            height: number
+        }[],
+        scenePage: number,
+        scenePages: number,
+        sceneIndex: number
+    }[]
+};
 
 export type Secret = {
+    _id?: string;
     password: string
 };
