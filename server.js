@@ -18,6 +18,9 @@ app.prepare()
         console.log("Successfully connected to MongoDB!");
         const server = express();
 
+        console.log("S3 Bucket name:", process.env.S3_BUCKET);
+        console.log("S3 Region:", process.env.S3_REGION);
+
         server.get("*", handle);
         server.post("*", handle);
         server.put("/api/*", handle);
