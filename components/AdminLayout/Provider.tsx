@@ -41,8 +41,8 @@ const useAdminLayout = () => {
 
 	useEffect(() => {
 		fetch("/api/footer/data")
-			.then((response) => response.json())
-			.then((data) => {
+			.then(response => response.json())
+			.then(data => {
 				setSnsList(data.sns.map((obj: Sns) => ({ ...obj })));
 				setIconsHtml(
 					data.sns.map((obj: Sns, i: number) => {
@@ -111,7 +111,7 @@ const useAdminLayout = () => {
 			setCommon(_common);
 			setEditTitle(false);
 		},
-		[setCommon, setEditTitle]
+		[common, setCommon, setEditTitle]
 	);
 
 	const commitHeaderTitle = useCallback(
@@ -122,7 +122,7 @@ const useAdminLayout = () => {
 			setCommon(_common);
 			setEditHeaderTitle(false);
 		},
-		[setCommon, setEditHeaderTitle]
+		[common, setCommon, setEditHeaderTitle]
 	);
 
 	const commitFooterSnsList = useCallback(
@@ -277,29 +277,29 @@ const [
 	useSnsOptions,
 ] = constate(
 	useAdminLayout,
-	(value) => value.footer,
-	(value) => value.setFooter,
-	(value) => value.iconsHtml,
-	(value) => value.setIconsHtml,
-	(value) => value.openSideMenu,
-	(value) => value.setOpenSideMenu,
-	(value) => value.editTitle,
-	(value) => value.setEditTitle,
-	(value) => value.editHeaderTitle,
-	(value) => value.setEditHeaderTitle,
-	(value) => value.editSnsList,
-	(value) => value.setEditSnsList,
-	(value) => value.title,
-	(value) => value.setTItle,
-	(value) => value.headerTitle,
-	(value) => value.setHeaderTItle,
-	(value) => value.snsList,
-	(value) => value.setSnsList,
-	(value) => value.commitTitle,
-	(value) => value.commitHeaderTitle,
-	(value) => value.commitFooterSnsList,
-	(value) => value.linkList,
-	(value) => value.snsOptions
+	value => value.footer,
+	value => value.setFooter,
+	value => value.iconsHtml,
+	value => value.setIconsHtml,
+	value => value.openSideMenu,
+	value => value.setOpenSideMenu,
+	value => value.editTitle,
+	value => value.setEditTitle,
+	value => value.editHeaderTitle,
+	value => value.setEditHeaderTitle,
+	value => value.editSnsList,
+	value => value.setEditSnsList,
+	value => value.title,
+	value => value.setTItle,
+	value => value.headerTitle,
+	value => value.setHeaderTItle,
+	value => value.snsList,
+	value => value.setSnsList,
+	value => value.commitTitle,
+	value => value.commitHeaderTitle,
+	value => value.commitFooterSnsList,
+	value => value.linkList,
+	value => value.snsOptions
 );
 
 export {
