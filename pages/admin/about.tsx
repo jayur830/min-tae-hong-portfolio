@@ -54,7 +54,7 @@ const About: NextPage = () => {
 	);
 
 	const removeMetadata = useCallback(
-		(removeIndex) => {
+		removeIndex => {
 			if (confirm("삭제하시겠습니까?")) {
 				const _metadata = metadata.concat();
 				_metadata.splice(removeIndex, 1);
@@ -102,13 +102,13 @@ const About: NextPage = () => {
 	const aboutImg = useMemo(
 		() => (
 			<div>
-				<Image src={"/" + aboutState.img.filename} width={aboutState.img.width} height={aboutState.img.height} draggable={false} alt="About" />
+				<Image src={"/api/file/" + aboutState.img.filename} width={aboutState.img.width} height={aboutState.img.height} draggable={false} alt="About" />
 				<br />
 				{editImg ? (
 					<>
 						<input
 							type="file"
-							onChange={(e) => {
+							onChange={e => {
 								if (e.target.files && e.target.files.length > 0) setImgFile(e.target.files[0] as any);
 							}}
 						/>
@@ -140,16 +140,14 @@ const About: NextPage = () => {
 									setEditImg(false);
 								};
 								img.src = src;
-							}}
-						>
+							}}>
 							등록
 						</BlackButton>
 						<BlackButton
 							onClick={() => {
 								setImgFile(null);
 								setEditImg(false);
-							}}
-						>
+							}}>
 							취소
 						</BlackButton>
 					</>
@@ -224,8 +222,7 @@ const About: NextPage = () => {
 															const _editMetadata = editMetadata.concat();
 															_editMetadata[i] = false;
 															setEditMetadata(_editMetadata);
-														}}
-													>
+														}}>
 														등록
 													</BlackButton>
 													<BlackButton
@@ -233,8 +230,7 @@ const About: NextPage = () => {
 															const _editMetadata = editMetadata.concat();
 															_editMetadata[i] = false;
 															setEditMetadata(_editMetadata);
-														}}
-													>
+														}}>
 														취소
 													</BlackButton>
 												</>
@@ -294,8 +290,7 @@ const About: NextPage = () => {
 														commitMetadata(aboutState._id, metadata.concat(newMetadataItem));
 														setNewMetadataItem(null);
 													}
-												}}
-											>
+												}}>
 												등록
 											</BlackButton>
 											<BlackButton onClick={() => setNewMetadataItem(null)}>취소</BlackButton>
@@ -379,8 +374,7 @@ const About: NextPage = () => {
 									postComment();
 									setComment("");
 									setWriteComment(false);
-								}}
-							>
+								}}>
 								등록
 							</BlackButton>
 						</div>

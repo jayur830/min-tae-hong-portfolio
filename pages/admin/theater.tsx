@@ -126,8 +126,8 @@ const Theater: NextPage = () => {
 							year: contentData.year,
 						}),
 					})
-						.then((response) => response.text())
-						.then((_id) => {
+						.then(response => response.text())
+						.then(_id => {
 							const dispatchData = contentData.year in theaterState ? theaterState[contentData.year].map((obj: any) => ({ ...obj })) : [];
 							dispatchData.push({
 								...payload,
@@ -153,7 +153,9 @@ const Theater: NextPage = () => {
 					{(theaterState[year] as any[]).map((obj: any, j: number) => (
 						<React.Fragment key={j}>
 							<div className="theater-block">
-								{obj.img && obj.img.filename !== "" ? <Image src={"/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="Theater Content Image" /> : null}
+								{obj.img && obj.img.filename !== "" ? (
+									<Image src={"/api/file/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="Theater Content Image" />
+								) : null}
 								<div>
 									<h3 className="font-smoothing">{obj.title}</h3>
 									<div className="font-smoothing">장소: {obj.theater}</div>
@@ -173,8 +175,7 @@ const Theater: NextPage = () => {
 											img: null,
 											scenes: [],
 										});
-									}}
-								>
+									}}>
 									편집
 								</BlackButton>
 								<BlackButton
@@ -187,8 +188,7 @@ const Theater: NextPage = () => {
 											else dispatch({ type: "REMOVE_THEATERS_YEAR", payload: { year } });
 											alert("삭제되었습니다.");
 										}
-									}}
-								>
+									}}>
 									삭제
 								</BlackButton>
 							</div>
@@ -354,15 +354,15 @@ const Theater: NextPage = () => {
 							component: (
 								<SceneTodoList
 									scenes={contentData.scenes}
-									onSetScene={async (sceneImgFiles) => {
+									onSetScene={async sceneImgFiles => {
 										const _contentData = { ...contentData };
-										const files = sceneImgFiles.filter((file) => file != null);
+										const files = sceneImgFiles.filter(file => file != null);
 										_contentData.scenes = files.map(() => null);
 
 										let readCount = 0;
 
 										sceneImgFiles
-											.filter((file) => file != null)
+											.filter(file => file != null)
 											.forEach((file: any, i) => {
 												const fileReader = new FileReader();
 												fileReader.onload = function (e: any) {
@@ -380,7 +380,7 @@ const Theater: NextPage = () => {
 												};
 												fileReader.readAsDataURL(file);
 											});
-										while (readCount < files.length) await new Promise((resolve) => setTimeout(resolve, 0));
+										while (readCount < files.length) await new Promise(resolve => setTimeout(resolve, 0));
 
 										setContentData(_contentData);
 									}}

@@ -19,8 +19,6 @@ const Consumer: NextPage = ({ children }) => {
 	const setOpenSideMenu = useSetOpenSideMenu();
 	const linkList = useLinkList();
 
-	// useInitApi(setIconsHtml);
-
 	return (
 		<AppTemplate>
 			<header className="app-header">

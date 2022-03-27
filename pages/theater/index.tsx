@@ -11,7 +11,7 @@ import SceneSlide from "@components/SceneSlide";
 // Local
 import { Provider, useSetTheaterScene, useData, useTheaterScene, useYears } from "./Provider";
 
-const Theater: NextPage = () => {
+const Consumer: NextPage = () => {
 	const theaters = useData();
 	const theaterScene = useTheaterScene();
 	const setTheaterScene = useSetTheaterScene();
@@ -23,7 +23,7 @@ const Theater: NextPage = () => {
 				<YearBlock key={i} year={year}>
 					{(theaters[year] as any[]).map((obj: any, j: number) => (
 						<div key={j} className="theater-block">
-							{obj.img && obj.img.filename !== "" ? <Image src={"/api/img/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="Index Content Image" /> : null}
+							{obj.img && obj.img.filename !== "" ? <Image src={"/api/file/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="Index Content Image" /> : null}
 							<div>
 								<h3 className="font-smoothing">{obj.title}</h3>
 								<div className="font-smoothing">장소: {obj.theater}</div>
@@ -53,8 +53,10 @@ const Theater: NextPage = () => {
 	);
 };
 
-export default () => (
+const Theater = () => (
 	<Provider>
-		<Theater />
+		<Consumer />
 	</Provider>
 );
+
+export default Theater;

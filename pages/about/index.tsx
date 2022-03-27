@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
 // Global
-import Line from "../../components/Line";
+import Line from "@components/Line";
 
 // Local
 import { useCommon } from "../Provider";

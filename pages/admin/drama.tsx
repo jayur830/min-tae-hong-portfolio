@@ -129,8 +129,8 @@ const Drama: NextPage = () => {
 							year: contentData.year,
 						}),
 					})
-						.then((response) => response.text())
-						.then((_id) => {
+						.then(response => response.text())
+						.then(_id => {
 							const dispatchData = contentData.year in dramaState ? dramaState[contentData.year].map((obj: any) => ({ ...obj })) : [];
 							dispatchData.push({
 								...payload,
@@ -156,7 +156,7 @@ const Drama: NextPage = () => {
 					{(dramaState[year] as any[]).map((obj: any, j: number) => (
 						<React.Fragment key={j}>
 							<div key={j} className="drama-block">
-								{obj.img && obj.img.filename !== "" ? <Image src={"/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="Drama Content Image" /> : null}
+								{obj.img && obj.img.filename !== "" ? <Image src={"/api/file/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="Drama Content Image" /> : null}
 								<div>
 									<h3 className="font-smoothing">{obj.title}</h3>
 									<div className="font-smoothing">연출: {obj.director}</div>
@@ -178,8 +178,7 @@ const Drama: NextPage = () => {
 											img: null,
 											scenes: [],
 										});
-									}}
-								>
+									}}>
 									편집
 								</BlackButton>
 								<BlackButton
@@ -192,8 +191,7 @@ const Drama: NextPage = () => {
 											else dispatch({ type: "REMOVE_DRAMAS_YEAR", payload: { year } });
 											alert("삭제되었습니다.");
 										}
-									}}
-								>
+									}}>
 									삭제
 								</BlackButton>
 							</div>
@@ -343,9 +341,9 @@ const Drama: NextPage = () => {
 							component: (
 								<TextTodoList
 									_texts={contentData.actors}
-									onSetText={(actorList) => {
+									onSetText={actorList => {
 										const _contentData = { ...contentData };
-										_contentData.actors = actorList.filter((actor) => actor != null && actor !== "") as string[];
+										_contentData.actors = actorList.filter(actor => actor != null && actor !== "") as string[];
 										setContentData(_contentData);
 									}}
 								/>
@@ -373,15 +371,15 @@ const Drama: NextPage = () => {
 							component: (
 								<SceneTodoList
 									scenes={contentData.scenes}
-									onSetScene={async (sceneImgFiles) => {
+									onSetScene={async sceneImgFiles => {
 										const _contentData = { ...contentData };
-										const files = sceneImgFiles.filter((file) => file != null);
+										const files = sceneImgFiles.filter(file => file != null);
 										_contentData.scenes = files.map(() => null);
 
 										let readCount = 0;
 
 										sceneImgFiles
-											.filter((file) => file != null)
+											.filter(file => file != null)
 											.forEach((file: any, i) => {
 												const fileReader = new FileReader();
 												fileReader.onload = function (e: any) {
@@ -399,7 +397,7 @@ const Drama: NextPage = () => {
 												};
 												fileReader.readAsDataURL(file);
 											});
-										while (readCount < files.length) await new Promise((resolve) => setTimeout(resolve, 0));
+										while (readCount < files.length) await new Promise(resolve => setTimeout(resolve, 0));
 
 										setContentData(_contentData);
 									}}

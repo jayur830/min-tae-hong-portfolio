@@ -41,7 +41,7 @@ const Consumer: NextPage = () => {
 			</div>
 			<div>
 				<div>
-					<Image src={"/api/img/" + contact.img.filename} width={contact.img.width} height={contact.img.height} draggable={false} alt="Index" />
+					<Image src={"/api/file/" + contact.img.filename} width={contact.img.width} height={contact.img.height} draggable={false} alt="Index" />
 				</div>
 			</div>
 		</section>

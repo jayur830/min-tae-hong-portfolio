@@ -68,7 +68,7 @@ const useAbout = () => {
 		() =>
 			data ? (
 				<div>
-					<Image src={"/api/img/" + data.img.filename} width={data.img.width} height={data.img.height} draggable={false} alt="Index" />
+					<Image src={"/api/file/" + data.img.filename} width={data.img.width} height={data.img.height} draggable={false} alt="Index" />
 				</div>
 			) : null,
 		[data]

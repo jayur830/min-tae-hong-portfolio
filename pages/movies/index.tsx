@@ -13,7 +13,7 @@ import VideoModal from "@components/VideoModal";
 // Local
 import { Provider, useData, useMoviesScene, useMoviesVideo, useSetMoviesScene, useSetMoviesVideo, useYears } from "./Provider";
 
-const Movies: NextPage = () => {
+const Consumer: NextPage = () => {
 	const movies = useData();
 	const moviesScene = useMoviesScene();
 	const setMoviesScene = useSetMoviesScene();
@@ -27,7 +27,7 @@ const Movies: NextPage = () => {
 				<YearBlock key={i} year={year}>
 					{(movies[year] as any[]).map((obj: any, j: number) => (
 						<div key={j} className="movies-block">
-							{obj.img && obj.img.filename !== "" ? <Image src={"/api/img/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="Index Content Image" /> : null}
+							{obj.img && obj.img.filename !== "" ? <Image src={"/api/file/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="Index Content Image" /> : null}
 							<div>
 								{obj.video ? <BlackButton onClick={() => setMoviesVideo({ ...obj.video })}>VIDEO</BlackButton> : null}
 								<h3 className="font-smoothing">{obj.title}</h3>
@@ -68,8 +68,10 @@ const Movies: NextPage = () => {
 	);
 };
 
-export default () => (
+const Movies = () => (
 	<Provider>
-		<Movies />
+		<Consumer />
 	</Provider>
 );
+
+export default Movies;

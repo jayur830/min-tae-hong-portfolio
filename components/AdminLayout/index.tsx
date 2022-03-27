@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as SolidIcons from "@fortawesome/free-solid-svg-icons";
 
 // Global
-import { useCommon, useSetCommon } from "@pages/Provider";
+import { useCommon } from "@pages/Provider";
 
 // Local
 import DarkModeButton from "../DarkModeButton";
@@ -16,9 +16,7 @@ import WhiteButton from "../WhiteButton";
 import {
 	Provider,
 	useFooter,
-	useSetFooter,
 	useIconsHtml,
-	useSetIconsHtml,
 	useOpenSideMenu,
 	useSetOpenSideMenu,
 	useEditTitle,
@@ -150,8 +148,7 @@ const Consumer: NextPage = ({ children }) => {
 													const _snsList = snsList.concat();
 													_snsList[i].name = e.target.value;
 													setSnsList(_snsList);
-												}}
-											>
+												}}>
 												{snsOptions}
 											</select>
 										</td>
@@ -203,16 +200,14 @@ const Consumer: NextPage = ({ children }) => {
 													footer._id as string,
 													snsList.filter((obj: { name: string; url: string }) => obj.url !== "")
 												)
-											}
-										>
+											}>
 											등록
 										</WhiteButton>
 										<WhiteButton
 											onClick={() => {
 												setSnsList(footer.sns.concat());
 												setEditSnsList(false);
-											}}
-										>
+											}}>
 											취소
 										</WhiteButton>
 									</td>
