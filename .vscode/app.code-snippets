@@ -1,0 +1,125 @@
+{
+	"Import Description": {
+		"scope": "javascript,typescript,javascriptreact,typescriptreact",
+		"prefix": "ii",
+		"body": ["// Package", "", "// Global", "", "// Local", ""],
+		"description": "Import Description"
+	},
+	"React Functional Component": {
+		"scope": "javascriptreact,typescriptreact",
+		"prefix": "rfc",
+		"body": [
+			"// Package",
+			"import { NextPage } from \"next\";",
+			"",
+			"// Global",
+			"",
+			"// Local",
+			"import { Provider } from \"./Provider\";",
+			"",
+			"const Consumer: NextPage = () => {",
+			"   return (",
+			"       <>",
+			"       </>",
+			"   );",
+			"}",
+			"",
+			"const ${1:${TM_DIRECTORY/^.+[\\/\\\\]+(.*)$/$1/}} = () => (",
+			"   <Provider>",
+			"       <Consumer />",
+			"   </Provider>",
+			");",
+			"",
+			"export default $1;"
+		],
+		"description": "React Functional Component"
+	},
+	"React Provider": {
+		"scope": "javascriptreact,typescriptreact",
+		"prefix": "rp",
+		"body": [
+			"// Package",
+			"import constate from \"constate\";",
+			"",
+			"// Global",
+			"",
+			"// Local",
+			"",
+			"const use${1:${TM_DIRECTORY/^.+[\\/\\\\]+(.*)$/$1/}} = () => {",
+			"   return {};",
+			"};",
+			"",
+			"const [Provider] = constate(",
+			"   use$1",
+			");",
+			"",
+			"export { Provider };"
+		],
+		"description": "React Provider"
+	},
+	"Next.js REST API Function": {
+		"scope": "javascript,typescript",
+		"prefix": "nrap",
+		"body": [
+			"// Package",
+			"import { NextApiRequest, NextApiResponse } from \"next\";",
+			"",
+			"// Global",
+			"",
+			"// Local",
+			"",
+			"const ${1:${TM_DIRECTORY/^.+[\\/\\\\]+(.*)$/$1/}} = (request: NextApiRequest, response: NextApiResponse) => {",
+			"   response.status(200);",
+			"};",
+			"",
+			"export default $1;"
+		],
+		"description": "Next.js REST API Function"
+	},
+	"Fetch (GET)": {
+		"scope": "javascript,typescript,javascriptreact,typescriptreact",
+		"prefix": "fget",
+		"body": ["fetch(\"\").then(response => response.json())", "   .then(data => {", "       ", "   });"],
+		"description": "Fetch (GET)"
+	},
+	"Fetch (POST)": {
+		"scope": "javascript,typescript,javascriptreact,typescriptreact",
+		"prefix": "fpost",
+		"body": [
+			"fetch(\"\", {",
+			"   method: \"POST\",",
+			"   headers: {",
+			"       \"Content-Type\": \"application/json\"",
+			"   },",
+			"   body: JSON.stringify()",
+			"}).then(response => response.json())",
+			"   .then(data => {",
+			"       ",
+			"   });"
+		],
+		"description": "Fetch (POST)"
+	},
+	"Fetch (PUT)": {
+		"scope": "javascript,typescript,javascriptreact,typescriptreact",
+		"prefix": "fput",
+		"body": [
+			"fetch(\"\", {",
+			"   method: \"PUT\",",
+			"   headers: {",
+			"       \"Content-Type\": \"application/json\"",
+			"   },",
+			"   body: JSON.stringify()",
+			"}).then(response => response.json())",
+			"   .then(data => {",
+			"       ",
+			"   });"
+		],
+		"description": "Fetch (PUT)"
+	},
+	"Fetch (DELETE)": {
+		"scope": "javascript,typescript,javascriptreact,typescriptreact",
+		"prefix": "fdelete",
+		"body": ["fetch(\"\", { method: \"DELETE\" })", "   .then(response => response.json())", "   .then(data => {", "       ", "   });"],
+		"description": "Fetch (DELETE)"
+	}
+}

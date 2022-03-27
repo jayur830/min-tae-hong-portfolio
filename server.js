@@ -9,30 +9,33 @@ const handle = app.getRequestHandler();
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 
-app.prepare()
-    .then(() => {
-        console.log("Connecting to MongoDB...");
-        dotenv.config();
-        mongoose.connect(process.env.MONGO_URL);
-    }).then(() => {
-        console.log("Successfully connected to MongoDB!");
-        const server = express();
+app
+	.prepare()
+	.then(() => {
+		console.log("Connecting to MongoDB...");
+		dotenv.config();
+		mongoose.connect(process.env.MONGO_URL);
+	})
+	.then(() => {
+		console.log("Successfully connected to MongoDB!");
+		const server = express();
 
-        console.log("S3 Bucket name:", process.env.S3_BUCKET);
-        console.log("S3 Region:", process.env.S3_REGION);
+		console.log("S3 Bucket name:", process.env.S3_BUCKET);
+		console.log("S3 Region:", process.env.S3_REGION);
 
-        server.get("*", handle);
-        server.post("*", handle);
-        server.put("/api/*", handle);
-        server.delete("/api/*", handle);
+		server.get("*", handle);
+		server.post("*", handle);
+		server.put("/api/*", handle);
+		server.delete("/api/*", handle);
 
-        const port = 3002;
+		const port = 3002;
 
-        server.listen(port, error => {
-            if (error) throw error;
-            console.log(`started server on ${port} port.`);
-        });
-    }).catch(e => {
-        console.log(e.stack);
-        process.exit(1);
-    });
+		server.listen(port, error => {
+			if (error) throw error;
+			console.log(`started server on ${port} port.`);
+		});
+	})
+	.catch(e => {
+		console.log(e.stack);
+		process.exit(1);
+	});

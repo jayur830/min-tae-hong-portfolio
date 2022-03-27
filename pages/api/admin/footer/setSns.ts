@@ -1,14 +1,21 @@
+// Package
 import { NextApiRequest, NextApiResponse } from "next";
 
-import Footer from "../../../../models/footer";
+// Global
+import Footer from "@root/models/footer";
+
+// Local
 
 const setSns = (request: NextApiRequest, response: NextApiResponse) => {
-    Footer.findOneAndUpdate({}, {
-        $set: {
-            sns: request.body.sns
-        }
-    }).exec();
-    response.send(200);
+	Footer.findOneAndUpdate(
+		{},
+		{
+			$set: {
+				sns: request.body.sns,
+			},
+		}
+	).exec();
+	response.send(200);
 };
 
 export default setSns;

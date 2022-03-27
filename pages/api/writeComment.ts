@@ -1,17 +1,24 @@
+// Package
 import { NextApiRequest, NextApiResponse } from "next";
 
-import About from "../../models/about";
-import mongoose from "mongoose";
+// Global
+import About from "@root/models/about";
+
+// Local
 
 const writeComment = (request: NextApiRequest, response: NextApiResponse) => {
-    About.findOneAndUpdate({}, {
-        $push: {
-            comments: request.body
-        }
-    }, {
-        _id: false
-    }).exec();
-    response.send(200);
+	About.findOneAndUpdate(
+		{},
+		{
+			$push: {
+				comments: request.body,
+			},
+		},
+		{
+			_id: false,
+		}
+	).exec();
+	response.send(200);
 };
 
 export default writeComment;

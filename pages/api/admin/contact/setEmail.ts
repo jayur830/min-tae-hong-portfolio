@@ -1,14 +1,21 @@
+// Package
 import { NextApiRequest, NextApiResponse } from "next";
 
-import Contact from "../../../../models/contact";
+// Global
+import Contact from "@root/models/contact";
+
+// Local
 
 const setEmail = (request: NextApiRequest, response: NextApiResponse) => {
-    Contact.findOneAndUpdate({}, {
-        $set: {
-            email: request.query.email
-        }
-    }).exec();
-    response.send(200);
+	Contact.findOneAndUpdate(
+		{},
+		{
+			$set: {
+				email: request.query.email,
+			},
+		}
+	).exec();
+	response.send(200);
 };
 
 export default setEmail;

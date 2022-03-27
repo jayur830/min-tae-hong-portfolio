@@ -1,9 +1,14 @@
-import nextConnect from "next-connect";
-import multer from "multer";
-import multerS3 from "multer-s3"
-import AWS from "aws-sdk";
+// Package
 
-import { app, upload, config } from "../../../assets/ts/s3";
+// Global
+import { app, upload, config } from "@root/assets/ts/s3";
+
+// Local
+
+// import nextConnect from "next-connect";
+// import multer from "multer";
+// import multerS3 from "multer-s3"
+// import AWS from "aws-sdk";
 
 // const app = nextConnect({
 //     onError(error, request, response) {
@@ -40,7 +45,7 @@ import { app, upload, config } from "../../../assets/ts/s3";
 // });
 
 app.post(upload.single("file"), (request, response) => {
-    response.send(200);
+	response.send(200);
 });
 
 export default app;

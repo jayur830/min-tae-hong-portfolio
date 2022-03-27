@@ -2,12 +2,12 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 // Global
-import About from "@root/models/about";
+import Dramas from "@root/models/dramas";
 
 // Local
 
 const getData = (request: NextApiRequest, response: NextApiResponse) => {
-	About.find({}).exec().then(response.json);
+	Dramas.find({}).exec().then(response.json);
 };
 
 export default getData;

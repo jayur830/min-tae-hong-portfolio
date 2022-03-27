@@ -1,9 +1,15 @@
+// Package
 import { NextApiRequest, NextApiResponse } from "next";
 
-import Footer from "../../../models/footer";
+// Global
+import Footer from "@root/models/footer";
+
+// Local
 
 const getData = (request: NextApiRequest, response: NextApiResponse) => {
-    Footer.find({}).exec().then(data => response.json(data[0]));
+	Footer.find({})
+		.exec()
+		.then(data => response.json(data[0]));
 };
 
 export default getData;

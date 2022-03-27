@@ -7,19 +7,12 @@ import { Theaters } from "@root/types";
 
 // Local
 
-type TheaterScene = {
-	year: string;
-	theaterIndex: number;
-	sceneIndex: number;
-	max: number;
-};
-
-const useTheater = () => {
+const useDrama = () => {
 	const [data, setData] = useState<Theaters>({});
 
-	const [theaterScene, setTheaterScene] = useState<TheaterScene>({
+	const [dramaScene, setDramaScene] = useState({
 		year: "",
-		theaterIndex: -1,
+		dramaIndex: -1,
 		sceneIndex: -1,
 		max: -1,
 	});
@@ -31,7 +24,7 @@ const useTheater = () => {
 	}, [data]);
 
 	useEffect(() => {
-		fetch("/api/theater/data")
+		fetch("/api/drama/data")
 			.then((response) => response.json())
 			.then((data) => {
 				let _data: { [year: string]: any[] } = {};
@@ -41,7 +34,8 @@ const useTheater = () => {
 					_data[year].push({
 						_id: obj._id,
 						title: obj.title,
-						theater: obj.theater,
+						director: obj.director,
+						actors: Object.freeze(obj.actors),
 						schedule: obj.schedule,
 						img: obj.img == null ? null : { ...obj.img },
 						scenes: Object.freeze(obj.scenes),
@@ -56,18 +50,18 @@ const useTheater = () => {
 
 	return {
 		data,
-		theaterScene,
-		setTheaterScene,
+		dramaScene,
+		setDramaScene,
 		years,
 	};
 };
 
-const [Provider, useData, useTheaterScene, useSetTheaterScene, useYears] = constate(
-	useTheater,
+const [Provider, useData, useDramaScene, useSetDramaScene, useYears] = constate(
+	useDrama,
 	(value) => value.data,
-	(value) => value.theaterScene,
-	(value) => value.setTheaterScene,
+	(value) => value.dramaScene,
+	(value) => value.setDramaScene,
 	(value) => value.years
 );
 
-export { Provider, useData, useTheaterScene, useSetTheaterScene, useYears };
+export { Provider, useData, useDramaScene, useSetDramaScene, useYears };
