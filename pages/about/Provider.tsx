@@ -35,7 +35,7 @@ const useAbout = () => {
 	});
 	useEffect(() => {
 		fetch("/api/about/data")
-			.then((response) => response.json())
+			.then(response => response.json())
 			.then(setData);
 	}, [setData]);
 
@@ -68,7 +68,7 @@ const useAbout = () => {
 		() =>
 			data ? (
 				<div>
-					<Image src={"/" + data.img.filename} width={data.img.width} height={data.img.height} draggable={false} alt="Index" />
+					<Image src={"/api/img/" + data.img.filename} width={data.img.width} height={data.img.height} draggable={false} alt="Index" />
 				</div>
 			) : null,
 		[data]
@@ -90,16 +90,16 @@ const useAbout = () => {
 
 const [Provider, useData, useSetData, useWriteComment, useSetWriteComment, useComment, useSetComment, useSecret, useSetSecret, usePostComment, useAboutImg] = constate(
 	useAbout,
-	(value) => value.data,
-	(value) => value.setData,
-	(value) => value.writeComment,
-	(value) => value.setWriteComment,
-	(value) => value.comment,
-	(value) => value.setComment,
-	(value) => value.secret,
-	(value) => value.setSecret,
-	(value) => value.postComment,
-	(value) => value.aboutImg
+	value => value.data,
+	value => value.setData,
+	value => value.writeComment,
+	value => value.setWriteComment,
+	value => value.comment,
+	value => value.setComment,
+	value => value.secret,
+	value => value.setSecret,
+	value => value.postComment,
+	value => value.aboutImg
 );
 
 export { Provider, useData, useSetData, useWriteComment, useSetWriteComment, useComment, useSetComment, useSecret, useSetSecret, usePostComment, useAboutImg };

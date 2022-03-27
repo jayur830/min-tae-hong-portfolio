@@ -23,7 +23,7 @@ const Consumer: NextPage = () => {
 				<YearBlock key={i} year={year}>
 					{(dramas[year] as any[]).map((obj: any, j: number) => (
 						<div key={j} className="drama-block">
-							{obj.img && obj.img.filename !== "" ? <Image src={"/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="Index Content Image" /> : null}
+							{obj.img && obj.img.filename !== "" ? <Image src={"/api/img/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="Index Content Image" /> : null}
 							<div>
 								<h3 className="font-smoothing">{obj.title}</h3>
 								<div className="font-smoothing">연출: {obj.director}</div>

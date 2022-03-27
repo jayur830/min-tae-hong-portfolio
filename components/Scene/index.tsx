@@ -26,8 +26,7 @@ const Consumer = () => {
 							onClick={() => {
 								setAnimateClass("fadeOut");
 								setTimeout(onClose, 500);
-							}}
-						>
+							}}>
 							&times;
 						</div>
 						<div className="left">
@@ -35,7 +34,7 @@ const Consumer = () => {
 						</div>
 						<div className="content">
 							<Image
-								src={"/" + scenes[index].filename}
+								src={"/api/img/" + scenes[index].filename}
 								className={scenes[index].width > scenes[index].height ? "horizontal" : "vertical"}
 								width={scenes[index].width}
 								height={scenes[index].height}
