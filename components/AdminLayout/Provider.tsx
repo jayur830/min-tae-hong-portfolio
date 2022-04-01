@@ -10,7 +10,7 @@ import constate from "constate";
 import { Footer } from "@root/types";
 
 // Local
-import { useCommon, useSetCommon } from "../../pages/Provider";
+import { useCommon, useSetCommon } from "@contexts/Provider";
 
 type Sns = {
 	name: string;

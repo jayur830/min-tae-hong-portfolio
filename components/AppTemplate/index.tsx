@@ -3,7 +3,7 @@ import React, { ReactNode } from "react";
 import Head from "next/head";
 
 // Global
-import { useCommon } from "@pages/Provider";
+import { useCommon } from "@contexts/Provider";
 
 // Local
 

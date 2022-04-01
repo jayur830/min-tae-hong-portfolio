@@ -34,7 +34,7 @@ const Consumer = () => {
 						</div>
 						<div className="content">
 							<Image
-								src={"/api/img/" + scenes[index].filename}
+								src={"/api/file/" + scenes[index].filename}
 								className={scenes[index].width > scenes[index].height ? "horizontal" : "vertical"}
 								width={scenes[index].width}
 								height={scenes[index].height}

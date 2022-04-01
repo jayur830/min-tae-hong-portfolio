@@ -4,7 +4,7 @@ import { NextPage } from "next";
 import Link from "next/link";
 
 // Global
-import { useCommon } from "@pages/Provider";
+import { useCommon } from "@contexts/Provider";
 
 // Local
 import DarkModeButton from "../DarkModeButton";

@@ -4,10 +4,10 @@ import { NextPage } from "next";
 import Image from "next/image";
 
 // Global
-import { useCommon } from "@pages/Provider";
+import { useCommon } from "@contexts/Provider";
+import { Provider, useContact } from "@contexts/contact/Provider";
 
 // Local
-import { Provider, useContact } from "./Provider";
 
 const Consumer: NextPage = () => {
 	const common = useCommon();

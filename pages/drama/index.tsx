@@ -7,9 +7,9 @@ import Image from "next/image";
 import Scene from "@components/Scene";
 import YearBlock from "@components/YearBlock";
 import SceneSlide from "@components/SceneSlide";
+import { Provider, useData, useDramaScene, useSetDramaScene, useYears } from "@contexts/drama/Provider";
 
 // Local
-import { Provider, useData, useDramaScene, useSetDramaScene, useYears } from "./Provider";
 
 const Consumer: NextPage = () => {
 	const dramas = useData();

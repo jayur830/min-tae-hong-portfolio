@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as SolidIcons from "@fortawesome/free-solid-svg-icons";
 
 // Global
-import { useCommon } from "@pages/Provider";
+import { useCommon } from "@contexts/Provider";
 
 // Local
 import DarkModeButton from "../DarkModeButton";
@@ -36,7 +36,9 @@ import {
 	useCommitFooterSnsList,
 	useLinkList,
 	useSnsOptions,
+	useSetIconsHtml,
 } from "./Provider";
+import { useInitApi } from "@root/hooks/useInitApi";
 
 const Consumer: NextPage = ({ children }) => {
 	const common = useCommon();
@@ -61,6 +63,9 @@ const Consumer: NextPage = ({ children }) => {
 	const commitFooterSnsList = useCommitFooterSnsList();
 	const linkList = useLinkList();
 	const snsOptions = useSnsOptions();
+	const setIconsHtml = useSetIconsHtml();
+
+	useInitApi(setIconsHtml, setSnsList);
 
 	return (
 		<AppTemplate>

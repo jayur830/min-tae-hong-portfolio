@@ -36,17 +36,17 @@ const Index: NextPage = () => {
 					<tbody>
 						<tr>
 							<td colSpan={2}>
-								<Image src="/photo1.png" width={1000} height={667} draggable={false} alt="" />
+								<Image src="/api/file/photo1.png" width={1000} height={667} draggable={false} alt="" />
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<Image src="/photo2.png" width={1000} height={1500} draggable={false} alt="" />
+								<Image src="/api/file/photo2.png" width={1000} height={1500} draggable={false} alt="" />
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<Image src="/photo3.png" width={1000} height={1500} draggable={false} alt="" />
+								<Image src="/api/file/photo3.png" width={1000} height={1500} draggable={false} alt="" />
 							</td>
 						</tr>
 					</tbody>

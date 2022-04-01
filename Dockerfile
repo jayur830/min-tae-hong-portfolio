@@ -4,4 +4,4 @@ RUN mkdir app
 COPY . app
 WORKDIR app
 RUN npm i
-ENTRYPOINT ["npm", "run", "start"]
+ENTRYPOINT ["npm", "start"]

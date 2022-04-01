@@ -6,7 +6,7 @@ import Image from "next/image";
 // Global
 
 // Local
-import { useCommon } from "./Provider";
+import { useCommon } from "@contexts/Provider";
 
 const Home: NextPage = () => {
 	const common = useCommon();

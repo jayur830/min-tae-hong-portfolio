@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 // Global
-import { useCommon } from "@pages/Provider";
+import { useCommon } from "@contexts/Provider";
 
 // Local
 
@@ -44,7 +44,7 @@ const SceneSlide: (props: Props) => JSX.Element = ({ type, year, i, scenePage, s
 					{scenes.slice(scenePage * (common.windowWidth > 1120 ? 5 : 3), Math.min((scenePage + 1) * (common.windowWidth > 1120 ? 5 : 3), scenes.length)).map((scene: any, k: number) => (
 						<li key={k}>
 							<Image
-								src={"/api/img/" + scene.filename}
+								src={"/api/file/" + scene.filename}
 								width={scene.width > scene.height ? 166 : (scene.width * 200) / scene.height}
 								height={scene.width <= scene.height ? 200 : (scene.height * 166) / scene.width}
 								onClick={() =>

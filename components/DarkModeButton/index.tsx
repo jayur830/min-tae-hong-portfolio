@@ -3,7 +3,7 @@ import React from "react";
 
 // Global
 import { Common } from "@root/types";
-import { useCommon, useSetCommon } from "@pages/Provider";
+import { useCommon, useSetCommon } from "@contexts/Provider";
 
 // Local
 
