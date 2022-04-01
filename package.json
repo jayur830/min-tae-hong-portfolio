@@ -1,6 +1,9 @@
 {
 	"name": "min-tae-hong-portfolio",
 	"private": true,
+	"engines": {
+		"node": "14.19.0"
+	},
 	"scripts": {
 		"dev": "node server.js",
 		"build": "next build",
