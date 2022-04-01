@@ -28,7 +28,7 @@ app
 		server.put("/api/*", handle);
 		server.delete("/api/*", handle);
 
-		const port = 3002;
+		const port = 3000;
 
 		server.listen(port, error => {
 			if (error) throw error;
