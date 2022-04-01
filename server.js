@@ -28,7 +28,8 @@ app
 		server.put("/api/*", handle);
 		server.delete("/api/*", handle);
 
-		const port = 3000;
+		let port = 3000;
+		if (process.argv[1] === "-p" || process.argv[1] === "--port") port = +process.argv[2];
 
 		server.listen(port, error => {
 			if (error) throw error;
