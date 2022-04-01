@@ -18,7 +18,7 @@ type Sns = {
 };
 
 const useAdminLayout = () => {
-	// require("../../hooks/useAuthenticate").useAuthenticate();
+	require("../../hooks/useAuthenticate").useAuthenticate();
 
 	const router = useRouter();
 

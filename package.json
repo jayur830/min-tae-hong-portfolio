@@ -3,13 +3,8 @@
 	"private": true,
 	"scripts": {
 		"dev": "node server.js",
-<<<<<<< HEAD
-		"build": "next build && next export",
-		"start": "node server.js",
-=======
 		"build": "next build",
-		"start": "NODE_ENV=production node server.js",
->>>>>>> dev
+		"start": "node server.js",
 		"lint": "next lint",
 		"test": "jest --detectOpenHandles --forceExit"
 	},
