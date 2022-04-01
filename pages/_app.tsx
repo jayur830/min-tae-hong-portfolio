@@ -6,11 +6,11 @@ import { useRouter } from "next/router";
 // Global
 import AdminLayout from "@components/AdminLayout";
 import AppLayout from "@components/AppLayout";
+import { Provider } from "@contexts/Provider";
 import wrapper from "@root/store";
 import "@styles/globals.scss";
 
 // Local
-import { Provider } from "./Provider";
 
 const App = ({ Component, pageProps }: AppProps) => {
 	return (

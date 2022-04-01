@@ -6,10 +6,10 @@ import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
 // Global
 import Line from "@components/Line";
+import { useCommon } from "@contexts/Provider";
+import { Provider, useData, useAboutImg, usePostComment, useSetComment, useSetWriteComment, useWriteComment } from "@contexts/about/Provider";
 
 // Local
-import { useCommon } from "../Provider";
-import { Provider, useData, useAboutImg, usePostComment, useSetComment, useSetWriteComment, useWriteComment } from "./Provider";
 
 const Consumer: NextPage = () => {
 	const common = useCommon();

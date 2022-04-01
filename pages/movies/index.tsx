@@ -9,9 +9,9 @@ import YearBlock from "@components/YearBlock";
 import SceneSlide from "@components/SceneSlide";
 import BlackButton from "@components/BlackButton";
 import VideoModal from "@components/VideoModal";
+import { Provider, useData, useMoviesScene, useMoviesVideo, useSetMoviesScene, useSetMoviesVideo, useYears } from "@contexts/movies/Provider";
 
 // Local
-import { Provider, useData, useMoviesScene, useMoviesVideo, useSetMoviesScene, useSetMoviesVideo, useYears } from "./Provider";
 
 const Consumer: NextPage = () => {
 	const movies = useData();

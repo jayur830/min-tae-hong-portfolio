@@ -16,8 +16,8 @@ const useApp = () => {
 	});
 	useEffect(() => {
 		fetch("/api/common/data")
-			.then((response) => response.json())
-			.then((data) => {
+			.then(response => response.json())
+			.then(data => {
 				setCommon({
 					title: data.title,
 					headerTitle: data.headerTitle,
@@ -35,8 +35,8 @@ const useApp = () => {
 
 const [Provider, useCommon, useSetCommon] = constate(
 	useApp,
-	(value) => value.common,
-	(value) => value.setCommon
+	value => value.common,
+	value => value.setCommon
 );
 
 export { Provider, useCommon, useSetCommon };
