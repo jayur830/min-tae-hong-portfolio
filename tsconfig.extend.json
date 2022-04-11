@@ -11,8 +11,9 @@
 			"@components/*": ["./components/*"],
 			"@contexts/*": ["./contexts/*"],
 			"@pages/*": ["./pages/*"],
-			"@styles/*": ["./styles/*"]
+			"@styles/*": ["./styles/*"],
+			"@types/*": ["./types/*"]
 		}
 	},
-	"files": ["@types/graphql.d.ts"]
+	"files": ["./types/graphql.d.ts"]
 }
