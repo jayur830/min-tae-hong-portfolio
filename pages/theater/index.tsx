@@ -1,62 +1,139 @@
 // Package
-import React from "react";
-import { NextPage } from "next";
-import Image from "next/image";
+import { NextPage } from 'next';
+import { Col, Descriptions, Layout, Row, RowProps, Image as AntImage, Skeleton } from 'antd';
+import { Content } from 'antd/lib/layout/layout';
+import styled from 'styled-components';
 
 // Global
-import Scene from "@components/Scene";
-import YearBlock from "@components/YearBlock";
-import SceneSlide from "@components/SceneSlide";
-import { Provider, useSetTheaterScene, useData, useTheaterScene, useYears } from "@contexts/theater/Provider";
+import { nest, nvl } from '@root/utils';
+import { values, DarkModeProps } from '@root/configs';
+import { useDarkMode, useImgUri } from '@contexts/Provider';
+import { Provider, useTheaterData } from '@contexts/theater/Provider';
+import YearLine from '@components/YearLine';
+import Image, { ImageProps } from '@components/Image';
+import Carousel from '@components/Carousel';
 
 // Local
 
-const Consumer: NextPage = () => {
-	const theaters = useData();
-	const theaterScene = useTheaterScene();
-	const setTheaterScene = useSetTheaterScene();
-	const years = useYears();
+const Theater: NextPage = () => {
+	const isDarkMode = useDarkMode();
+	const imgUri = useImgUri();
+	const theaterData = useTheaterData();
 
 	return (
-		<section className="theater">
-			{years.map((year, i) => (
-				<YearBlock key={i} year={year}>
-					{(theaters[year] as any[]).map((obj: any, j: number) => (
-						<div key={j} className="theater-block">
-							{obj.img && obj.img.filename !== "" ? <Image src={"/api/file/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="Index Content Image" /> : null}
-							<div>
-								<h3 className="font-smoothing">{obj.title}</h3>
-								<div className="font-smoothing">장소: {obj.theater}</div>
-								<div className="font-smoothing">{obj.schedule}</div>
-							</div>
-							{obj.scenes.length === 0 ? null : <SceneSlide type="theater" year={year} i={j} scenePage={obj.scenePage} scenes={obj.scenes} setScene={setTheaterScene} />}
-						</div>
-					))}
-				</YearBlock>
-			))}
-			{theaterScene.year !== "" && theaterScene.theaterIndex !== -1 && theaterScene.sceneIndex !== -1 && theaterScene.max !== -1 ? (
-				<Scene
-					scenes={theaters[theaterScene.year][theaterScene.theaterIndex].scenes}
-					sceneIndex={theaterScene.sceneIndex}
-					max={theaterScene.max}
-					onClose={() =>
-						setTheaterScene({
-							year: "",
-							theaterIndex: -1,
-							sceneIndex: -1,
-							max: -1,
-						})
-					}
-				/>
-			) : null}
-		</section>
+		<StyledLayout dark-mode={isDarkMode.toString()}>
+			{Object.keys(theaterData)
+				.sort((a, b) => (a < b ? 1 : -1))
+				.map((year, i) => (
+					<Row key={i} justify="center">
+						<Col xs={22} sm={22} lg={16}>
+							<YearLine year={year} />
+							{nvl(theaterData, year, []).map((theater: any, j: number) => {
+								const { img, scenes, ...info } = theater;
+
+								const rowProps: RowProps = {
+									justify: 'center',
+									align: 'middle',
+								};
+
+								const imageProps: ImageProps = {
+									loading: nvl(img, 'filename', null) == null,
+									src: `${imgUri}/${nvl(img, 'filename', '')}`,
+									width: nvl(img, 'width', 0),
+									height: nvl(img, 'height', 0),
+								};
+
+								return (
+									<Content key={j}>
+										<StyledImageWrap {...rowProps}>
+											<Col span={20}>
+												<Image {...imageProps} />
+											</Col>
+										</StyledImageWrap>
+										<Row {...rowProps}>
+											<Col span={20}>
+												<StyledDescriptions column={1} dark-mode={isDarkMode.toString()}>
+													{values.theaterValue.descriptions
+														.map(config => {
+															if (!config.single) {
+																if (nvl(info, config.name, []).length === 0) return null;
+																return (
+																	<Descriptions.Item key={config.name} label={config.label}>
+																		{nvl(info, config.name, []).join(', ')}
+																	</Descriptions.Item>
+																);
+															}
+
+															if (nvl(info, config.name, null) == null) return null;
+															return (
+																<Descriptions.Item key={config.name} label={config.label}>
+																	{nvl(info, config.name, '')}
+																</Descriptions.Item>
+															);
+														})
+														.filter(component => component != null)}
+												</StyledDescriptions>
+											</Col>
+										</Row>
+										<StyledCarouselWrap {...rowProps}>
+											<Col span={20}>
+												<Row gutter={[5, 0]} {...rowProps}>
+													<Carousel>
+														{scenes.map((scene: any, i: number) => {
+															if (nvl(scene, 'filename', '') == null) {
+																return <Skeleton.Image />;
+															}
+
+															return (
+																<Col key={i} flex={1}>
+																	<AntImage src={`${imgUri}/${nvl(scene, 'filename', '')}`} />
+																</Col>
+															);
+														})}
+													</Carousel>
+												</Row>
+											</Col>
+										</StyledCarouselWrap>
+									</Content>
+								);
+							})}
+						</Col>
+					</Row>
+				))}
+		</StyledLayout>
 	);
 };
 
-const Theater = () => (
-	<Provider>
-		<Consumer />
-	</Provider>
-);
+export default nest(Provider, Theater);
 
-export default Theater;
+const StyledLayout = styled(Layout)<DarkModeProps>(({ theme, ...props }) => ({
+	backgroundColor: props['dark-mode'] === 'true' ? theme.darkMode6 : theme.white,
+	transition: 'background-color 0.3s ease',
+}));
+
+const StyledImageWrap = styled(Row)(({ theme }) => ({
+	['&&']: {
+		margin: '10px 0 30px',
+		['.ant-col']: {
+			display: theme.displayFlex,
+			justifyContent: 'center',
+		},
+	},
+}));
+
+const StyledDescriptions = styled(Descriptions)<DarkModeProps>(({ theme, ...props }) => ({
+	['.ant-descriptions-item']: {
+		padding: 0,
+		['.ant-descriptions-item-label, .ant-descriptions-item-content']: {
+			color: props['dark-mode'] === 'true' ? theme.white : theme.black,
+		},
+	},
+}));
+
+const StyledCarouselWrap = styled(Row)(({ theme }) => ({
+	margin: '50px 0 70px',
+	['.ant-col']: {
+		display: theme.displayFlex,
+		justifyContent: 'center',
+	},
+}));

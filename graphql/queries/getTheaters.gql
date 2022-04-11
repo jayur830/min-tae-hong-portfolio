@@ -1,0 +1,16 @@
+#import "../fragments/MediaMetadata.gql"
+
+query Theaters {
+	theaters: getTheaters {
+		title
+		theater
+		year
+		schedule
+		img {
+			...MediaMetadata
+		}
+		scenes {
+			...MediaMetadata
+		}
+	}
+}

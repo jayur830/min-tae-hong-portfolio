@@ -1,0 +1,20 @@
+#import "../fragments/MediaMetadata.gql"
+
+query Movies {
+	movies: getMovies {
+		title
+		year
+		director
+		actors
+		awards
+		img {
+			...MediaMetadata
+		}
+		video {
+			...MediaMetadata
+		}
+		scenes {
+			...MediaMetadata
+		}
+	}
+}

@@ -1,0 +1,93 @@
+type Common {
+	title: String!
+	headerTitle: String!
+}
+
+type MediaMetadata {
+	filename: String
+	width: Float
+	height: Float
+}
+
+type AboutMetadata {
+	label: String!
+	value: String!
+}
+
+type AboutComment {
+	comment: String!
+	date: String!
+}
+
+type About {
+	name: String!
+	birth: String!
+	info: String!
+	metadata: [AboutMetadata!]
+	img: MediaMetadata
+	comments: [AboutComment!]
+}
+
+type Movies {
+	title: String!
+	year: Int!
+	director: String!
+	actors: [String!]
+	awards: [String!]
+	img: MediaMetadata
+	video: MediaMetadata
+	scenes: [MediaMetadata!]
+}
+
+type Dramas {
+	title: String!
+	year: Int!
+	director: String
+	actors: [String!]
+	schedule: String
+	img: MediaMetadata
+	scenes: [MediaMetadata!]
+}
+
+type Theaters {
+	title: String!
+	theater: String
+	year: Int!
+	schedule: String
+	img: MediaMetadata
+	scenes: [MediaMetadata!]
+}
+
+type Contact {
+	email: String!
+	img: MediaMetadata
+}
+
+type Sns {
+	name: String!
+	url: String!
+}
+
+type Footer {
+	sns: [Sns!]
+}
+
+type Secret {
+	password: String!
+}
+
+type Query {
+	getCommon: Common!
+	getHome: [MediaMetadata!]
+	getAbout: About!
+	getMovies: [Movies!]
+	getDramas: [Dramas!]
+	getTheaters: [Theaters!]
+	getContact: Contact!
+	getFooter: Footer!
+}
+
+type Mutation {
+	writeComment(comment: String!, date: String!): Boolean!
+	auth(password: String!): Boolean!
+}

@@ -1,0 +1,5 @@
+fragment MediaMetadata on MediaMetadata {
+	filename
+	width
+	height
+}

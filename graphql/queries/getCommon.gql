@@ -1,0 +1,6 @@
+query Common {
+	common: getCommon {
+		title
+		headerTitle
+	}
+}

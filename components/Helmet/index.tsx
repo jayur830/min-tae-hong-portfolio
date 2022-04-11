@@ -1,0 +1,22 @@
+// Package
+import Head from 'next/head';
+
+// Global
+import { nvl } from '@root/utils';
+import { useCommonData } from '@contexts/Provider';
+
+// Local
+
+const Helmet = () => {
+	const commonData = useCommonData();
+
+	return (
+		<Head>
+			<title>{nvl(commonData, 'title', '')}</title>
+			<meta name="description" content="민태홍 포트폴리오" />
+			<link rel="icon" href="/favicon.ico" />
+		</Head>
+	);
+};
+
+export default Helmet;

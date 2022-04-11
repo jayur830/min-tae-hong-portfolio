@@ -1,59 +1,66 @@
 // Package
-import React from "react";
-import type { NextPage } from "next";
-import Image from "next/image";
+import type { NextPage } from 'next';
+import { Row, Col, RowProps, ColProps } from 'antd';
 
 // Global
+import { nest, nvl } from '@root/utils';
+import { useImgUri } from '@contexts/Provider';
+import { Provider, useHomeData } from '@contexts/home/Provider';
+import Image, { ImageProps } from '@components/Image';
+import styled from 'styled-components';
 
 // Local
-import { useCommon } from "@contexts/Provider";
 
 const Home: NextPage = () => {
-	const common = useCommon();
+	const imgUri = useImgUri();
+	const homeData = useHomeData();
+
+	const rowProps: RowProps = {
+		justify: 'center',
+		align: 'middle',
+	};
+
+	const colProps: ColProps = {
+		xs: 24,
+		sm: 24,
+		md: 12,
+		lg: 12,
+	};
 
 	return (
-		<section className="home">
-			{common.windowWidth > 1120 ? (
-				<table>
-					<tbody>
-						<tr>
-							<td colSpan={2}>
-								<Image src="/api/file/photo1.png" width={1000} height={667} draggable={false} alt="" />
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<Image src="/api/file/photo2.png" width={498} height={747} draggable={false} alt="" />
-							</td>
-							<td>
-								<Image src="/api/file/photo3.png" width={498} height={747} draggable={false} alt="" />
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			) : (
-				<table>
-					<tbody>
-						<tr>
-							<td colSpan={2}>
-								<Image src="/photo1.png" width={1000} height={667} draggable={false} alt="" />
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<Image src="/photo2.png" width={1000} height={1500} draggable={false} alt="" />
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<Image src="/photo3.png" width={1000} height={1500} draggable={false} alt="" />
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			)}
-		</section>
+		<Row {...rowProps}>
+			<Col {...colProps}>
+				<Row {...rowProps} gutter={[40, 20]}>
+					{homeData.map((obj: { filename: string; width: number; height: number }, i: number) => {
+						const imageProps: ImageProps = {
+							loading: nvl(obj, 'filename', null) == null,
+							src: `${imgUri}/${nvl(obj, 'filename', '')}`,
+							width: obj.width,
+							height: obj.height,
+							layout: 'intrinsic',
+						};
+
+						const imageColProps: ColProps = {
+							xs: 23,
+							sm: 23,
+							md: i === 0 ? 24 : 12,
+							lg: i === 0 ? 24 : 12,
+						};
+
+						return (
+							<StyledCol key={i} {...imageColProps}>
+								<Image {...imageProps} />
+							</StyledCol>
+						);
+					})}
+				</Row>
+			</Col>
+		</Row>
 	);
 };
 
-export default Home;
+export default nest(Provider, Home);
+
+const StyledCol = styled(Col)(({ theme }) => ({
+	textAlign: 'center',
+}));

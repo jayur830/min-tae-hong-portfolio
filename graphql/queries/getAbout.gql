@@ -1,0 +1,20 @@
+#import "../fragments/MediaMetadata.gql"
+
+query About {
+	about: getAbout {
+		name
+		birth
+		info
+		metadata {
+			label
+			value
+		}
+		img {
+			...MediaMetadata
+		}
+		comments {
+			comment
+			date
+		}
+	}
+}

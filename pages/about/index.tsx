@@ -1,106 +1,181 @@
 // Package
-import React from "react";
-import { NextPage } from "next";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { useCallback } from 'react';
+import { NextPage } from 'next';
+// import Image, { ImageProps } from 'next/image';
+import { Row, Col, Descriptions, DescriptionsProps, RowProps, Layout, Comment, Avatar, CommentProps, Tooltip, Typography, Button, Form } from 'antd';
+import TextArea from 'antd/lib/input/TextArea';
+import { UserOutlined } from '@ant-design/icons';
+import styled from 'styled-components';
 
 // Global
-import Line from "@components/Line";
-import { useCommon } from "@contexts/Provider";
-import { Provider, useData, useAboutImg, usePostComment, useSetComment, useSetWriteComment, useWriteComment } from "@contexts/about/Provider";
+import { DarkModeProps } from '@root/configs';
+import { nest, nvl } from '@root/utils';
+import { useImgUri, useDarkMode } from '@contexts/Provider';
+import { Provider, useWriteComment, useSetWriteComment, useAboutData } from '@contexts/about/Provider';
+import Image, { ImageProps } from '@components/Image';
 
 // Local
 
-const Consumer: NextPage = () => {
-	const common = useCommon();
-	const about = useData();
-	const writeComment = useWriteComment();
+const About: NextPage = () => {
+	const isDarkMode = useDarkMode();
+	const imgUri = useImgUri();
+	const [form] = Form.useForm();
+	const isWriteComment = useWriteComment();
 	const setWriteComment = useSetWriteComment();
-	const setComment = useSetComment();
-	const postComment = usePostComment();
-	const aboutImg = useAboutImg();
+	const aboutData = useAboutData();
+
+	const onWriteComment = useCallback(() => {
+		setWriteComment(true);
+	}, []);
+
+	const onCancelWriteComment = useCallback(() => {
+		setWriteComment(false);
+	}, []);
+
+	const rowProps: RowProps = {
+		justify: 'center',
+		align: 'middle',
+		gutter: [50, 0],
+	};
+
+	const descriptionsProps: DescriptionsProps = {
+		bordered: true,
+		column: 1,
+		colon: false,
+	};
+
+	const imageProps: ImageProps = {
+		loading: aboutData == null,
+		src: `${imgUri}/${nvl(aboutData, 'img.filename', '')}`,
+		width: nvl(aboutData, 'img.width', 0),
+		height: nvl(aboutData, 'img.height', 0),
+		layout: 'intrinsic',
+	};
 
 	return (
-		<section className="about">
-			<div className="content">
-				{common.windowWidth <= 1120 ? aboutImg : null}
-				<div>
-					<div>
-						<table>
-							<tbody>
-								{about.metadata.map((obj: any, i: number) => (
-									<tr key={i}>
-										<td className="font-smoothing">{obj.label}.</td>
-										<td className="font-smoothing">{obj.value}</td>
-									</tr>
-								))}
-							</tbody>
-						</table>
-					</div>
-				</div>
-				{common.windowWidth > 1120 ? aboutImg : null}
-			</div>
-			<div className="comment">
-				<h2>Comments</h2>
-				{about.comments.map((obj: { comment: string; date: string; secret: boolean }, i: number) => (
-					<div key={`comment-${i}`} className="comment-block">
-						<div>
-							<FontAwesomeIcon
-								size="1x"
-								icon={faUserCircle}
-								style={{
-									position: "relative",
-									left: -10,
-									width: 40,
-								}}
-							/>
-							<Line />
-							<span className="comment-date font-smoothing">{obj.date}</span>
-						</div>
-						<div className={(obj.secret ? "secret" : "") + " font-smoothing"}>{obj.secret ? "비밀 댓글입니다." : obj.comment}</div>
-					</div>
-				))}
-				{writeComment ? (
-					<div key="comment-new" className="comment-block">
-						<div>
-							<FontAwesomeIcon
-								size="1x"
-								icon={faUserCircle}
-								style={{
-									position: "relative",
-									left: -10,
-									width: 40,
-								}}
-							/>
-							<Line />
-						</div>
-						<div>
-							<input
-								type="text"
-								placeholder="댓글을 입력하세요."
-								onKeyUp={(e: any) => {
-									if (e.key === "Enter") postComment();
-									else setComment(e.target.value);
-								}}
-								autoFocus={true}
-							/>
-						</div>
-						<div>
-							<input type="button" value="취소" onClick={() => setWriteComment(false)} />
-							<input type="button" value="등록" onClick={postComment} />
-						</div>
-					</div>
-				) : null}
-				<input type="button" value="댓글 쓰기" onClick={() => setWriteComment(true)} />
-			</div>
-		</section>
+		<StyledLayout dark-mode={isDarkMode.toString()}>
+			<StyledAboutContent {...rowProps}>
+				<Col xs={24} sm={24} md={12} lg={8}>
+					<StyledDescriptions {...descriptionsProps} dark-mode={isDarkMode.toString()}>
+						<Descriptions.Item key={0} label="NAME.">
+							{nvl(aboutData, 'name', '')}
+						</Descriptions.Item>
+						{nvl(aboutData, 'metadata', []).map(({ label, value }: any, i: number) => (
+							<Descriptions.Item key={i + 1} label={`${label}.`}>
+								{value}
+							</Descriptions.Item>
+						))}
+					</StyledDescriptions>
+				</Col>
+				<Col xs={23} sm={23} md={11} lg={8}>
+					<Image {...imageProps} />
+				</Col>
+			</StyledAboutContent>
+			<StyledAboutCommentsWrap {...rowProps} dir="column">
+				<Col xs={22} sm={22} lg={15}>
+					<StyledCommentsTitle level={4} dark-mode={isDarkMode.toString()}>
+						Comments
+					</StyledCommentsTitle>
+					{nvl(aboutData, 'comments', []).map(({ comment, date }: any, i: number) => {
+						const commentProps: CommentProps = {
+							avatar: <Avatar icon={<UserOutlined />} />,
+							content: comment,
+							datetime: (
+								<Tooltip title={date}>
+									<Typography.Text>{date}</Typography.Text>
+								</Tooltip>
+							),
+						};
+
+						return <StyledComment key={i} {...commentProps} dark-mode={isDarkMode.toString()} />;
+					})}
+					{isWriteComment ? (
+						<Row>
+							<Col span={24}>
+								<Comment
+									avatar={<Avatar icon={<UserOutlined />} />}
+									content={
+										<Form form={form} layout="vertical" autoComplete="off">
+											<Form.Item name="comment">
+												<TextArea />
+											</Form.Item>
+											<Form.Item>
+												<Row justify="end" gutter={[5, 0]}>
+													<Col>
+														<Button onClick={onCancelWriteComment} className={isDarkMode ? 'dark-mode' : ''}>
+															취소
+														</Button>
+													</Col>
+													<Col>
+														<Button type="primary" htmlType="submit" className={isDarkMode ? 'dark-mode' : ''}>
+															등록
+														</Button>
+													</Col>
+												</Row>
+											</Form.Item>
+										</Form>
+									}
+								/>
+							</Col>
+						</Row>
+					) : (
+						<StyledCommentButton type="primary" onClick={onWriteComment} className={isDarkMode ? 'dark-mode' : ''}>
+							댓글 쓰기
+						</StyledCommentButton>
+					)}
+				</Col>
+			</StyledAboutCommentsWrap>
+		</StyledLayout>
 	);
 };
 
-const About = () => (
-	<Provider>
-		<Consumer />
-	</Provider>
-);
+export default nest(Provider, About);
 
-export default About;
+const StyledLayout = styled(Layout)<DarkModeProps>(({ theme, ...props }) => ({
+	justifyContent: 'center',
+	backgroundColor: props['dark-mode'] === 'true' ? theme.darkMode6 : theme.white,
+	transition: 'background-color 0.3s ease',
+}));
+
+const StyledAboutContent = styled(Row)(({ theme }) => ({
+	margin: '50px 0',
+	[`@media screen and (max-width: ${theme.mobileSize})`]: {
+		flexDirection: 'column-reverse',
+	},
+}));
+
+const StyledDescriptions = styled(Descriptions)<DarkModeProps>(({ theme, ...props }) => ({
+	['&&']: {
+		['.ant-descriptions-view']: {
+			backgroundColor: 'transparent',
+			border: theme.none,
+			['tr, th, td']: {
+				backgroundColor: 'transparent',
+				color: props['dark-mode'] === 'true' ? theme.white : theme.black,
+				border: theme.none,
+			},
+		},
+	},
+}));
+
+const StyledCommentsTitle = styled(Typography.Title)<DarkModeProps>(({ theme, ...props }) => ({
+	['&&']: {
+		color: props['dark-mode'] === 'true' ? theme.white : theme.black,
+		marginBottom: 30,
+	},
+}));
+
+const StyledAboutCommentsWrap = styled(Row)(({ theme }) => ({
+	margin: '10px 0 60px',
+}));
+
+const StyledComment = styled(Comment)<DarkModeProps>(({ theme, ...props }) => ({
+	padding: '16px 0 24px',
+	['*']: {
+		color: props['dark-mode'] === 'true' ? theme.white : theme.black,
+	},
+}));
+
+const StyledCommentButton = styled(Button)(({ theme }) => ({
+	float: 'right',
+}));

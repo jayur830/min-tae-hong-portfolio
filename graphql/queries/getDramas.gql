@@ -1,0 +1,17 @@
+#import "../fragments/MediaMetadata.gql"
+
+query Dramas {
+	dramas: getDramas {
+		title
+		year
+		director
+		actors
+		schedule
+		img {
+			...MediaMetadata
+		}
+		scenes {
+			...MediaMetadata
+		}
+	}
+}
