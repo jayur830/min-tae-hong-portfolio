@@ -88,6 +88,6 @@ type Query {
 }
 
 type Mutation {
-	writeComment(comment: String!, date: String!): Boolean!
+	postComment(comment: String!, date: String!): Boolean!
 	auth(password: String!): Boolean!
 }

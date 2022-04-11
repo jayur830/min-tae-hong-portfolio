@@ -1,4 +1,32 @@
-import { ContentDataType } from './types';
+import { AboutValueType, ContentDataType } from './types';
+
+export const aboutValue: AboutValueType = {
+	comments: {
+		title: 'Comments',
+		buttons: {
+			submit: {
+				label: '등록',
+				type: 'primary',
+			},
+			cancel: {
+				label: '취소',
+				type: 'default',
+			},
+			write: {
+				label: '댓글 쓰기',
+				type: 'primary',
+			},
+		},
+	},
+	required: true,
+	rules: [
+		{
+			required: true,
+			message: '댓글을 입력해주세요.',
+		},
+	],
+	initialValue: '',
+};
 
 export const moviesValue: ContentDataType = {
 	descriptions: [

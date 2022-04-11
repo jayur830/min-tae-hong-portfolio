@@ -1,0 +1,3 @@
+mutation PostComment($comment: String!, $date: String!) {
+	postComment(comment: $comment, date: $date)
+}

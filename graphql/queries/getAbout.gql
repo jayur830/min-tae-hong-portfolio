@@ -12,9 +12,5 @@ query About {
 		img {
 			...MediaMetadata
 		}
-		comments {
-			comment
-			date
-		}
 	}
 }

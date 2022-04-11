@@ -1,0 +1,8 @@
+query Comments {
+	comments: getAbout {
+		comments {
+			comment
+			date
+		}
+	}
+}

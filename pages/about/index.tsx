@@ -1,18 +1,19 @@
 // Package
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { NextPage } from 'next';
 // import Image, { ImageProps } from 'next/image';
-import { Row, Col, Descriptions, DescriptionsProps, RowProps, Layout, Comment, Avatar, CommentProps, Tooltip, Typography, Button, Form } from 'antd';
+import { Row, Col, Descriptions, DescriptionsProps, RowProps, Layout, Comment, Avatar, CommentProps, Tooltip, Typography, Button, Form, ButtonProps, FormItemProps, FormProps } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import { UserOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 
 // Global
-import { DarkModeProps } from '@root/configs';
+import { DarkModeProps, values } from '@root/configs';
 import { nest, nvl } from '@root/utils';
-import { useImgUri, useDarkMode } from '@contexts/Provider';
-import { Provider, useWriteComment, useSetWriteComment, useAboutData, useAboutLoading } from '@contexts/about/Provider';
+import { useImgUri, useDarkMode, useCommonLoading } from '@contexts/Provider';
+import { Provider, useWriteComment, useSetWriteComment, useAboutData, useAboutLoading, useCommentsData, useCommentsRefetch, usePostComment } from '@contexts/about/Provider';
 import Image, { ImageProps } from '@components/Image';
+import dayjs from 'dayjs';
 
 // Local
 
@@ -24,6 +25,9 @@ const About: NextPage = () => {
 	const setWriteComment = useSetWriteComment();
 	const aboutData = useAboutData();
 	const loading = useAboutLoading();
+	const commentsData = useCommentsData();
+	const commentsRefetch = useCommentsRefetch();
+	const postComment = usePostComment();
 
 	const onWriteComment = useCallback(() => {
 		setWriteComment(true);
@@ -33,17 +37,64 @@ const About: NextPage = () => {
 		setWriteComment(false);
 	}, []);
 
-	const rowProps: RowProps = {
-		justify: 'center',
-		align: 'middle',
-		gutter: [50, 0],
-	};
+	const onFinish = useCallback(async ({ comment }: any) => {
+		const { data: isPostedComment } = await postComment({
+			variables: {
+				comment,
+				date: dayjs().format('YYYY.MM.DD HH:mm:ss'),
+			},
+		});
+		if (isPostedComment) {
+			setWriteComment(false);
+			commentsRefetch();
+		}
+	}, []);
 
-	const descriptionsProps: DescriptionsProps = {
-		bordered: true,
-		column: 1,
-		colon: false,
-	};
+	const commentContent = useMemo(() => {
+		const formProps: FormProps = {
+			form,
+			layout: 'vertical',
+			autoComplete: 'off',
+			onFinish,
+		};
+
+		const formItemProps: FormItemProps = {
+			name: 'comment',
+			required: nvl(values.aboutValue, 'required', false),
+			rules: nvl(values.aboutValue, 'rules', []),
+			initialValue: nvl(values.aboutValue, 'initialValue', ''),
+		};
+
+		const cancelButtonProps: ButtonProps = {
+			type: nvl(values.aboutValue, 'comments.buttons.cancel.type', 'default'),
+			className: isDarkMode ? 'dark-mode' : '',
+			onClick: onCancelWriteComment,
+		};
+
+		const submitButtonProps: ButtonProps = {
+			type: nvl(values.aboutValue, 'comments.buttons.submit.type', 'default'),
+			htmlType: 'submit',
+			className: isDarkMode ? 'dark-mode' : '',
+		};
+
+		return (
+			<Form {...formProps}>
+				<Form.Item {...formItemProps}>
+					<TextArea />
+				</Form.Item>
+				<Form.Item>
+					<Row justify="end" gutter={[5, 0]}>
+						<Col>
+							<Button {...cancelButtonProps}>{nvl(values.aboutValue, 'comments.buttons.cancel.label', '')}</Button>
+						</Col>
+						<Col>
+							<Button {...submitButtonProps}>{nvl(values.aboutValue, 'comments.buttons.submit.label', '')}</Button>
+						</Col>
+					</Row>
+				</Form.Item>
+			</Form>
+		);
+	}, [form, isDarkMode]);
 
 	const imageProps: ImageProps = {
 		loading,
@@ -52,6 +103,12 @@ const About: NextPage = () => {
 		height: nvl(aboutData, 'img.height', 0),
 		layout: 'intrinsic',
 		alt: 'About',
+	};
+
+	const writeButtonProps: ButtonProps = {
+		type: nvl(values.aboutValue, 'comments.buttons.write.type', 'default'),
+		className: isDarkMode ? 'dark-mode' : '',
+		onClick: onWriteComment,
 	};
 
 	return (
@@ -73,12 +130,12 @@ const About: NextPage = () => {
 					<Image {...imageProps} />
 				</Col>
 			</StyledAboutContent>
-			<StyledAboutCommentsWrap {...rowProps} dir="column">
+			<StyledAboutCommentsWrap {...rowProps}>
 				<Col xs={22} sm={22} lg={15}>
 					<StyledCommentsTitle level={4} dark-mode={isDarkMode.toString()}>
 						Comments
 					</StyledCommentsTitle>
-					{nvl(aboutData, 'comments', []).map(({ comment, date }: any, i: number) => {
+					{commentsData.map(({ comment, date }: any, i: number) => {
 						const commentProps: CommentProps = {
 							avatar: <Avatar icon={<UserOutlined />} />,
 							content: comment,
@@ -94,36 +151,11 @@ const About: NextPage = () => {
 					{isWriteComment ? (
 						<Row>
 							<Col span={24}>
-								<Comment
-									avatar={<Avatar icon={<UserOutlined />} />}
-									content={
-										<Form form={form} layout="vertical" autoComplete="off">
-											<Form.Item name="comment">
-												<TextArea />
-											</Form.Item>
-											<Form.Item>
-												<Row justify="end" gutter={[5, 0]}>
-													<Col>
-														<Button onClick={onCancelWriteComment} className={isDarkMode ? 'dark-mode' : ''}>
-															취소
-														</Button>
-													</Col>
-													<Col>
-														<Button type="primary" htmlType="submit" className={isDarkMode ? 'dark-mode' : ''}>
-															등록
-														</Button>
-													</Col>
-												</Row>
-											</Form.Item>
-										</Form>
-									}
-								/>
+								<Comment avatar={<Avatar icon={<UserOutlined />} />} content={commentContent} />
 							</Col>
 						</Row>
 					) : (
-						<StyledCommentButton type="primary" onClick={onWriteComment} className={isDarkMode ? 'dark-mode' : ''}>
-							댓글 쓰기
-						</StyledCommentButton>
+						<StyledCommentButton {...writeButtonProps}>{nvl(values.aboutValue, 'comments.buttons.write.label', '')}</StyledCommentButton>
 					)}
 				</Col>
 			</StyledAboutCommentsWrap>
@@ -132,6 +164,18 @@ const About: NextPage = () => {
 };
 
 export default nest(Provider, About);
+
+const rowProps: RowProps = {
+	justify: 'center',
+	align: 'middle',
+	gutter: [50, 0],
+};
+
+const descriptionsProps: DescriptionsProps = {
+	bordered: true,
+	column: 1,
+	colon: false,
+};
 
 const StyledLayout = styled(Layout)<DarkModeProps>(({ theme, ...props }) => ({
 	justifyContent: 'center',

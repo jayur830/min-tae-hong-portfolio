@@ -1,5 +1,5 @@
 import * as values from './values';
-import { DescriptionType, ContentDataType, DarkModeProps } from './types';
+import { AboutValueType, DescriptionType, ContentDataType, DarkModeProps } from './types';
 
 export { values };
-export type { DescriptionType, ContentDataType, DarkModeProps };
+export type { AboutValueType, DescriptionType, ContentDataType, DarkModeProps };

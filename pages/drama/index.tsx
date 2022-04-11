@@ -59,9 +59,11 @@ const Drama: NextPage = () => {
 														.map(config => {
 															if (loading) return null;
 															if (!config.single) {
+																const texts = nvl(info, config.name, []);
+																if (texts.length === 0) return null;
 																return (
 																	<Descriptions.Item key={config.name} label={config.label}>
-																		{nvl(info, config.name, []).join(', ')}
+																		{texts.join(', ')}
 																	</Descriptions.Item>
 																);
 															}
