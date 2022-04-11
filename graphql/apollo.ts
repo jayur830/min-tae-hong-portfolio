@@ -16,7 +16,7 @@ const authLink = setContext((_, { headers }) => ({
 const client = new ApolloClient({
 	connectToDevTools: process.env.NODE_ENV !== 'production',
 	cache: new InMemoryCache().restore({}),
-	link: ApolloLink.from([httpLink, authLink]),
+	link: ApolloLink.from([authLink, httpLink]),
 	defaultOptions: {
 		watchQuery: {
 			fetchPolicy: 'no-cache',
