@@ -1,10 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	reactStrictMode: false,
+	jsconfigPaths: true,
 	async headers() {
 		return [
 			{
-				source: '/api/*',
+				source: '/api/:path*',
 				headers: [
 					{ key: 'Access-Control-Allow-Credentials', value: 'true' },
 					{ key: 'Access-Control-Allow-Origin', value: '*' },

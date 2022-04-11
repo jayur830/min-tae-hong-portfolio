@@ -1,32 +1,35 @@
 // @ts-ignore
-const express = require("express");
-const next = require("next");
+const express = require('express');
+const next = require('next');
 
-const dev = process.env.NODE_ENV !== "production";
+const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-const dotenv = require("dotenv");
-const mongoose = require("mongoose");
+const dotenv = require('dotenv');
+const mongoose = require('mongoose');
+
+const cors = require('cors');
 
 app
 	.prepare()
 	.then(() => {
-		console.log("Connecting to MongoDB...");
+		console.log('Connecting to MongoDB...');
 		dotenv.config();
 		mongoose.connect(process.env.MONGO_URL);
 	})
 	.then(() => {
-		console.log("Successfully connected to MongoDB!");
+		console.log('Successfully connected to MongoDB!');
 		const server = express();
+		server.use(cors());
 
-		console.log("S3 Bucket name:", process.env.S3_BUCKET);
-		console.log("S3 Region:", process.env.S3_REGION);
+		console.log('S3 Bucket name:', process.env.S3_BUCKET);
+		console.log('S3 Region:', process.env.S3_REGION);
 
-		server.get("*", handle);
-		server.post("*", handle);
-		server.put("/api/*", handle);
-		server.delete("/api/*", handle);
+		server.get('*', handle);
+		server.post('*', handle);
+		server.put('/api/*', handle);
+		server.delete('/api/*', handle);
 
 		const port = 3000;
 
