@@ -9,12 +9,16 @@ import ContactQuery from '@graphql/queries/getContact.gql';
 // Local
 
 const useContact = () => {
-	const { data: contact } = useQuery(ContactQuery);
+	const { data: contact, loading: contactLoading } = useQuery(ContactQuery);
 	const contactData = nvl(contact, 'contact', {});
 
-	return { contactData };
+	return { contactData, contactLoading };
 };
 
-const [Provider, useContactData] = constate(useContact, value => value.contactData);
+const [Provider, useContactData, useContactLoading] = constate(
+	useContact,
+	value => value.contactData,
+	value => value.contactLoading
+);
 
-export { Provider, useContactData };
+export { Provider, useContactData, useContactLoading };

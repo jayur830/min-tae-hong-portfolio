@@ -9,7 +9,7 @@ import MoviesQuery from '@graphql/queries/getMovies.gql';
 // Local
 
 const useMovies = () => {
-	const { data: movies } = useQuery(MoviesQuery);
+	const { data: movies, loading: moviesLoading } = useQuery(MoviesQuery);
 	const moviesData = nvl(movies, 'movies', []).reduce((result: any, movie: any) => {
 		const { year, ...etc } = movie;
 		if (!(year in result))
@@ -28,9 +28,13 @@ const useMovies = () => {
 		};
 	}, {});
 
-	return { moviesData };
+	return { moviesData, moviesLoading };
 };
 
-const [Provider, useMoviesData] = constate(useMovies, value => value.moviesData);
+const [Provider, useMoviesData, useMoviesLoading] = constate(
+	useMovies,
+	value => value.moviesData,
+	value => value.moviesLoading
+);
 
-export { Provider, useMoviesData };
+export { Provider, useMoviesData, useMoviesLoading };

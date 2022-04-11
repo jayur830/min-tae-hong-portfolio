@@ -18,16 +18,16 @@ const useAppLayout = () => {
 
 	const imgUri = `https://${process.env.NEXT_PUBLIC_S3_BUCKET}.s3.${process.env.NEXT_PUBLIC_S3_REGION}.amazonaws.com`;
 
-	const { data: common } = useQuery(CommonQuery);
+	const { data: common, loading: commonLoading } = useQuery(CommonQuery);
 	const commonData = nvl(common, 'common', {});
 
-	const { data: footer } = useQuery(FooterQuery);
+	const { data: footer, loading: footerLoading } = useQuery(FooterQuery);
 	const footerData = nvl(footer, 'footer', {});
 
-	return { visibleMenu, setVisibleMenu, imgUri, isDarkMode, setDarkMode, commonData, footerData, tab, setTab };
+	return { visibleMenu, setVisibleMenu, imgUri, isDarkMode, setDarkMode, commonData, commonLoading, footerData, footerLoading, tab, setTab };
 };
 
-const [Provider, useVisibleMenu, useSetVisibleMenu, useImgUri, useDarkMode, useSetDarkMode, useCommonData, useFooterData, useTab, useSetTab] = constate(
+const [Provider, useVisibleMenu, useSetVisibleMenu, useImgUri, useDarkMode, useSetDarkMode, useCommonData, useCommonLoading, useFooterData, useFooterLoading, useTab, useSetTab] = constate(
 	useAppLayout,
 	value => value.visibleMenu,
 	value => value.setVisibleMenu,
@@ -35,9 +35,11 @@ const [Provider, useVisibleMenu, useSetVisibleMenu, useImgUri, useDarkMode, useS
 	value => value.isDarkMode,
 	value => value.setDarkMode,
 	value => value.commonData,
+	value => value.commonLoading,
 	value => value.footerData,
+	value => value.footerLoading,
 	value => value.tab,
 	value => value.setTab
 );
 
-export { Provider, useVisibleMenu, useSetVisibleMenu, useImgUri, useDarkMode, useSetDarkMode, useCommonData, useFooterData, useTab, useSetTab };
+export { Provider, useVisibleMenu, useSetVisibleMenu, useImgUri, useDarkMode, useSetDarkMode, useCommonData, useCommonLoading, useFooterData, useFooterLoading, useTab, useSetTab };

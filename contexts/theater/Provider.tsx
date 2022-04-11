@@ -9,7 +9,7 @@ import TheaterQuery from '@graphql/queries/getTheaters.gql';
 // Local
 
 const useTheater = () => {
-	const { data: theater } = useQuery(TheaterQuery);
+	const { data: theater, loading: theaterLoading } = useQuery(TheaterQuery);
 	const theaterData = nvl(theater, 'theaters', []).reduce((result: any, movie: any) => {
 		const { year, ...etc } = movie;
 		if (!(year in result))
@@ -27,9 +27,13 @@ const useTheater = () => {
 		};
 	}, {});
 
-	return { theaterData };
+	return { theaterData, theaterLoading };
 };
 
-const [Provider, useTheaterData] = constate(useTheater, value => value.theaterData);
+const [Provider, useTheaterData, useTheaterLoading] = constate(
+	useTheater,
+	value => value.theaterData,
+	value => value.theaterLoading
+);
 
-export { Provider, useTheaterData };
+export { Provider, useTheaterData, useTheaterLoading };

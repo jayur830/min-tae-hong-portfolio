@@ -5,7 +5,7 @@ import { Row, Col, RowProps, ColProps } from 'antd';
 // Global
 import { nest, nvl } from '@root/utils';
 import { useImgUri } from '@contexts/Provider';
-import { Provider, useHomeData } from '@contexts/home/Provider';
+import { Provider, useHomeData, useHomeLoading } from '@contexts/home/Provider';
 import Image, { ImageProps } from '@components/Image';
 import styled from 'styled-components';
 
@@ -14,6 +14,7 @@ import styled from 'styled-components';
 const Home: NextPage = () => {
 	const imgUri = useImgUri();
 	const homeData = useHomeData();
+	const loading = useHomeLoading();
 
 	const rowProps: RowProps = {
 		justify: 'center',
@@ -33,7 +34,7 @@ const Home: NextPage = () => {
 				<Row {...rowProps} gutter={[40, 20]}>
 					{homeData.map((obj: { filename: string; width: number; height: number }, i: number) => {
 						const imageProps: ImageProps = {
-							loading: nvl(obj, 'filename', null) == null,
+							loading,
 							src: `${imgUri}/${nvl(obj, 'filename', '')}`,
 							width: obj.width,
 							height: obj.height,

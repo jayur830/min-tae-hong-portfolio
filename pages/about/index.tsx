@@ -11,7 +11,7 @@ import styled from 'styled-components';
 import { DarkModeProps } from '@root/configs';
 import { nest, nvl } from '@root/utils';
 import { useImgUri, useDarkMode } from '@contexts/Provider';
-import { Provider, useWriteComment, useSetWriteComment, useAboutData } from '@contexts/about/Provider';
+import { Provider, useWriteComment, useSetWriteComment, useAboutData, useAboutLoading } from '@contexts/about/Provider';
 import Image, { ImageProps } from '@components/Image';
 
 // Local
@@ -23,6 +23,7 @@ const About: NextPage = () => {
 	const isWriteComment = useWriteComment();
 	const setWriteComment = useSetWriteComment();
 	const aboutData = useAboutData();
+	const loading = useAboutLoading();
 
 	const onWriteComment = useCallback(() => {
 		setWriteComment(true);
@@ -45,7 +46,7 @@ const About: NextPage = () => {
 	};
 
 	const imageProps: ImageProps = {
-		loading: aboutData == null,
+		loading,
 		src: `${imgUri}/${nvl(aboutData, 'img.filename', '')}`,
 		width: nvl(aboutData, 'img.width', 0),
 		height: nvl(aboutData, 'img.height', 0),

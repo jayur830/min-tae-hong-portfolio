@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import { nest, nvl } from '@root/utils';
 import { values, DarkModeProps } from '@root/configs';
 import { useDarkMode, useImgUri } from '@contexts/Provider';
-import { Provider, useDramaData } from '@contexts/drama/Provider';
+import { Provider, useDramaData, useDramaLoading } from '@contexts/drama/Provider';
 import YearLine from '@components/YearLine';
 import Image, { ImageProps } from '@components/Image';
 import Carousel from '@components/Carousel';
@@ -19,6 +19,7 @@ const Drama: NextPage = () => {
 	const isDarkMode = useDarkMode();
 	const imgUri = useImgUri();
 	const dramaData = useDramaData();
+	const loading = useDramaLoading();
 
 	return (
 		<StyledLayout dark-mode={isDarkMode.toString()}>
@@ -37,7 +38,7 @@ const Drama: NextPage = () => {
 								};
 
 								const imageProps: ImageProps = {
-									loading: nvl(img, 'filename', null) == null,
+									loading,
 									src: `${imgUri}/${nvl(img, 'filename', '')}`,
 									width: nvl(img, 'width', 0),
 									height: nvl(img, 'height', 0),
@@ -56,8 +57,8 @@ const Drama: NextPage = () => {
 												<StyledDescriptions column={1} dark-mode={isDarkMode.toString()}>
 													{values.dramaValue.descriptions
 														.map(config => {
+															if (loading) return null;
 															if (!config.single) {
-																if (nvl(info, config.name, []).length === 0) return null;
 																return (
 																	<Descriptions.Item key={config.name} label={config.label}>
 																		{nvl(info, config.name, []).join(', ')}
@@ -65,7 +66,6 @@ const Drama: NextPage = () => {
 																);
 															}
 
-															if (nvl(info, config.name, null) == null) return null;
 															return (
 																<Descriptions.Item key={config.name} label={config.label}>
 																	{nvl(info, config.name, '')}
@@ -81,9 +81,7 @@ const Drama: NextPage = () => {
 												<Row gutter={[5, 0]} {...rowProps}>
 													<Carousel>
 														{scenes.map((scene: any, i: number) => {
-															if (nvl(scene, 'filename', '') == null) {
-																return <Skeleton.Image />;
-															}
+															if (loading) return <Skeleton.Image />;
 
 															return (
 																<Col key={i} flex={1}>

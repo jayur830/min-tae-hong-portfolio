@@ -9,7 +9,7 @@ import DramaQuery from '@graphql/queries/getDramas.gql';
 // Local
 
 const useDrama = () => {
-	const { data: drama } = useQuery(DramaQuery);
+	const { data: drama, loading: dramaLoading } = useQuery(DramaQuery);
 	const dramaData = nvl(drama, 'dramas', []).reduce((result: any, movie: any) => {
 		const { year, ...etc } = movie;
 		if (!(year in result))
@@ -27,9 +27,13 @@ const useDrama = () => {
 		};
 	}, {});
 
-	return { dramaData };
+	return { dramaData, dramaLoading };
 };
 
-const [Provider, useDramaData] = constate(useDrama, value => value.dramaData);
+const [Provider, useDramaData, useDramaLoading] = constate(
+	useDrama,
+	value => value.dramaData,
+	value => value.dramaLoading
+);
 
-export { Provider, useDramaData };
+export { Provider, useDramaData, useDramaLoading };

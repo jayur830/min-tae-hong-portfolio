@@ -9,12 +9,16 @@ import HomeQuery from '@graphql/queries/getHome.gql';
 // Local
 
 const useHome = () => {
-	const { data: home } = useQuery(HomeQuery);
+	const { data: home, loading: homeLoading } = useQuery(HomeQuery);
 	const homeData = nvl(home, 'home', []);
 
-	return { homeData };
+	return { homeData, homeLoading };
 };
 
-const [Provider, useHomeData] = constate(useHome, value => value.homeData);
+const [Provider, useHomeData, useHomeLoading] = constate(
+	useHome,
+	value => value.homeData,
+	value => value.homeLoading
+);
 
-export { Provider, useHomeData };
+export { Provider, useHomeData, useHomeLoading };

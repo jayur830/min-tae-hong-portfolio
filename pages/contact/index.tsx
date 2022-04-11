@@ -1,6 +1,5 @@
 // Package
 import { NextPage } from 'next';
-import Image, { ImageProps } from 'next/image';
 import { Col, Descriptions, Row, RowProps } from 'antd';
 import styled from 'styled-components';
 
@@ -8,7 +7,8 @@ import styled from 'styled-components';
 import { DarkModeProps } from '@root/configs';
 import { nest, nvl } from '@root/utils';
 import { useImgUri, useDarkMode } from '@contexts/Provider';
-import { Provider, useContactData } from '@contexts/contact/Provider';
+import { Provider, useContactData, useContactLoading } from '@contexts/contact/Provider';
+import Image, { ImageProps } from '@components/Image';
 
 // Local
 
@@ -16,6 +16,7 @@ const Contact: NextPage = () => {
 	const isDarkMode = useDarkMode();
 	const imgUri = useImgUri();
 	const contactData = useContactData();
+	const loading = useContactLoading();
 
 	const rowProps: RowProps = {
 		justify: 'center',
@@ -24,6 +25,7 @@ const Contact: NextPage = () => {
 	};
 
 	const imageProps: ImageProps = {
+		loading,
 		src: `${imgUri}/${nvl(contactData, 'img.filename', '')}`,
 		width: nvl(contactData, 'img.width', 0),
 		height: nvl(contactData, 'img.height', 0),
