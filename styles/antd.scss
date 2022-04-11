@@ -1,0 +1,115 @@
+@import './variables.scss';
+
+html {
+	--antd-wave-shadow-color: $black;
+}
+
+.ant-layout {
+	background-color: $white;
+}
+
+a.ant-typography {
+	color: transparent;
+	&::after {
+		color: transparent;
+	}
+}
+
+.ant-carousel .slick-prev,
+.ant-carousel .slick-next {
+	font-size: inherit;
+	color: $black;
+}
+
+.ant-image-preview-img {
+	width: 768px;
+	@media screen and (max-width: $mobile-size) {
+		width: 85vmin;
+	}
+}
+
+.ant-btn {
+	height: fit-content;
+	border-radius: 0;
+	padding: 8px 25px;
+	transition: all 0.3s ease;
+
+	&-default {
+		color: $black;
+		border-color: $black;
+
+		&:focus {
+			color: $black;
+			border-color: $black;
+		}
+		&:hover {
+			color: $grey4;
+			border-color: $grey4;
+		}
+		&:active {
+			color: $grey6;
+			border-color: $grey6;
+			background: $grey2;
+		}
+
+		&.dark-mode {
+			color: $white;
+			background-color: $dark-mode6;
+			border-color: $white;
+
+			&:focus {
+				color: $white;
+				background-color: $dark-mode6;
+				border-color: $white;
+			}
+			&:hover {
+				color: $white;
+				background-color: $dark-mode3;
+				border-color: $white;
+			}
+			&:active {
+				color: $white;
+				background-color: $dark-mode5;
+				border-color: $white;
+			}
+		}
+	}
+
+	&-primary {
+		background-color: $black;
+		color: $white;
+		border-color: $black;
+
+		&:focus {
+			border-color: $black;
+			background: $black;
+		}
+		&:hover {
+			border-color: $grey4;
+			background: $grey4;
+		}
+		&:active {
+			border-color: $grey6;
+			background: $grey6;
+		}
+
+		&.dark-mode {
+			background-color: $dark-mode1;
+			color: $dark-mode6;
+			border-color: $dark-mode1;
+
+			&:focus {
+				border-color: $dark-mode1;
+				background: $dark-mode1;
+			}
+			&:hover {
+				border-color: $dark-mode2;
+				background: $dark-mode2;
+			}
+			&:active {
+				border-color: $dark-mode3;
+				background: $dark-mode3;
+			}
+		}
+	}
+}

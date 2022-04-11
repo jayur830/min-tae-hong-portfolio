@@ -1,73 +1,35 @@
 // Package
-import { useEffect, useMemo, useState } from "react";
-import constate from "constate";
+import constate from 'constate';
+import { useQuery } from '@apollo/client';
 
 // Global
-import { Theaters } from "@root/types";
+import { nvl } from '@root/utils';
+import TheaterQuery from '@graphql/queries/getTheaters.gql';
 
 // Local
 
-type TheaterScene = {
-	year: string;
-	theaterIndex: number;
-	sceneIndex: number;
-	max: number;
-};
-
 const useTheater = () => {
-	const [data, setData] = useState<Theaters>({});
+	const { data: theater } = useQuery(TheaterQuery);
+	const theaterData = nvl(theater, 'theaters', []).reduce((result: any, movie: any) => {
+		const { year, ...etc } = movie;
+		if (!(year in result))
+			result = {
+				...result,
+				[year]: [],
+			};
 
-	const [theaterScene, setTheaterScene] = useState<TheaterScene>({
-		year: "",
-		theaterIndex: -1,
-		sceneIndex: -1,
-		max: -1,
-	});
+		return {
+			...result,
+			[year]: result[year].concat({
+				...etc,
+				img: etc.img.filename ? etc.img : null,
+			}),
+		};
+	}, {});
 
-	const years = useMemo(() => {
-		const years = Object.keys(data);
-		years.sort((a, b) => (a < b ? 1 : -1));
-		return years;
-	}, [data]);
-
-	useEffect(() => {
-		fetch("/api/theater/data")
-			.then((response) => response.json())
-			.then((data) => {
-				let _data: { [year: string]: any[] } = {};
-				data.forEach((obj: any) => {
-					const year = obj.year.toString();
-					if (!(year in _data)) _data[year] = [];
-					_data[year].push({
-						_id: obj._id,
-						title: obj.title,
-						theater: obj.theater,
-						schedule: obj.schedule,
-						img: obj.img == null ? null : { ...obj.img },
-						scenes: Object.freeze(obj.scenes),
-						scenePage: 0,
-						scenePages: Math.ceil(obj.scenes.length / 5),
-						sceneIndex: -1,
-					});
-				});
-				setData(_data);
-			});
-	}, [setData]);
-
-	return {
-		data,
-		theaterScene,
-		setTheaterScene,
-		years,
-	};
+	return { theaterData };
 };
 
-const [Provider, useData, useTheaterScene, useSetTheaterScene, useYears] = constate(
-	useTheater,
-	(value) => value.data,
-	(value) => value.theaterScene,
-	(value) => value.setTheaterScene,
-	(value) => value.years
-);
+const [Provider, useTheaterData] = constate(useTheater, value => value.theaterData);
 
-export { Provider, useData, useTheaterScene, useSetTheaterScene, useYears };
+export { Provider, useTheaterData };

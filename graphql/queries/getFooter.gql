@@ -1,0 +1,8 @@
+query Footer {
+	footer: getFooter {
+		sns {
+			name
+			url
+		}
+	}
+}

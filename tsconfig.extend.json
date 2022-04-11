@@ -5,11 +5,14 @@
 			"@root/*": ["./*"],
 			"@assets/*": ["./assets/*"],
 			"@hooks/*": ["./hooks/*"],
+			"@configs/*": ["./configs/*"],
 			"@models/*": ["./models/*"],
+			"@graphql/*": ["./graphql/*"],
 			"@components/*": ["./components/*"],
 			"@contexts/*": ["./contexts/*"],
 			"@pages/*": ["./pages/*"],
 			"@styles/*": ["./styles/*"]
 		}
-	}
+	},
+	"files": ["@types/graphql.d.ts"]
 }

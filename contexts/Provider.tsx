@@ -1,42 +1,43 @@
 // Package
-import { useEffect, useState } from "react";
-import constate from "constate";
+import { useState } from 'react';
+import constate from 'constate';
+import { useQuery } from '@apollo/client';
 
 // Global
-import { Common } from "@root/types";
+// import { CommonQuery, FooterQuery } from '@graphql/queries';
+import CommonQuery from '@graphql/queries/getCommon.gql';
+import FooterQuery from '@graphql/queries/getFooter.gql';
+import { nvl } from '@root/utils';
 
 // Local
 
-const useApp = () => {
-	const [common, setCommon] = useState<Common>({
-		title: "",
-		headerTitle: "",
-		darkMode: false,
-		windowWidth: 0,
-	});
-	useEffect(() => {
-		fetch("/api/common/data")
-			.then(response => response.json())
-			.then(data => {
-				setCommon({
-					title: data.title,
-					headerTitle: data.headerTitle,
-					darkMode: false,
-					windowWidth: window.innerWidth,
-				});
-			});
-	}, [setCommon]);
+const useAppLayout = () => {
+	const [visibleMenu, setVisibleMenu] = useState(false);
+	const [isDarkMode, setDarkMode] = useState(false);
+	const [tab, setTab] = useState('');
 
-	return {
-		common,
-		setCommon,
-	};
+	const imgUri = `https://${process.env.NEXT_PUBLIC_S3_BUCKET}.s3.${process.env.NEXT_PUBLIC_S3_REGION}.amazonaws.com`;
+
+	const { data: common } = useQuery(CommonQuery);
+	const commonData = nvl(common, 'common', {});
+
+	const { data: footer } = useQuery(FooterQuery);
+	const footerData = nvl(footer, 'footer', {});
+
+	return { visibleMenu, setVisibleMenu, imgUri, isDarkMode, setDarkMode, commonData, footerData, tab, setTab };
 };
 
-const [Provider, useCommon, useSetCommon] = constate(
-	useApp,
-	value => value.common,
-	value => value.setCommon
+const [Provider, useVisibleMenu, useSetVisibleMenu, useImgUri, useDarkMode, useSetDarkMode, useCommonData, useFooterData, useTab, useSetTab] = constate(
+	useAppLayout,
+	value => value.visibleMenu,
+	value => value.setVisibleMenu,
+	value => value.imgUri,
+	value => value.isDarkMode,
+	value => value.setDarkMode,
+	value => value.commonData,
+	value => value.footerData,
+	value => value.tab,
+	value => value.setTab
 );
 
-export { Provider, useCommon, useSetCommon };
+export { Provider, useVisibleMenu, useSetVisibleMenu, useImgUri, useDarkMode, useSetDarkMode, useCommonData, useFooterData, useTab, useSetTab };

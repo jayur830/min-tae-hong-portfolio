@@ -1,37 +1,20 @@
 // Package
-import { useEffect, useState } from "react";
-import constate from "constate";
+import constate from 'constate';
+import { useQuery } from '@apollo/client';
 
 // Global
-import { Contact } from "@root/types";
+import { nvl } from '@root/utils';
+import ContactQuery from '@graphql/queries/getContact.gql';
 
 // Local
 
-const ContactContext = () => {
-	const [contact, setContact] = useState<Contact>({
-		email: "",
-		img: {
-			filename: "",
-			width: 0,
-			height: 0,
-		},
-	});
-	useEffect(() => {
-		fetch("/api/contact/data")
-			.then((response) => response.json())
-			.then(setContact);
-	}, [setContact]);
+const useContact = () => {
+	const { data: contact } = useQuery(ContactQuery);
+	const contactData = nvl(contact, 'contact', {});
 
-	return {
-		contact,
-		setContact,
-	};
+	return { contactData };
 };
 
-const [Provider, useContact, useSetContact] = constate(
-	ContactContext,
-	(value) => value.contact,
-	(value) => value.setContact
-);
+const [Provider, useContactData] = constate(useContact, value => value.contactData);
 
-export { Provider, useContact, useSetContact };
+export { Provider, useContactData };

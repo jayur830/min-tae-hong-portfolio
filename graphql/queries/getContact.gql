@@ -1,0 +1,10 @@
+#import "../fragments/MediaMetadata.gql"
+
+query Contact {
+	contact: getContact {
+		email
+		img {
+			...MediaMetadata
+		}
+	}
+}

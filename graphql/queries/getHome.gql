@@ -1,0 +1,7 @@
+#import "../fragments/MediaMetadata.gql"
+
+query Home {
+	home: getHome {
+		...MediaMetadata
+	}
+}

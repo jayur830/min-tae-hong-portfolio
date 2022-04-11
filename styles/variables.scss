@@ -1,0 +1,75 @@
+// color
+$black: black;
+$white: white;
+$grey1: #f6f6f6;
+$grey2: #e3e3e3;
+$grey3: #bbbbbb;
+$grey4: #8f8f8f;
+$grey5: #595959;
+$grey6: #303030;
+
+$red: #df3131;
+$blue: #165ddf;
+$green: #128312;
+$yellow: #e7e745;
+$purple: #8008ff;
+
+$dark-mode1: #acacd1;
+$dark-mode2: #8181a1;
+$dark-mode3: #747490;
+$dark-mode4: #5f5f7a;
+$dark-mode5: #43435d;
+$dark-mode6: #2e2e41;
+
+// font-family
+$font-family-regular: 'HeirofLight Regular';
+$font-family-bold: 'HeirofLight Bold';
+
+// display
+$display-inline: inline;
+$display-inline-block: inline-block;
+$display-block: block;
+$display-grid: grid;
+$display-inline-grid: inline-grid;
+$display-flex: flex;
+$display-inline-flex: inline-flex;
+$display-table: table;
+$display-table-cell: table-cell;
+$display-inline-flex: inline-table;
+
+// position
+$position-absolute: absolute;
+$position-relative: relative;
+$position-fixed: fixed;
+$position-static: static;
+$position-sticky: sticky;
+
+// align
+$flex-start: flex-start;
+$flex-end: flex-end;
+$top: top;
+$bottom: bottom;
+$left: left;
+$right: right;
+$middle: middle;
+$center: center;
+
+// border style
+$border-style-solid: solid;
+$border-style-dashed: dashed;
+$border-style-dotted: dotted;
+$border-style-double: double;
+$border-style-groove: groove;
+
+// etc
+$auto: auto;
+$initial: initial;
+$inherit: inherit;
+$inset: inset;
+$outset: outset;
+$unset: unset;
+$none: none;
+
+// responsive
+$tablet-size: 992px;
+$mobile-size: 768px;

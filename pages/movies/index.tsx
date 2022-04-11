@@ -1,77 +1,139 @@
 // Package
-import React from "react";
-import { NextPage } from "next";
-import Image from "next/image";
+import { NextPage } from 'next';
+import { Col, Descriptions, Layout, Row, RowProps, Image as AntImage, Skeleton } from 'antd';
+import { Content } from 'antd/lib/layout/layout';
+import styled from 'styled-components';
 
 // Global
-import Scene from "@components/Scene";
-import YearBlock from "@components/YearBlock";
-import SceneSlide from "@components/SceneSlide";
-import BlackButton from "@components/BlackButton";
-import VideoModal from "@components/VideoModal";
-import { Provider, useData, useMoviesScene, useMoviesVideo, useSetMoviesScene, useSetMoviesVideo, useYears } from "@contexts/movies/Provider";
+import { nest, nvl } from '@root/utils';
+import { values, DarkModeProps } from '@root/configs';
+import { useDarkMode, useImgUri } from '@contexts/Provider';
+import { Provider, useMoviesData } from '@contexts/movies/Provider';
+import YearLine from '@components/YearLine';
+import Image, { ImageProps } from '@components/Image';
+import Carousel from '@components/Carousel';
 
 // Local
 
-const Consumer: NextPage = () => {
-	const movies = useData();
-	const moviesScene = useMoviesScene();
-	const setMoviesScene = useSetMoviesScene();
-	const moviesVideo = useMoviesVideo();
-	const setMoviesVideo = useSetMoviesVideo();
-	const years = useYears();
+const Movies: NextPage = () => {
+	const isDarkMode = useDarkMode();
+	const imgUri = useImgUri();
+	const moviesData = useMoviesData();
 
 	return (
-		<section className="movies">
-			{years.map((year, i) => (
-				<YearBlock key={i} year={year}>
-					{(movies[year] as any[]).map((obj: any, j: number) => (
-						<div key={j} className="movies-block">
-							{obj.img && obj.img.filename !== "" ? <Image src={"/api/file/" + obj.img.filename} width={obj.img.width} height={obj.img.height} draggable={false} alt="Index Content Image" /> : null}
-							<div>
-								{obj.video ? <BlackButton onClick={() => setMoviesVideo({ ...obj.video })}>VIDEO</BlackButton> : null}
-								<h3 className="font-smoothing">{obj.title}</h3>
-								<div className="font-smoothing">감독: {obj.director}</div>
-								{obj.actors.length === 0 ? null : <div className="font-smoothing">출연: {obj.actors.join(", ")}</div>}
-								{obj.awards.length > 0 ? (
-									<ul>
-										{obj.awards.map((award: string, k: number) => (
-											<li key={k} className="font-smoothing">
-												{award}
-											</li>
-										))}
-									</ul>
-								) : null}
-							</div>
-							{obj.scenes.length === 0 ? null : <SceneSlide type="movies" year={year} i={j} scenePage={obj.scenePage} scenes={obj.scenes} setScene={setMoviesScene} />}
-						</div>
-					))}
-				</YearBlock>
-			))}
-			{moviesScene.year !== "" && moviesScene.moviesIndex !== -1 && moviesScene.sceneIndex !== -1 && moviesScene.max !== -1 ? (
-				<Scene
-					scenes={movies[moviesScene.year][moviesScene.moviesIndex].scenes}
-					sceneIndex={moviesScene.sceneIndex}
-					max={moviesScene.max}
-					onClose={() =>
-						setMoviesScene({
-							year: "",
-							moviesIndex: -1,
-							sceneIndex: -1,
-							max: -1,
-						})
-					}
-				/>
-			) : null}
-			{moviesVideo ? <VideoModal src={moviesVideo} onClose={() => setMoviesVideo(null)} /> : null}
-		</section>
+		<StyledLayout dark-mode={isDarkMode.toString()}>
+			{Object.keys(moviesData)
+				.sort((a, b) => (a < b ? 1 : -1))
+				.map((year, i) => (
+					<Row key={i} justify="center">
+						<Col xs={22} sm={22} lg={16}>
+							<YearLine year={year} />
+							{nvl(moviesData, year, []).map((movie: any, j: number) => {
+								const { img, video, scenes, ...info } = movie;
+
+								const rowProps: RowProps = {
+									justify: 'center',
+									align: 'middle',
+								};
+
+								const imageProps: ImageProps = {
+									loading: nvl(img, 'filename', null) == null,
+									src: `${imgUri}/${nvl(img, 'filename', '')}`,
+									width: nvl(img, 'width', 0),
+									height: nvl(img, 'height', 0),
+								};
+
+								return (
+									<Content key={j}>
+										<StyledImageWrap {...rowProps}>
+											<Col span={20}>
+												<Image {...imageProps} />
+											</Col>
+										</StyledImageWrap>
+										<Row {...rowProps}>
+											<Col span={20}>
+												<StyledDescriptions column={1} dark-mode={isDarkMode.toString()}>
+													{values.moviesValue.descriptions
+														.map(config => {
+															if (!config.single) {
+																if (nvl(info, config.name, []).length === 0) return null;
+																return (
+																	<Descriptions.Item key={config.name} label={config.label}>
+																		{nvl(info, config.name, []).join(', ')}
+																	</Descriptions.Item>
+																);
+															}
+
+															if (nvl(info, config.name, null) == null) return null;
+															return (
+																<Descriptions.Item key={config.name} label={config.label}>
+																	{nvl(info, config.name, '')}
+																</Descriptions.Item>
+															);
+														})
+														.filter(component => component != null)}
+												</StyledDescriptions>
+											</Col>
+										</Row>
+										<StyledCarouselWrap {...rowProps}>
+											<Col span={20}>
+												<Row gutter={[5, 0]} {...rowProps}>
+													<Carousel>
+														{scenes.map((scene: any, i: number) => {
+															if (nvl(scene, 'filename', '') == null) {
+																return <Skeleton.Image />;
+															}
+
+															return (
+																<Col key={i} flex={1}>
+																	<AntImage src={`${imgUri}/${nvl(scene, 'filename', '')}`} />
+																</Col>
+															);
+														})}
+													</Carousel>
+												</Row>
+											</Col>
+										</StyledCarouselWrap>
+									</Content>
+								);
+							})}
+						</Col>
+					</Row>
+				))}
+		</StyledLayout>
 	);
 };
 
-const Movies = () => (
-	<Provider>
-		<Consumer />
-	</Provider>
-);
+export default nest(Provider, Movies);
 
-export default Movies;
+const StyledLayout = styled(Layout)<DarkModeProps>(({ theme, ...props }) => ({
+	backgroundColor: props['dark-mode'] === 'true' ? theme.darkMode6 : theme.white,
+	transition: 'background-color 0.3s ease',
+}));
+
+const StyledImageWrap = styled(Row)(({ theme }) => ({
+	['&&']: {
+		margin: '10px 0 30px',
+		['.ant-col']: {
+			display: theme.displayFlex,
+			justifyContent: 'center',
+		},
+	},
+}));
+
+const StyledDescriptions = styled(Descriptions)<DarkModeProps>(({ theme, ...props }) => ({
+	['.ant-descriptions-item']: {
+		padding: 0,
+		['.ant-descriptions-item-label, .ant-descriptions-item-content']: {
+			color: props['dark-mode'] === 'true' ? theme.white : theme.black,
+		},
+	},
+}));
+
+const StyledCarouselWrap = styled(Row)(({ theme }) => ({
+	margin: '50px 0 70px',
+	['.ant-col']: {
+		display: theme.displayFlex,
+		justifyContent: 'center',
+	},
+}));

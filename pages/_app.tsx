@@ -1,37 +1,26 @@
 // Package
-import React from "react";
-import { AppContext, AppInitialProps, AppProps } from "next/app";
-import { useRouter } from "next/router";
+import type { AppProps } from 'next/app';
+import { ThemeProvider } from 'styled-components';
+import { ApolloProvider } from '@apollo/client';
 
 // Global
-import AdminLayout from "@components/AdminLayout";
-import AppLayout from "@components/AppLayout";
-import { Provider } from "@contexts/Provider";
-import wrapper from "@root/store";
-import "@styles/globals.scss";
+import AppLayout from '@components/AppLayout';
+import client from '@graphql/apollo';
+import theme from '!!sass-variable-parser!@styles/variables.scss';
+import '@styles/globals.scss';
 
 // Local
 
-const App = ({ Component, pageProps }: AppProps) => {
+function MyApp({ Component, pageProps }: AppProps) {
 	return (
-		<Provider>
-			{useRouter().pathname.indexOf("/admin") !== -1 ? (
-				<AdminLayout>
-					<Component {...pageProps} />
-				</AdminLayout>
-			) : (
+		<ApolloProvider client={client}>
+			<ThemeProvider theme={theme}>
 				<AppLayout>
 					<Component {...pageProps} />
 				</AppLayout>
-			)}
-		</Provider>
+			</ThemeProvider>
+		</ApolloProvider>
 	);
-};
+}
 
-App.getInitialProps = async ({ Component, ctx }: AppContext): Promise<AppInitialProps> => {
-	let pageProps = {};
-	if (Component.getInitialProps) pageProps = await Component.getInitialProps(ctx);
-	return { pageProps };
-};
-
-export default wrapper.withRedux(App);
+export default MyApp;
