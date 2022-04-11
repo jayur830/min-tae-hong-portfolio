@@ -38,6 +38,7 @@ const Home: NextPage = () => {
 							width: obj.width,
 							height: obj.height,
 							layout: 'intrinsic',
+							alt: 'Home',
 						};
 
 						const imageColProps: ColProps = {

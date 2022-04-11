@@ -14,14 +14,14 @@ export interface ImageProps {
 	width?: number | string;
 	height?: number | string;
 	layout?: 'fill' | 'fixed' | 'intrinsic' | 'responsive' | 'raw';
+	alt?: string;
 }
 
-const Image = ({ loading, src, width, height }: ImageProps) => {
-	const imageProps: NextImageProps = { src, width, height };
+const Image = ({ loading, src, width, height, layout, alt }: ImageProps) => {
+	const imageProps: NextImageProps = { src, width, height, layout, alt };
 	const skeletonInlineStyle: CSSProperties = { width, height };
 
 	return loading ? <Skeleton.Image style={skeletonInlineStyle} /> : <NextImage {...imageProps} />;
-	// return <Skeleton.Image style={skeletonInlineStyle} />;
 };
 
 export default Image;

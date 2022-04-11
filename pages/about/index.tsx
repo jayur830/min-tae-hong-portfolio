@@ -50,6 +50,7 @@ const About: NextPage = () => {
 		width: nvl(aboutData, 'img.width', 0),
 		height: nvl(aboutData, 'img.height', 0),
 		layout: 'intrinsic',
+		alt: 'About',
 	};
 
 	return (

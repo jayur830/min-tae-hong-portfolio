@@ -41,6 +41,7 @@ const Movies: NextPage = () => {
 									src: `${imgUri}/${nvl(img, 'filename', '')}`,
 									width: nvl(img, 'width', 0),
 									height: nvl(img, 'height', 0),
+									alt: 'Movies main image',
 								};
 
 								return (

@@ -27,6 +27,7 @@ const Contact: NextPage = () => {
 		src: `${imgUri}/${nvl(contactData, 'img.filename', '')}`,
 		width: nvl(contactData, 'img.width', 0),
 		height: nvl(contactData, 'img.height', 0),
+		alt: 'Contact',
 	};
 
 	return (
