@@ -21,7 +21,12 @@ app
 	.then(() => {
 		console.log('Successfully connected to MongoDB!');
 		const server = express();
-		server.use(cors());
+		server.use(
+			cors({
+				origin: process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : `https://${process.env.VERCEL_URL}`,
+				credentials: true,
+			})
+		);
 
 		console.log('S3 Bucket name:', process.env.S3_BUCKET);
 		console.log('S3 Region:', process.env.S3_REGION);
