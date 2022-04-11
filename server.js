@@ -32,11 +32,11 @@ app
 		console.log('S3 Region:', process.env.S3_REGION);
 
 		server.get('*', handle);
-		server.post('*', handle);
+		server.post('/api/*', handle);
 		server.put('/api/*', handle);
 		server.delete('/api/*', handle);
 
-		const port = 3000;
+		const port = process.env.PORT || 3000;
 
 		server.listen(port, error => {
 			if (error) throw error;
