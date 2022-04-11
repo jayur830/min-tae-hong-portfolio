@@ -1,6 +1,5 @@
 import { ApolloServer } from 'apollo-server-micro';
 import { ApolloServerPluginLandingPageDisabled, ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core';
-// import { loadFile } from 'graphql-import-files';
 
 import * as Query from '../../graphql/resolvers/queries';
 import * as Mutation from '../../graphql/resolvers/mutations';

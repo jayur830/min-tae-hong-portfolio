@@ -1,13 +1,22 @@
 import { ApolloClient, ApolloLink, createHttpLink, InMemoryCache } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 
 const httpLink = createHttpLink({
-	uri: `http://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/graphql`,
+	uri: '/api/graphql',
+	credentials: 'same-origin',
 });
+
+const authLink = setContext((_, { headers }) => ({
+	headers: {
+		...headers,
+		'Access-Control-Allow-Origin': '*',
+	},
+}));
 
 const client = new ApolloClient({
 	connectToDevTools: process.env.NODE_ENV !== 'production',
 	cache: new InMemoryCache().restore({}),
-	link: ApolloLink.from([httpLink]),
+	link: ApolloLink.from([httpLink, authLink]),
 	defaultOptions: {
 		watchQuery: {
 			fetchPolicy: 'no-cache',
