@@ -14,6 +14,7 @@ const Helmet = () => {
 		<Head>
 			<title>{nvl(commonData, 'title', '')}</title>
 			<meta name="description" content="민태홍 포트폴리오" />
+			<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
 			<link rel="icon" href="/favicon.ico" />
 		</Head>
 	);
