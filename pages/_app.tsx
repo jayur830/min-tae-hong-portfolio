@@ -1,23 +1,28 @@
 // Package
 import type { AppProps } from 'next/app';
-import { ThemeProvider } from 'styled-components';
+import { useRouter } from 'next/router';
 import { ApolloProvider } from '@apollo/client';
+import { ThemeProvider } from 'styled-components';
 
 // Global
-import AppLayout from '@components/AppLayout';
 import client from '@graphql/apollo';
+import AppLayout from '@components/AppLayout';
+import AdminLayout from '@components/AdminLayout';
 import theme from '!!sass-variable-parser!@styles/variables.scss';
 import '@styles/globals.scss';
 
 // Local
 
 function MyApp({ Component, pageProps }: AppProps) {
+	const { pathname } = useRouter();
+	const Layout = pathname.indexOf('/admin') !== -1 ? AdminLayout : AppLayout;
+
 	return (
 		<ApolloProvider client={client}>
 			<ThemeProvider theme={theme}>
-				<AppLayout>
+				<Layout>
 					<Component {...pageProps} />
-				</AppLayout>
+				</Layout>
 			</ThemeProvider>
 		</ApolloProvider>
 	);

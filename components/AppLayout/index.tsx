@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import { nest } from '@root/utils';
 import { DarkModeProps } from '@root/configs';
 import { Provider, useDarkMode } from '@contexts/Provider';
-import Helmet from '@components/Helmet';
+import Helmet from '@root/components/AppLayout/Helmet';
 
 // Local
 import AppFooter from './AppFooter';
