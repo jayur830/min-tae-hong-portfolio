@@ -4,12 +4,12 @@ import { Row, Col, RowProps, ColProps } from 'antd';
 
 // Global
 import { nest, nvl } from '@root/utils';
-import { useImgUri } from '@contexts/Provider';
-import { Provider, useHomeData, useHomeLoading } from '@contexts/home/Provider';
-import Image, { ImageProps } from '@components/Image';
+import Image, { ImageProps } from '@root/components/Image';
 import styled from 'styled-components';
+import { useImgUri } from '@root/contexts/Provider';
 
 // Local
+import { Provider, useHomeData, useHomeLoading } from './Provider';
 
 const Home: NextPage = () => {
 	const imgUri = useImgUri();

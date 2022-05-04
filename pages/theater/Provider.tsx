@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/client';
 
 // Global
 import { nvl } from '@root/utils';
-import TheaterQuery from '@graphql/queries/getTheaters.gql';
+import TheaterQuery from '@root/graphql/queries/getTheaters.gql';
 
 // Local
 

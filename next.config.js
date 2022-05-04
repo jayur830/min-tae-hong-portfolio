@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+module.exports = {
 	reactStrictMode: false,
 	jsconfigPaths: true,
+	pageExtensions: ['page.js', 'page.ts', 'page.jsx', 'page.tsx', 'api.js', 'api.ts', 'api.jsx', 'api.tsx'],
 	async headers() {
 		return [
 			{
@@ -32,5 +33,3 @@ const nextConfig = {
 		domains: [`${process.env.S3_BUCKET}.s3.${process.env.S3_REGION}.amazonaws.com`],
 	},
 };
-
-module.exports = nextConfig;

@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/client';
 
 // Global
 import { nvl } from '@root/utils';
-import ContactQuery from '@graphql/queries/getContact.gql';
+import ContactQuery from '@root/graphql/queries/getContact.gql';
 
 // Local
 

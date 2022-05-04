@@ -4,7 +4,7 @@ import { ApolloServerPluginLandingPageDisabled, ApolloServerPluginLandingPageGra
 import * as Query from '../../graphql/resolvers/queries';
 import * as Mutation from '../../graphql/resolvers/mutations';
 
-import typeDefs from '@graphql/schema.gql';
+import typeDefs from '@root/graphql/schema.gql';
 
 const resolvers = {
 	Query,

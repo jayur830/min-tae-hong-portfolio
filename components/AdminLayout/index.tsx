@@ -6,10 +6,12 @@ import Sider from 'antd/lib/layout/Sider';
 import styled from 'styled-components';
 
 // Global
+import { nest } from '@root/utils';
+import { Provider } from '@root/contexts/Provider';
 
 // Local
-import SideMenu from './SideMenu';
 import Helmet from './Helmet';
+import SideMenu from './SideMenu';
 
 const AdminLayout: NextPage = ({ children }) => {
 	return (
@@ -24,7 +26,7 @@ const AdminLayout: NextPage = ({ children }) => {
 	);
 };
 
-export default AdminLayout;
+export default nest(Provider, AdminLayout);
 
 const StyledLayout = styled(Layout)(({ theme }) => ({
 	height: '100%',

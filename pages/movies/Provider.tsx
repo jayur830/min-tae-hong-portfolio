@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/client';
 
 // Global
 import { nvl } from '@root/utils';
-import MoviesQuery from '@graphql/queries/getMovies.gql';
+import MoviesQuery from '@root/graphql/queries/getMovies.gql';
 
 // Local
 

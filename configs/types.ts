@@ -10,6 +10,18 @@ export interface AboutValueType extends FormItemProps {
 			};
 		};
 	};
+	admin: {
+		columns: {
+			key: string;
+			title: string;
+			dataIndex?: string | string[];
+			width?: number | string;
+		}[];
+		infoModal: {
+			title: string;
+			okText?: string;
+		};
+	};
 }
 
 export interface DescriptionType {

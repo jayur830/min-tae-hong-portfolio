@@ -1,4 +1,4 @@
-import Footer from '@models/footer';
+import Footer from '@root/models/footer';
 
 import { nvl } from '@root/utils';
 

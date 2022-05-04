@@ -45,3 +45,8 @@ export const range = (start: number, end: number) => {
 	for (let i = start; i <= end; ++i) rangeList.push(i);
 	return rangeList;
 };
+
+export const assignKeys = (list: any[]): any[] => {
+	if (!list) return [];
+	return list.map((obj, i) => ({ ...obj, key: i }));
+};

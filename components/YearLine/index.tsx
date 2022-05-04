@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 // Global
 import { DarkModeProps } from '@root/configs';
-import { useDarkMode } from '@contexts/Provider';
+import { useDarkMode } from '@root/contexts/Provider';
 
 // Local
 

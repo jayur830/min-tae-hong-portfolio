@@ -1,4 +1,4 @@
-import Contact from '@models/contact';
+import Contact from '@root/models/contact';
 
 import { nvl } from '@root/utils';
 

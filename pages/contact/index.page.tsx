@@ -1,16 +1,16 @@
 // Package
 import { NextPage } from 'next';
-import { Col, Descriptions, Row, RowProps } from 'antd';
+import { Row, RowProps, Col, Descriptions } from 'antd';
 import styled from 'styled-components';
 
 // Global
 import { DarkModeProps } from '@root/configs';
 import { nest, nvl } from '@root/utils';
-import { useImgUri, useDarkMode } from '@contexts/Provider';
-import { Provider, useContactData, useContactLoading } from '@contexts/contact/Provider';
-import Image, { ImageProps } from '@components/Image';
+import { useImgUri, useDarkMode } from '@root/contexts/Provider';
+import Image, { ImageProps } from '@root/components/Image';
 
 // Local
+import { Provider, useContactData, useContactLoading } from './Provider';
 
 const Contact: NextPage = () => {
 	const isDarkMode = useDarkMode();

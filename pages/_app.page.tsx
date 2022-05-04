@@ -5,15 +5,15 @@ import { ApolloProvider } from '@apollo/client';
 import { ThemeProvider } from 'styled-components';
 
 // Global
-import client from '@graphql/apollo';
-import AppLayout from '@components/AppLayout';
-import AdminLayout from '@components/AdminLayout';
-import theme from '!!sass-variable-parser!@styles/variables.scss';
-import '@styles/globals.scss';
+import client from '@root/graphql/apollo';
+import AppLayout from '@root/components/AppLayout';
+import AdminLayout from '@root/components/AdminLayout';
+import theme from '!!sass-variable-parser!@root/styles/variables.scss';
+import '@root/styles/globals.scss';
 
 // Local
 
-function MyApp({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps }: AppProps) {
 	const { pathname } = useRouter();
 	const Layout = pathname.indexOf('/admin') !== -1 ? AdminLayout : AppLayout;
 
@@ -28,4 +28,4 @@ function MyApp({ Component, pageProps }: AppProps) {
 	);
 }
 
-export default MyApp;
+export default App;

@@ -26,6 +26,31 @@ export const aboutValue: AboutValueType = {
 		},
 	],
 	initialValue: '',
+	admin: {
+		columns: [
+			{
+				key: 'date',
+				title: '날짜 및 시간',
+				dataIndex: ['date'],
+				width: 200,
+			},
+			{
+				key: 'comment',
+				title: '댓글',
+				dataIndex: ['comment'],
+			},
+			{
+				key: 'option',
+				title: '',
+				dataIndex: ['option'],
+				width: 220,
+			},
+		],
+		infoModal: {
+			title: '정보 수정',
+			okText: '완료',
+		},
+	},
 };
 
 export const moviesValue: ContentDataType = {
@@ -53,7 +78,7 @@ export const moviesValue: ContentDataType = {
 	],
 };
 
-export const dramaValue = {
+export const dramaValue: ContentDataType = {
 	descriptions: [
 		{
 			name: 'title',
@@ -78,7 +103,7 @@ export const dramaValue = {
 	],
 };
 
-export const theaterValue = {
+export const theaterValue: ContentDataType = {
 	descriptions: [
 		{
 			name: 'title',

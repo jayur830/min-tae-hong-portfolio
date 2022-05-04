@@ -1,4 +1,4 @@
-import About from '@models/about';
+import About from '@root/models/about';
 
 import { nvl } from '@root/utils';
 

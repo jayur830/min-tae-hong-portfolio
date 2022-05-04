@@ -7,7 +7,7 @@ import styled from 'styled-components';
 // Global
 import { nest } from '@root/utils';
 import { DarkModeProps } from '@root/configs';
-import { Provider, useDarkMode } from '@contexts/Provider';
+import { Provider, useDarkMode } from '@root/contexts/Provider';
 import Helmet from '@root/components/AppLayout/Helmet';
 
 // Local

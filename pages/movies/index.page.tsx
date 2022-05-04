@@ -7,30 +7,30 @@ import styled from 'styled-components';
 // Global
 import { nest, nvl } from '@root/utils';
 import { values, DarkModeProps } from '@root/configs';
-import { useDarkMode, useImgUri } from '@contexts/Provider';
-import { Provider, useDramaData, useDramaLoading } from '@contexts/drama/Provider';
-import YearLine from '@components/YearLine';
-import Image, { ImageProps } from '@components/Image';
-import Carousel from '@components/Carousel';
+import YearLine from '@root/components/YearLine';
+import Image, { ImageProps } from '@root/components/Image';
+import Carousel from '@root/components/Carousel';
+import { useDarkMode, useImgUri } from '@root/contexts/Provider';
 
 // Local
+import { Provider, useMoviesData, useMoviesLoading } from './Provider';
 
-const Drama: NextPage = () => {
+const Movies: NextPage = () => {
 	const isDarkMode = useDarkMode();
 	const imgUri = useImgUri();
-	const dramaData = useDramaData();
-	const loading = useDramaLoading();
+	const moviesData = useMoviesData();
+	const loading = useMoviesLoading();
 
 	return (
 		<StyledLayout dark-mode={isDarkMode.toString()}>
-			{Object.keys(dramaData)
+			{Object.keys(moviesData)
 				.sort((a, b) => (a < b ? 1 : -1))
 				.map((year, i) => (
 					<Row key={i} justify="center">
 						<Col xs={22} sm={22} lg={16}>
 							<YearLine year={year} />
-							{nvl(dramaData, year, []).map((drama: any, j: number) => {
-								const { img, scenes, ...info } = drama;
+							{nvl(moviesData, year, []).map((movie: any, j: number) => {
+								const { img, video, scenes, ...info } = movie;
 
 								const rowProps: RowProps = {
 									justify: 'center',
@@ -42,7 +42,7 @@ const Drama: NextPage = () => {
 									src: `${imgUri}/${nvl(img, 'filename', '')}`,
 									width: nvl(img, 'width', 0),
 									height: nvl(img, 'height', 0),
-									alt: 'Drama main image',
+									alt: 'Movies main image',
 								};
 
 								return (
@@ -55,7 +55,7 @@ const Drama: NextPage = () => {
 										<Row {...rowProps}>
 											<Col span={20}>
 												<StyledDescriptions column={1} dark-mode={isDarkMode.toString()}>
-													{values.dramaValue.descriptions
+													{values.moviesValue.descriptions
 														.map(config => {
 															if (loading) return null;
 															if (!config.single) {
@@ -105,7 +105,7 @@ const Drama: NextPage = () => {
 	);
 };
 
-export default nest(Provider, Drama);
+export default nest(Provider, Movies);
 
 const StyledLayout = styled(Layout)<DarkModeProps>(({ theme, ...props }) => ({
 	backgroundColor: props['dark-mode'] === 'true' ? theme.darkMode6 : theme.white,

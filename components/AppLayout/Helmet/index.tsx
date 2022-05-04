@@ -3,7 +3,7 @@ import Head from 'next/head';
 
 // Global
 import { nvl } from '@root/utils';
-import { useCommonData } from '@contexts/Provider';
+import { useCommonData } from '@root/contexts/Provider';
 
 // Local
 

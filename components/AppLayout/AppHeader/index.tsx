@@ -7,7 +7,7 @@ import styled from 'styled-components';
 // Global
 import { DarkModeProps } from '@root/configs';
 import { nvl } from '@root/utils';
-import { useCommonData, useDarkMode } from '@contexts/Provider';
+import { useCommonData, useDarkMode } from '@root/contexts/Provider';
 
 // Local
 

@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/client';
 
 // Global
 import { nvl } from '@root/utils';
-import HomeQuery from '@graphql/queries/getHome.gql';
+import HomeQuery from '@root/graphql/queries/getHome.gql';
 
 // Local
 
