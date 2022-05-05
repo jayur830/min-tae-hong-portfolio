@@ -15,15 +15,62 @@ const authLink = setContext((_, { headers }) => ({
 
 const client = new ApolloClient({
 	connectToDevTools: process.env.NODE_ENV !== 'production',
-	cache: new InMemoryCache().restore({}),
+	cache: new InMemoryCache({
+		typePolicies: {
+			['Query']: {
+				fields: {
+					['getAbout']: {
+						merge(existingData, incomingData) {
+							return incomingData;
+						},
+					},
+					['getCommon']: {
+						merge(existingData, incomingData) {
+							return incomingData;
+						},
+					},
+					['getContact']: {
+						merge(existingData, incomingData) {
+							return incomingData;
+						},
+					},
+					['getDramas']: {
+						merge(existingData, incomingData) {
+							return incomingData;
+						},
+					},
+					['getFooter']: {
+						merge(existingData, incomingData) {
+							return incomingData;
+						},
+					},
+					['getHome']: {
+						merge(existingData, incomingData) {
+							return incomingData;
+						},
+					},
+					['getMovies']: {
+						merge(existingData, incomingData) {
+							return incomingData;
+						},
+					},
+					['getTheaters']: {
+						merge(existingData, incomingData) {
+							return incomingData;
+						},
+					},
+				},
+			},
+		},
+	}).restore({}),
 	link: ApolloLink.from([authLink, httpLink]),
 	defaultOptions: {
 		watchQuery: {
-			fetchPolicy: 'no-cache',
+			fetchPolicy: 'cache-first',
 			errorPolicy: 'ignore',
 		},
 		query: {
-			fetchPolicy: 'no-cache',
+			fetchPolicy: 'cache-first',
 			errorPolicy: 'all',
 		},
 	},
