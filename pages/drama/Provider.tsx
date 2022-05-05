@@ -5,11 +5,12 @@ import { useQuery } from '@apollo/client';
 // Global
 import { nvl } from '@root/utils';
 import DramaQuery from '@root/graphql/queries/getDramas.gql';
+import { Dramas } from '@root/graphql/scheme';
 
 // Local
 
 const useDrama = () => {
-	const { data: drama, loading: dramaLoading } = useQuery(DramaQuery);
+	const { data: drama, loading: dramaLoading } = useQuery<{ drama: Dramas }>(DramaQuery);
 	const dramaData = nvl(drama, 'dramas', []).reduce((result: any, movie: any) => {
 		const { year, ...etc } = movie;
 		if (!(year in result))

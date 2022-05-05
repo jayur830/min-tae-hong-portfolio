@@ -5,11 +5,12 @@ import { useQuery } from '@apollo/client';
 // Global
 import { nvl } from '@root/utils';
 import ContactQuery from '@root/graphql/queries/getContact.gql';
+import { Contact } from '@root/graphql/scheme';
 
 // Local
 
 const useContact = () => {
-	const { data: contact, loading: contactLoading } = useQuery(ContactQuery);
+	const { data: contact, loading: contactLoading } = useQuery<{ contact: Contact }>(ContactQuery);
 	const contactData = nvl(contact, 'contact', {});
 
 	return { contactData, contactLoading };

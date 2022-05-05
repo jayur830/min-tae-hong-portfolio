@@ -9,18 +9,18 @@ import Image, { ImageProps } from '@root/components/Image';
 import { useImgUri } from '@root/contexts/Provider';
 
 // Local
-import { useAboutData, useAboutLoading } from '../Provider';
+import { useContactData, useContactLoading } from '../Provider';
 
-const AboutImage: NextPage = () => {
+const ContactImage: NextPage = () => {
 	const imgUri = useImgUri();
-	const aboutData = useAboutData();
-	const loading = useAboutLoading();
+	const contactData = useContactData();
+	const loading = useContactLoading();
 
 	const imageProps: ImageProps = {
 		loading,
-		src: `${imgUri}/${nvl(aboutData, 'img.filename', '')}`,
-		width: nvl(aboutData, 'img.width', 0),
-		height: nvl(aboutData, 'img.height', 0),
+		src: `${imgUri}/${nvl(contactData, 'img.filename', '')}`,
+		width: nvl(contactData, 'img.width', 0),
+		height: nvl(contactData, 'img.height', 0),
 		layout: 'intrinsic',
 		alt: 'About',
 	};
@@ -32,4 +32,4 @@ const AboutImage: NextPage = () => {
 	);
 };
 
-export default AboutImage;
+export default ContactImage;

@@ -66,7 +66,7 @@ const Comments: NextPage = () => {
 	};
 
 	return (
-		<Card title={<Title level={4}>Comments</Title>}>
+		<Card title={<Title level={4}>댓글</Title>}>
 			<Table {...tableProps} />
 		</Card>
 	);

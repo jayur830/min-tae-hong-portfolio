@@ -1,20 +1,21 @@
 // Package
+import Link from 'next/link';
 import { Menu } from 'antd';
 import Sider from 'antd/lib/layout/Sider';
-import Link from 'next/link';
 import styled from 'styled-components';
 
 // Global
-import { values } from '../configs';
+import { nvl } from '@root/utils';
 
 // Local
+import { values } from '../configs';
 
 const SideMenu = () => {
 	return (
 		<StyledSider>
 			<StyledMenu>
-				{values.adminLayoutValue.menus.map(({ label, link }, i) => (
-					<Menu.Item key={i}>
+				{nvl(values, 'adminLayoutValue.menus', []).map(({ label, link }: any, i: number) => (
+					<Menu.Item key={i} color="white">
 						<Link href={link}>{label}</Link>
 					</Menu.Item>
 				))}
@@ -31,19 +32,30 @@ const StyledSider = styled(Sider)(({ theme }) => ({
 	justifyContent: 'start',
 	alignItems: theme.center,
 	fontSize: 16,
-	backgroundColor: '#83c3ff',
-	color: '#15293b',
+	backgroundColor: theme.grey6,
 	padding: 15,
 }));
 
 const StyledMenu = styled(Menu)(({ theme }) => ({
+	color: theme.white,
 	backgroundColor: 'transparent',
 	border: theme.none,
+	['.ant-menu-item']: {
+		['a']: {
+			color: theme.white,
+		},
+		[':hover']: {
+			backgroundColor: theme.white,
+			['a']: {
+				color: theme.black,
+			},
+		},
+	},
 	['&&&&']: {
 		['.ant-menu-item-selected']: {
-			backgroundColor: '#15293b',
+			backgroundColor: theme.white,
 			['a']: {
-				color: '#daeeff',
+				color: theme.black,
 			},
 		},
 	},

@@ -18,21 +18,9 @@ const Info: NextPage = () => {
 		setVisibleInfoModal(true);
 	}, []);
 
-	const descriptionsProps: DescriptionsProps = {
-		bordered: true,
-		column: 1,
-		labelStyle: {
-			textAlign: 'right',
-			padding: '10px 18px',
-		},
-		contentStyle: {
-			padding: '10px 18px',
-		},
-	};
-
 	return (
 		<Card
-			title={<Title level={4}>Info</Title>}
+			title={<Title level={4}>정보</Title>}
 			extra={
 				<Button type="primary" onClick={onShowInfoModal}>
 					수정
@@ -51,3 +39,15 @@ const Info: NextPage = () => {
 };
 
 export default Info;
+
+const descriptionsProps: DescriptionsProps = {
+	bordered: true,
+	column: 1,
+	labelStyle: {
+		textAlign: 'right',
+		padding: '10px 18px',
+	},
+	contentStyle: {
+		padding: '10px 18px',
+	},
+};

@@ -1,0 +1,12 @@
+overwrite: true
+schema: 'http://localhost:3000/api/graphql'
+documents:
+  - './graphql/fragments/*.gql'
+  - './graphql/mutations/*.gql'
+  - './graphql/queries/*.gql'
+generates:
+  ./graphql/scheme.tsx:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typed-document-node

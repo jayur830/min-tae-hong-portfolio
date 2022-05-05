@@ -8,6 +8,7 @@ import { nvl } from '@root/utils';
 import AboutQuery from '@root/graphql/queries/getAbout.gql';
 import CommentsQuery from '@root/graphql/queries/getComments.gql';
 import CommentMutation from '@root/graphql/mutations/postComment.gql';
+import { About } from '@root/graphql/scheme';
 
 // Local
 
@@ -15,10 +16,10 @@ const useAbout = () => {
 	const [isWriteComment, setWriteComment] = useState<boolean>(false);
 	const [visibleInfoModal, setVisibleInfoModal] = useState<boolean>(false);
 
-	const { data: about, loading: aboutLoading } = useQuery(AboutQuery);
+	const { data: about, loading: aboutLoading } = useQuery<About>(AboutQuery);
 	const aboutData = nvl(about, 'about', {});
 
-	const { data: comments, loading: commentsLoading, refetch: commentsRefetch } = useQuery(CommentsQuery);
+	const { data: comments, loading: commentsLoading, refetch: commentsRefetch } = useQuery<About>(CommentsQuery);
 	const commentsData = nvl(comments, 'comments.comments', []);
 
 	const [postComment] = useMutation(CommentMutation);
