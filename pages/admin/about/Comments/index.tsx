@@ -1,11 +1,11 @@
 // Package
-import { NextPage } from 'next';
 import { useCallback, useMemo } from 'react';
-import { Row, Col, Card, Table, TableProps, Button } from 'antd';
+import { NextPage } from 'next';
+import { Row, Col, Card, Table, TableProps, Button, Popconfirm, message } from 'antd';
 import Title from 'antd/lib/typography/Title';
 
 // Global
-import { values } from '@root/configs';
+import { values } from '../configs';
 import { assignKeys, nvl } from '@root/utils';
 
 // Local
@@ -14,19 +14,39 @@ import { useCommentsData } from '../Provider';
 const Comments: NextPage = () => {
 	const commentsData = useCommentsData();
 
+	const onRemove = useCallback(({ date, comment }: any) => {
+		try {
+			message.loading({
+				key: 'loading',
+				content: nvl(values, 'adminAboutCommentsValue.loadingText', ''),
+			});
+			/** TODO Implement */
+			message.destroy('loading');
+			message.success(nvl(values, 'adminAboutCommentsValue.infoText', ''));
+		} catch (e) {
+			message.destroy('loading');
+			message.error(nvl(values, 'adminAboutCommentsValue.errorText', ''));
+		}
+	}, []);
+
 	const getColumns = useCallback(() => {
-		return nvl(values, 'aboutValue.admin.columns', []).map((column: any) => {
-			if (nvl(column, 'key', '') === 'option') {
+		return nvl(values, 'adminAboutCommentsValue.columns', []).map((column: any) => {
+			const key = nvl(column, 'key', '');
+
+			if (key === 'option') {
 				return {
 					...column,
-					render() {
+					render(_: any, record: any) {
 						return (
 							<Row gutter={[10, 0]}>
 								<Col>
-									<Button>수정</Button>
-								</Col>
-								<Col>
-									<Button>삭제</Button>
+									<Popconfirm
+										title={nvl(values, 'adminAboutCommentsValue.removeText', '')}
+										onConfirm={() => {
+											onRemove(record);
+										}}>
+										<Button>삭제</Button>
+									</Popconfirm>
 								</Col>
 							</Row>
 						);

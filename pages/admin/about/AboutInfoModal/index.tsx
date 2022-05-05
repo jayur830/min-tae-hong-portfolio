@@ -1,37 +1,22 @@
 // Package
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect } from 'react';
 import { NextPage } from 'next';
-import { Descriptions, DescriptionsProps, Form, FormProps, Input, message, Modal, ModalProps } from 'antd';
-import styled from 'styled-components';
+import { Form, FormProps, message, Modal, ModalProps } from 'antd';
 
 // Global
 import { values as commonValues } from '@root/configs';
-import { nvl } from '@root/utils';
-import { useVisibleInfoModal, useSetVisibleInfoModal, useAboutData } from '../Provider';
-import { stringify } from 'querystring';
-import { values } from '../configs';
+import { nest, nvl } from '@root/utils';
 
 // Local
+import { values } from '../configs';
+import { useVisibleInfoModal, useSetVisibleInfoModal } from '../Provider';
+import { Provider } from './Provider';
+import FormContents from './FormContents';
 
 const AboutInfoModal: NextPage = () => {
 	const [form] = Form.useForm();
 	const visibleInfoModal = useVisibleInfoModal();
 	const setVisibleInfoModal = useSetVisibleInfoModal();
-	const aboutData = useAboutData();
-
-	const initialFormData = useMemo(
-		() => ({
-			['NAME']: nvl(aboutData, 'name', ''),
-			...nvl(aboutData, 'metadata', []).reduce(
-				(result: any, cur: { label: string; value: string }) => ({
-					...result,
-					[cur.label]: cur.value,
-				}),
-				{}
-			),
-		}),
-		[]
-	);
 
 	const onOk = useCallback(() => {
 		form.submit();
@@ -39,8 +24,7 @@ const AboutInfoModal: NextPage = () => {
 
 	const onCancel = useCallback(() => {
 		setVisibleInfoModal(false);
-		form.setFieldsValue(initialFormData);
-	}, [form, initialFormData]);
+	}, [form]);
 
 	const onFinish = useCallback(
 		(fields: any) => {
@@ -54,7 +38,11 @@ const AboutInfoModal: NextPage = () => {
 							content: nvl(values, 'adminAboutInfoModalValue.loadingText', ''),
 						});
 						/** TODO Implement */
-						console.log('fields:', fields);
+						const result = {
+							name: nvl(fields, 'name', ''),
+							metadata: nvl(fields, 'metadata', []).map(({ label, value }: any) => ({ label, value })),
+						};
+						console.log('fields:', result);
 
 						message.destroy('loading');
 						message.success(nvl(values, 'adminAboutInfoModalValue.infoText', ''));
@@ -63,25 +51,12 @@ const AboutInfoModal: NextPage = () => {
 						message.success(nvl(values, 'adminAboutInfoModalValue.errorText', ''));
 					} finally {
 						setVisibleInfoModal(false);
-						form.setFieldsValue(initialFormData);
 					}
 				},
 			});
 		},
-		[form, initialFormData]
+		[form]
 	);
-
-	const onChangeInput = useCallback((i: number, keyName: 'label' | 'value') => {
-		return (e: any) => {
-			form.setFieldsValue({
-				...form.getFieldsValue(),
-				[i]: {
-					...form.getFieldValue(i),
-					[keyName]: e.target.value,
-				},
-			});
-		};
-	}, []);
 
 	const modalProps: ModalProps = {
 		centered: true,
@@ -104,31 +79,10 @@ const AboutInfoModal: NextPage = () => {
 	return (
 		<Modal {...modalProps}>
 			<Form {...formProps}>
-				<Descriptions {...descriptionsProps}>
-					<Descriptions.Item label="NAME.">
-						<Form.Item required initialValue={nvl(aboutData, 'name', '')} name="name" rules={[{ required: true, message: '이름을 입력해주세요.' }]}>
-							<Input />
-						</Form.Item>
-					</Descriptions.Item>
-					{nvl(aboutData, 'metadata', []).map(({ label, value }: any, i: number) => {
-						return (
-							<Descriptions.Item key={i} label={<Input defaultValue={label} onChange={onChangeInput(i, 'label')} />}>
-								<Input defaultValue={value} onChange={onChangeInput(i, 'value')} />
-							</Descriptions.Item>
-						);
-					})}
-				</Descriptions>
+				<FormContents form={form} />
 			</Form>
 		</Modal>
 	);
 };
 
-const descriptionsProps: DescriptionsProps = {
-	bordered: true,
-	column: 1,
-	labelStyle: {
-		width: 220,
-	},
-};
-
-export default AboutInfoModal;
+export default nest(Provider, AboutInfoModal);
