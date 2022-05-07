@@ -31,34 +31,30 @@ const FormContents: NextPage<Props> = ({ form }) => {
 				</Form.Item>
 			</Col>
 			<Form.List name="metadata">
-				{(fields, { add, remove }) => {
-					return (
-						<>
-							{fields.map((_: any, i: number) => {
-								return (
-									<Fragment key={i}>
-										<Col span={8}>
-											<StyledFormItem name={[i, 'label']}>
-												<Input />
-											</StyledFormItem>
-										</Col>
-										<Col span={14}>
-											<StyledFormItem name={[i, 'value']}>
-												<Input />
-											</StyledFormItem>
-										</Col>
-										<Col span={2}>
-											<StyledRemoveIcon onClick={() => remove(i)} />
-										</Col>
-									</Fragment>
-								);
-							})}
-							<StyledFooterCol span={24}>
-								<PlusCircleOutlined onClick={add} />
-							</StyledFooterCol>
-						</>
-					);
-				}}
+				{(fields, { add, remove }) => (
+					<>
+						{fields.map((_: any, i: number) => (
+							<Fragment key={i}>
+								<Col span={8}>
+									<StyledFormItem name={[i, 'label']}>
+										<Input />
+									</StyledFormItem>
+								</Col>
+								<Col span={14}>
+									<StyledFormItem name={[i, 'value']}>
+										<Input />
+									</StyledFormItem>
+								</Col>
+								<Col span={2}>
+									<StyledRemoveIcon onClick={() => remove(i)} />
+								</Col>
+							</Fragment>
+						))}
+						<StyledFooterCol span={24}>
+							<PlusCircleOutlined onClick={add} />
+						</StyledFooterCol>
+					</>
+				)}
 			</Form.List>
 		</Row>
 	);

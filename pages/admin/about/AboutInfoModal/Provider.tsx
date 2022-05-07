@@ -16,13 +16,6 @@ const useAboutInfoModal = () => {
 		setFormData({
 			name: nvl(aboutData, 'name', ''),
 			metadata: nvl(aboutData, 'metadata', []).map(({ __typename, ...etc }: any) => etc),
-			// ...nvl(aboutData, 'metadata', []).reduce((result: any, obj: any, i: number) => {
-			// 	const { __typename, ...etc } = obj;
-			// 	return {
-			// 		...result,
-			// 		[i]: etc,
-			// 	};
-			// }, {}),
 		});
 	}, [aboutData]);
 
