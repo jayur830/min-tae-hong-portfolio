@@ -42,5 +42,6 @@ const StyledHeader = styled(Header)(({ theme }) => ({
 }));
 
 const StyledContent = styled(Content)(({ theme }) => ({
+	overflowY: 'scroll',
 	padding: 15,
 }));
