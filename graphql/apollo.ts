@@ -20,44 +20,28 @@ const client = new ApolloClient({
 			['Query']: {
 				fields: {
 					['getAbout']: {
-						merge(existingData, incomingData) {
-							return incomingData;
-						},
+						merge: false,
 					},
 					['getCommon']: {
-						merge(existingData, incomingData) {
-							return incomingData;
-						},
+						merge: false,
 					},
 					['getContact']: {
-						merge(existingData, incomingData) {
-							return incomingData;
-						},
+						merge: false,
 					},
 					['getDramas']: {
-						merge(existingData, incomingData) {
-							return incomingData;
-						},
+						merge: false,
 					},
 					['getFooter']: {
-						merge(existingData, incomingData) {
-							return incomingData;
-						},
+						merge: false,
 					},
 					['getHome']: {
-						merge(existingData, incomingData) {
-							return incomingData;
-						},
+						merge: false,
 					},
 					['getMovies']: {
-						merge(existingData, incomingData) {
-							return incomingData;
-						},
+						merge: false,
 					},
 					['getTheaters']: {
-						merge(existingData, incomingData) {
-							return incomingData;
-						},
+						merge: false,
 					},
 				},
 			},

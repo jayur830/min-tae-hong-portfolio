@@ -1,6 +1,6 @@
 import About from '@root/models/about';
 
-export const postComment = async (parent: any, args: { comment: string; date: string }) => {
+export const postComment = async (_: any, args: { comment: string; date: string }) => {
 	try {
 		await About.findOneAndUpdate(
 			{},

@@ -27,6 +27,9 @@ export const upload = multer({
 	storage: multerS3({
 		s3,
 		bucket: process.env.S3_BUCKET as string,
+		key(req, file, callback) {
+			callback(null, file.originalname);
+		},
 	}),
 	limits: {
 		fileSize: 10 * 1024 * 1024 * 1024, // 10GB

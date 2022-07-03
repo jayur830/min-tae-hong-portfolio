@@ -23,8 +23,8 @@ const useMovies = () => {
 			...result,
 			[year]: result[year].concat({
 				...etc,
-				img: etc.img.filename ? etc.img : null,
-				video: etc.video.filename ? etc.video : null,
+				img: nvl(etc, 'img.filename', null) ? etc.img : null,
+				video: nvl(etc, 'video.filename', null) ? etc.video : null,
 			}),
 		};
 	}, {});

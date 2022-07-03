@@ -5,7 +5,7 @@ import { app, upload, config } from '@root/modules';
 
 // Local
 
-app.post(upload.single('file'), (request, response) => {
+app.post(upload.single('img'), (request, response) => {
 	response.send(200);
 });
 

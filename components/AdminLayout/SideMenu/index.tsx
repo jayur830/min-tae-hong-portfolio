@@ -15,7 +15,7 @@ const SideMenu = () => {
 		<StyledSider>
 			<StyledMenu>
 				{nvl(values, 'adminLayoutValue.menus', []).map(({ label, link }: any, i: number) => (
-					<Menu.Item key={i} color="white">
+					<Menu.Item key={i}>
 						<Link href={link}>{label}</Link>
 					</Menu.Item>
 				))}

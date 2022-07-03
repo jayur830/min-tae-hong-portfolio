@@ -2,6 +2,7 @@
 
 query Dramas {
 	dramas: getDramas {
+		id
 		title
 		year
 		director

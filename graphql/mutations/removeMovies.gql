@@ -1,0 +1,3 @@
+mutation RemoveMovies($id: String!) {
+	removed: Movies_remove(id: $id)
+}

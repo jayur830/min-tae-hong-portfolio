@@ -8,7 +8,7 @@
 	},
 	"scripts": {
 		"dev": "node server.js",
-		"build": "next build",
+		"build": "next build && next export",
 		"start": "NODE_ENV=production node server.js",
 		"lint": "next lint",
 		"generate": "graphql-codegen --config codegen.yml",
@@ -23,7 +23,7 @@
 		"@types/multer-s3": "^2.7.11",
 		"@types/react-responsive": "^8.0.5",
 		"@types/styled-components": "^5.1.24",
-		"antd": "^4.19.5",
+		"antd": "^4.19.2",
 		"apollo-server-core": "^3.6.7",
 		"apollo-server-micro": "^3.6.7",
 		"aws-sdk": "^2.1109.0",

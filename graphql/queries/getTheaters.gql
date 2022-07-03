@@ -2,6 +2,7 @@
 
 query Theaters {
 	theaters: getTheaters {
+		id
 		title
 		theater
 		year

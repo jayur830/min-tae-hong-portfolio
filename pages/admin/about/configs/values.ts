@@ -28,7 +28,7 @@ export const adminAboutCommentsValue: AdminAboutCommentsValueType = {
 			key: 'option',
 			title: '',
 			dataIndex: ['option'],
-			width: 350,
+			width: 50,
 		},
 	],
 };

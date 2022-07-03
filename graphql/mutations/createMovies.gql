@@ -1,7 +1,7 @@
 #import "../fragments/MediaMetadata.gql"
 
-query Movies {
-	movies: getMovies {
+mutation CreateMovies($createMoviesInput: CreateMoviesInput!) {
+	created: Movies_create(createMoviesInput: $createMoviesInput) {
 		id
 		title
 		year

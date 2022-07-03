@@ -1,11 +1,11 @@
 // Package
 import { NextPage } from 'next';
-import { Col, Descriptions, Layout, Row, RowProps, Image as AntImage, Skeleton } from 'antd';
+import { Col, Descriptions, Layout, Row, RowProps, Image as AntdImage, Skeleton } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import styled from 'styled-components';
 
 // Global
-import { nest, nvl } from '@root/utils';
+import { nvl, nest } from '@root/utils';
 import { values, DarkModeProps } from '@root/configs';
 import YearLine from '@root/components/YearLine';
 import Image, { ImageProps } from '@root/components/Image';
@@ -87,7 +87,7 @@ const Theater: NextPage = () => {
 
 															return (
 																<Col key={i} flex={1}>
-																	<AntImage src={`${imgUri}/${nvl(scene, 'filename', '')}`} />
+																	<AntdImage src={`${imgUri}/${nvl(scene, 'filename', '')}`} />
 																</Col>
 															);
 														})}
@@ -118,6 +118,15 @@ const StyledImageWrap = styled(Row)(({ theme }) => ({
 		['.ant-col']: {
 			display: theme.displayFlex,
 			justifyContent: 'center',
+			['img']: {
+				maxWidth: 900,
+				[`@media (max-width: ${theme.tabletSize})`]: {
+					maxWidth: 'calc(100% - 100px)',
+				},
+				[`@media (max-width: ${theme.mobileSize})`]: {
+					maxWidth: 'calc(100% - 50px)',
+				},
+			},
 		},
 	},
 }));

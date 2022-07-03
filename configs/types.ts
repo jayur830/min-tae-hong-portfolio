@@ -37,3 +37,19 @@ export interface ContentDataType {
 export interface DarkModeProps {
 	'dark-mode': string;
 }
+
+export interface Option {
+	label: string;
+	value: string;
+}
+
+export interface MessageType {
+	confirm?: string;
+	loading?: string;
+	success?: string;
+	error?: string;
+}
+
+export interface MessagesType {
+	[name: string]: MessageType;
+}

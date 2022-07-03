@@ -1,7 +1,7 @@
 // Package
 import { useCallback, useMemo } from 'react';
 import { NextPage } from 'next';
-import { Row, Col, Card, Table, TableProps, Button, Popconfirm, message } from 'antd';
+import { Row, Col, Card, Table, TableProps, Button, Popconfirm, message, PopconfirmProps } from 'antd';
 import Title from 'antd/lib/typography/Title';
 
 // Global
@@ -37,14 +37,21 @@ const Comments: NextPage = () => {
 				return {
 					...column,
 					render(_: any, record: any) {
+						const popconfirmProps: PopconfirmProps = {
+							title: nvl(values, 'adminAboutCommentsValue.removeText', ''),
+							overlayStyle: {
+								whiteSpace: 'pre-line',
+								width: 'fit-content',
+							},
+							onConfirm() {
+								onRemove(record);
+							},
+						};
+
 						return (
 							<Row gutter={[10, 0]}>
 								<Col>
-									<Popconfirm
-										title={nvl(values, 'adminAboutCommentsValue.removeText', '')}
-										onConfirm={() => {
-											onRemove(record);
-										}}>
+									<Popconfirm {...popconfirmProps}>
 										<Button>삭제</Button>
 									</Popconfirm>
 								</Col>
