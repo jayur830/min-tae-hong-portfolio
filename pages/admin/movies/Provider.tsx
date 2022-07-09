@@ -15,7 +15,7 @@ import RemoveByYearMutation from '@root/graphql/mutations/removeByYearMovies.gql
 import { values } from './configs';
 
 const useMovies = () => {
-	const [vislbleModifyModal, setVislbleModifyModal] = useState<boolean>(false);
+	const [visibleModifyModal, setVisibleModifyModal] = useState<boolean>(false);
 	const [selectedData, setSelectedData] = useState<any>(null);
 	const [visiblePreviewModal, setVisiblePreviewModal] = useState<boolean>(false);
 	const [previewImage, setPreviewImage] = useState<string>('');
@@ -91,23 +91,23 @@ const useMovies = () => {
 	const onRemoveByYear = useCallback((year: number) => {
 		Modal.confirm({
 			centered: true,
-			title: nvl(values, 'adminMoviesModifyModalValue.messages.removeByYear.confirm', ''),
+			title: nvl(values, 'adminMoviesSubmitModalValue.messages.removeByYear.confirm', ''),
 			width: 'fit-content',
 			bodyStyle: { whiteSpace: 'pre-line' },
 			async onOk() {
 				try {
 					message.loading({
 						key: 'loading',
-						content: nvl(values, 'adminMoviesModifyModalValue.messages.removeByYear.loading', ''),
+						content: nvl(values, 'adminMoviesSubmitModalValue.messages.removeByYear.loading', ''),
 					});
 
 					await removeByYearMovies({ variables: { year } });
 
 					message.destroy('loading');
-					message.success(nvl(values, 'adminMoviesModifyModalValue.messages.removeByYear.success', ''));
+					message.success(nvl(values, 'adminMoviesSubmitModalValue.messages.removeByYear.success', ''));
 				} catch (e) {
 					message.destroy('loading');
-					message.error(nvl(values, 'adminMoviesModifyModalValue.messages.removeByYear.error', ''));
+					message.error(nvl(values, 'adminMoviesSubmitModalValue.messages.removeByYear.error', ''));
 				}
 			},
 		});
@@ -116,22 +116,22 @@ const useMovies = () => {
 	const onRemove = useCallback((id: string) => {
 		Modal.confirm({
 			centered: true,
-			title: nvl(values, 'adminMoviesModifyModalValue.messages.remove.confirm', ''),
+			title: nvl(values, 'adminMoviesSubmitModalValue.messages.remove.confirm', ''),
 			width: 'fit-content',
 			async onOk() {
 				try {
 					message.loading({
 						key: 'loading',
-						content: nvl(values, 'adminMoviesModifyModalValue.messages.remove.loading', ''),
+						content: nvl(values, 'adminMoviesSubmitModalValue.messages.remove.loading', ''),
 					});
 
 					await removeMovies({ variables: { id } });
 
 					message.destroy('loading');
-					message.success(nvl(values, 'adminMoviesModifyModalValue.messages.remove.success', ''));
+					message.success(nvl(values, 'adminMoviesSubmitModalValue.messages.remove.success', ''));
 				} catch (e) {
 					message.destroy('loading');
-					message.error(nvl(values, 'adminMoviesModifyModalValue.messages.remove.error', ''));
+					message.error(nvl(values, 'adminMoviesSubmitModalValue.messages.remove.error', ''));
 				}
 			},
 		});
@@ -140,8 +140,8 @@ const useMovies = () => {
 	return {
 		moviesData,
 		moviesLoading,
-		vislbleModifyModal,
-		setVislbleModifyModal,
+		visibleModifyModal,
+		setVisibleModifyModal,
 		selectedData,
 		setSelectedData,
 		visiblePreviewModal,
@@ -157,7 +157,7 @@ const [
 	Provider,
 	useMoviesData,
 	useMoviesLoading,
-	useVislbleModifyModal,
+	useVisibleModifyModal,
 	useSetVisibleModifyModal,
 	useSelectedData,
 	useSetSelectedData,
@@ -171,8 +171,8 @@ const [
 	useMovies,
 	value => value.moviesData,
 	value => value.moviesLoading,
-	value => value.vislbleModifyModal,
-	value => value.setVislbleModifyModal,
+	value => value.visibleModifyModal,
+	value => value.setVisibleModifyModal,
 	value => value.selectedData,
 	value => value.setSelectedData,
 	value => value.visiblePreviewModal,
@@ -187,7 +187,7 @@ export {
 	Provider,
 	useMoviesData,
 	useMoviesLoading,
-	useVislbleModifyModal,
+	useVisibleModifyModal,
 	useSetVisibleModifyModal,
 	useSelectedData,
 	useSetSelectedData,

@@ -21,8 +21,8 @@ export interface ListItemType {
 	itemType: FormItemUnionType;
 }
 
-export interface AdminMoviesSubmitModalValueType {
-	title: string | { [name: string]: string };
+export interface AdminDramasModifyModalValueType {
+	title: string;
 	okText?: string;
 	messages?: MessagesType;
 	descriptions: {

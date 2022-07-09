@@ -7,12 +7,13 @@ import { nvl, nest } from '@root/utils';
 
 // Local
 import { values } from '../configs';
-import { useVislbleModifyModal } from '../Provider';
-import { Provider, useOnOk, useOnCancel, useAfterClose } from './Provider';
+import { useVisibleModifyModal } from '../Provider';
+import { Provider, useModalType, useOnOk, useOnCancel, useAfterClose } from './Provider';
 import ModalForm from './ModalForm';
 
 const ModifyModal: NextPage = () => {
-	const vislbleModifyModal = useVislbleModifyModal();
+	const visibleModifyModal = useVisibleModifyModal();
+	const modalType = useModalType();
 	const onOk = useOnOk();
 	const onCancel = useOnCancel();
 	const afterClose = useAfterClose();
@@ -20,9 +21,9 @@ const ModifyModal: NextPage = () => {
 	const modalProps: ModalProps = {
 		centered: true,
 		destroyOnClose: true,
-		visible: vislbleModifyModal,
-		title: nvl(values, 'adminMoviesModifyModalValue.title', ''),
-		okText: nvl(values, 'adminMoviesModifyModalValue.okText', ''),
+		visible: visibleModifyModal,
+		title: nvl(values, `adminMoviesSubmitModalValue.title.${modalType}`, ''),
+		okText: nvl(values, 'adminMoviesSubmitModalValue.okText', ''),
 		bodyStyle: {
 			overflowY: 'scroll',
 			height: 750,

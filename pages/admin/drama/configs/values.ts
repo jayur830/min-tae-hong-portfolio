@@ -1,11 +1,8 @@
 import dayjs from 'dayjs';
-import { AdminMoviesSubmitModalValueType } from './types';
+import { AdminDramasModifyModalValueType } from './types';
 
-export const adminMoviesSubmitModalValue: AdminMoviesSubmitModalValueType = {
-	title: {
-		create: '영화 작품 추가',
-		update: '영화 작품 수정',
-	},
+export const adminDramasModifyModalValue: AdminDramasModifyModalValueType = {
+	title: '영화 작품 수정',
 	okText: '완료',
 	messages: {
 		create: {
@@ -111,9 +108,6 @@ export const adminMoviesSubmitModalValue: AdminMoviesSubmitModalValueType = {
 					message: '제목을 입력해주세요.',
 				},
 			],
-			props: {
-				placeholder: '제목을 입력해주세요.',
-			},
 		},
 		{
 			key: 'director',
@@ -126,9 +120,6 @@ export const adminMoviesSubmitModalValue: AdminMoviesSubmitModalValueType = {
 					message: '감독명을 입력해주세요.',
 				},
 			],
-			props: {
-				placeholder: '감독명을 입력해주세요.',
-			},
 		},
 		{
 			key: 'actors',
@@ -137,9 +128,6 @@ export const adminMoviesSubmitModalValue: AdminMoviesSubmitModalValueType = {
 			itemType: {
 				type: 'text',
 				label: '',
-				props: {
-					placeholder: '출연 배우를 입력해주세요.',
-				},
 			},
 		},
 		{
@@ -149,9 +137,6 @@ export const adminMoviesSubmitModalValue: AdminMoviesSubmitModalValueType = {
 			itemType: {
 				type: 'text',
 				label: '',
-				props: {
-					placeholder: '수상 이력을 입력해주세요.',
-				},
 			},
 		},
 		{

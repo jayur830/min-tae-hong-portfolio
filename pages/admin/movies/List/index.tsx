@@ -72,7 +72,7 @@ export default function List() {
 												<Row gutter={[15, 0]}>
 													<Col span={12}>
 														<Descriptions column={1}>
-															{nvl(values, 'adminMoviesModifyModalValue.descriptions', []).map(({ key, label }: any) => {
+															{nvl(values, 'adminMoviesSubmitModalValue.descriptions', []).map(({ key, label }: any) => {
 																if (['title', 'img', 'scenes'].includes(key)) {
 																	return null;
 																}

@@ -6,7 +6,7 @@ import { NextPage } from 'next';
 // Local
 import { Provider } from './Provider';
 import List from './List';
-import ModifyModal from './ModifyModal';
+import ModifyModal from './SubmitModal';
 import PreviewModal from './PreviewModal';
 
 const Movies: NextPage = () => {

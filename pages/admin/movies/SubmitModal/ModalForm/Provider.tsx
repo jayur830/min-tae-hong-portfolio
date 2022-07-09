@@ -70,7 +70,7 @@ function useFormContents() {
 	}, []);
 
 	const formItems = useMemo(() => {
-		return nvl(values, 'adminMoviesModifyModalValue.formItems', []).map((item: FormItemUnionType | UploadItemType | ListItemType) => {
+		return nvl(values, 'adminMoviesSubmitModalValue.formItems', []).map((item: FormItemUnionType | UploadItemType | ListItemType) => {
 			const key = nvl(item, 'key', '');
 
 			if (key === 'img') {

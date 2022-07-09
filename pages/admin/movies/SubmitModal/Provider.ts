@@ -80,12 +80,12 @@ const useModifyModal = () => {
 		(fields: any) => {
 			Modal.confirm({
 				centered: true,
-				title: nvl(values, `adminMoviesModifyModalValue.messages.${modalType}.confirm`, ''),
+				title: nvl(values, `adminMoviesSubmitModalValue.messages.${modalType}.confirm`, ''),
 				async onOk() {
 					try {
 						message.loading({
 							key: 'loading',
-							content: nvl(values, `adminMoviesModifyModalValue.messages.${modalType}.loading`, ''),
+							content: nvl(values, `adminMoviesSubmitModalValue.messages.${modalType}.loading`, ''),
 						});
 
 						if (modalType === 'update') {
@@ -106,10 +106,10 @@ const useModifyModal = () => {
 						}
 
 						message.destroy('loading');
-						message.success(nvl(values, `adminMoviesModifyModalValue.messages.${modalType}.success`, ''));
+						message.success(nvl(values, `adminMoviesSubmitModalValue.messages.${modalType}.success`, ''));
 					} catch (e) {
 						message.destroy('loading');
-						message.error(nvl(values, `adminMoviesModifyModalValue.messages.${modalType}.error`, ''));
+						message.error(nvl(values, `adminMoviesSubmitModalValue.messages.${modalType}.error`, ''));
 					} finally {
 						setVisibleModifyModal(false);
 						setSelectedData(null);
@@ -137,11 +137,12 @@ const useModifyModal = () => {
 		}
 	}, []);
 
-	return { form, onOk, onCancel, afterClose, onFinish, onValuesChange };
+	return { modalType, form, onOk, onCancel, afterClose, onFinish, onValuesChange };
 };
 
-const [Provider, useForm, useOnOk, useOnCancel, useAfterClose, useOnFinish, useOnValuesChange] = constate(
+const [Provider, useModalType, useForm, useOnOk, useOnCancel, useAfterClose, useOnFinish, useOnValuesChange] = constate(
 	useModifyModal,
+	value => value.modalType,
 	value => value.form,
 	value => value.onOk,
 	value => value.onCancel,
@@ -150,4 +151,4 @@ const [Provider, useForm, useOnOk, useOnCancel, useAfterClose, useOnFinish, useO
 	value => value.onValuesChange
 );
 
-export { Provider, useForm, useOnOk, useOnCancel, useAfterClose, useOnFinish, useOnValuesChange };
+export { Provider, useModalType, useForm, useOnOk, useOnCancel, useAfterClose, useOnFinish, useOnValuesChange };

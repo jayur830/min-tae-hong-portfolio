@@ -31,7 +31,7 @@ const ModalForm: NextPage = () => {
 	useEffect(() => {
 		form.resetFields();
 
-		if (nvl(selectedData, 'img', {})) {
+		if (nvl(selectedData, 'img.filename', null)) {
 			setImageFile({
 				uid: '-1',
 				name: nvl(selectedData, 'img.filename', ''),
@@ -40,7 +40,7 @@ const ModalForm: NextPage = () => {
 			});
 		}
 
-		if (nvl(selectedData, 'video', {})) {
+		if (nvl(selectedData, 'video.filename', null)) {
 			setVideoFile({
 				uid: '-1',
 				name: nvl(selectedData, 'video.filename', ''),
@@ -69,11 +69,13 @@ const ModalForm: NextPage = () => {
 					name: key,
 					label,
 					valuePropName: 'file',
-					initialValue: nvl(selectedData, key, {}),
+					initialValue: nvl(selectedData, key, null),
 					async getValueFromEvent(e) {
 						if (Array.isArray(e)) {
 							return e;
 						}
+
+						console.log(e.target.value);
 
 						if (!nvl(e, 'target.files.0.type').includes('image')) {
 							return null;
@@ -148,7 +150,7 @@ const ModalForm: NextPage = () => {
 										<Fragment key={i}>
 											<Col span={22}>
 												<StyledFormItem name={i}>
-													<Input />
+													<Input {...nvl(item, 'itemType.props', {})} />
 												</StyledFormItem>
 											</Col>
 											<Col span={2}>

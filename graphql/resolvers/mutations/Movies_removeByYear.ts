@@ -1,5 +1,9 @@
-export const Movies_removeByYear = (_: any, args: { year: number }) => {
+import Movies from '@root/models/movies';
+
+export const Movies_removeByYear = async (_: any, args: { year: number }) => {
 	const { year } = args;
-	/** TODO Implement */
+
+	await Movies.deleteMany({ year }).exec();
+
 	return year;
 };
