@@ -65,13 +65,6 @@ export const adminDramasSubmitModalValue: AdminDramasSubmitModalValueType = {
 			key: 'img',
 			type: 'upload',
 			label: '대표 이미지',
-			required: true,
-			rules: [
-				{
-					required: true,
-					message: '대표 이미지를 올려주세요.',
-				},
-			],
 			props: {
 				name: 'img',
 				action: '/api/file/post',
@@ -109,13 +102,6 @@ export const adminDramasSubmitModalValue: AdminDramasSubmitModalValueType = {
 			key: 'director',
 			type: 'text',
 			label: '감독',
-			required: true,
-			rules: [
-				{
-					required: true,
-					message: '감독명을 입력해주세요.',
-				},
-			],
 			props: {
 				placeholder: '감독명을 입력해주세요.',
 			},
@@ -124,13 +110,6 @@ export const adminDramasSubmitModalValue: AdminDramasSubmitModalValueType = {
 			key: 'schedule',
 			type: 'text',
 			label: '일정',
-			required: true,
-			rules: [
-				{
-					required: true,
-					message: '일정을 입력해주세요.',
-				},
-			],
 			props: {
 				placeholder: '일정을 입력해주세요.',
 			},

@@ -51,7 +51,7 @@ function useFormContents() {
 	}, []);
 
 	const formItems = useMemo(() => {
-		return nvl(values, 'adminDramasSubmitModalValue.formItems', []).map((item: FormItemUnionType | UploadItemType | ListItemType) => {
+		return nvl(values, 'adminTheatersSubmitModalValue.formItems', []).map((item: FormItemUnionType | UploadItemType | ListItemType) => {
 			const key = nvl(item, 'key', '');
 
 			if (key === 'img') {

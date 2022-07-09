@@ -1,10 +1,10 @@
 import dayjs from 'dayjs';
-import { AdminMoviesSubmitModalValueType } from './types';
+import { AdminTheatersSubmitModalValueType } from './types';
 
-export const adminMoviesSubmitModalValue: AdminMoviesSubmitModalValueType = {
+export const adminTheatersSubmitModalValue: AdminTheatersSubmitModalValueType = {
 	title: {
-		create: '영화 작품 추가',
-		update: '영화 작품 수정',
+		create: '연극 작품 추가',
+		update: '연극 작품 수정',
 	},
 	okText: '완료',
 	messages: {
@@ -35,16 +35,12 @@ export const adminMoviesSubmitModalValue: AdminMoviesSubmitModalValueType = {
 	},
 	descriptions: [
 		{
-			key: 'director',
-			label: '감독',
+			key: 'theater',
+			label: '극장',
 		},
 		{
-			key: 'actors',
-			label: '연출',
-		},
-		{
-			key: 'awards',
-			label: '수상',
+			key: 'schedule',
+			label: '일정',
 		},
 	],
 	formItems: [
@@ -72,16 +68,6 @@ export const adminMoviesSubmitModalValue: AdminMoviesSubmitModalValueType = {
 			},
 		},
 		{
-			key: 'video',
-			type: 'upload',
-			label: '비디오',
-			props: {
-				name: 'img',
-				action: '/api/file/post',
-				listType: 'picture',
-			},
-		},
-		{
 			key: 'title',
 			type: 'text',
 			label: '제목',
@@ -97,42 +83,26 @@ export const adminMoviesSubmitModalValue: AdminMoviesSubmitModalValueType = {
 			},
 		},
 		{
-			key: 'director',
+			key: 'theater',
 			type: 'text',
-			label: '감독',
+			label: '극장',
 			required: true,
 			rules: [
 				{
 					required: true,
-					message: '감독명을 입력해주세요.',
+					message: '극장명을 입력해주세요.',
 				},
 			],
 			props: {
-				placeholder: '감독명을 입력해주세요.',
+				placeholder: '극장명을 입력해주세요.',
 			},
 		},
 		{
-			key: 'actors',
-			type: 'list',
-			label: '연출',
-			itemType: {
-				type: 'text',
-				label: '',
-				props: {
-					placeholder: '출연 배우를 입력해주세요.',
-				},
-			},
-		},
-		{
-			key: 'awards',
-			type: 'list',
-			label: '수상',
-			itemType: {
-				type: 'text',
-				label: '',
-				props: {
-					placeholder: '수상 이력을 입력해주세요.',
-				},
+			key: 'schedule',
+			type: 'text',
+			label: '일정',
+			props: {
+				placeholder: '일정을 입력해주세요.',
 			},
 		},
 		{

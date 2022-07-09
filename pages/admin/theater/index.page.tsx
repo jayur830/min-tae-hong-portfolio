@@ -4,9 +4,19 @@ import { NextPage } from 'next';
 // Global
 
 // Local
+import { Provider } from './Provider';
+import List from './List';
+import ModifyModal from './SubmitModal';
+import PreviewModal from './PreviewModal';
 
-const Theater: NextPage = () => {
-	return <>Theater</>;
+const Theaters: NextPage = () => {
+	return (
+		<Provider>
+			<List />
+			<ModifyModal />
+			<PreviewModal />
+		</Provider>
+	);
 };
 
-export default Theater;
+export default Theaters;

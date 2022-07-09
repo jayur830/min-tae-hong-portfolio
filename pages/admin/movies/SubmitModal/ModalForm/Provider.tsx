@@ -139,7 +139,6 @@ function useFormContents() {
 							if (sceneFileList.some(scene => scene.uid === file.uid)) {
 								const removeIndex = sceneFileList.findIndex(scene => scene.uid === file.uid);
 								form.setFieldsValue({ scenes: form.getFieldValue('scenes').filter((_: any, i: number) => i !== removeIndex) });
-								console.log(form.getFieldValue('scenes'));
 								setSceneFileList(state => state.filter(scene => scene.uid !== file.uid));
 							} else if (!nvl(file, 'type', '').includes('image')) {
 								message.error('이미지만 추가하세요.');
