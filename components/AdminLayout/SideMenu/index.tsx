@@ -9,14 +9,19 @@ import { nvl } from '@root/utils';
 
 // Local
 import { values } from '../configs';
+import { useRouter } from 'next/router';
 
 const SideMenu = () => {
+	const { pathname } = useRouter();
+
 	return (
 		<StyledSider>
-			<StyledMenu>
-				{nvl(values, 'adminLayoutValue.menus', []).map(({ label, link }: any, i: number) => (
-					<Menu.Item key={i}>
-						<Link href={link}>{label}</Link>
+			<StyledMenu defaultSelectedKeys={[pathname]}>
+				{nvl(values, 'adminLayoutValue.menus', []).map(({ label, link }: any) => (
+					<Menu.Item key={link}>
+						<Link href={link}>
+							<a>{label}</a>
+						</Link>
 					</Menu.Item>
 				))}
 			</StyledMenu>
