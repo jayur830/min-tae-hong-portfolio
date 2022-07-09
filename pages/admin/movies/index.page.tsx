@@ -6,14 +6,14 @@ import { NextPage } from 'next';
 // Local
 import { Provider } from './Provider';
 import List from './List';
-import ModifyModal from './SubmitModal';
+import SubmitModal from './SubmitModal';
 import PreviewModal from './PreviewModal';
 
 const Movies: NextPage = () => {
 	return (
 		<Provider>
 			<List />
-			<ModifyModal />
+			<SubmitModal />
 			<PreviewModal />
 		</Provider>
 	);

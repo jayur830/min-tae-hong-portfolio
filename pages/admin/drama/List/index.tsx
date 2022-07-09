@@ -10,10 +10,10 @@ import { nvl } from '@root/utils';
 
 // Local
 import { values } from '../configs';
-import { useMoviesData, useSetVisibleModifyModal, useSetSelectedData, useOnRemoveByYear, useOnRemove } from '../Provider';
+import { useDramasData, useSetVisibleModifyModal, useSetSelectedData, useOnRemoveByYear, useOnRemove } from '../Provider';
 
 export default function List() {
-	const moviesData = useMoviesData();
+	const dramasData = useDramasData();
 	const setVisibleModifyModal = useSetVisibleModifyModal();
 	const setSelectedData = useSetSelectedData();
 	const onRemoveByYear = useOnRemoveByYear();
@@ -25,15 +25,15 @@ export default function List() {
 	}, []);
 
 	const getContents = useCallback(() => {
-		return Object.keys(moviesData)
+		return Object.keys(dramasData)
 			.reverse()
 			.map(year => {
 				return {
 					year,
-					contents: nvl(moviesData, year, []).map(({ __typename, ...etc }: any) => etc),
+					contents: nvl(dramasData, year, []).map(({ __typename, ...etc }: any) => etc),
 				};
 			});
-	}, [moviesData]);
+	}, [dramasData]);
 	const contents = useMemo(getContents, [getContents]);
 
 	return (
@@ -72,7 +72,7 @@ export default function List() {
 												<Row gutter={[15, 0]}>
 													<Col span={12}>
 														<Descriptions column={1}>
-															{nvl(values, 'adminMoviesSubmitModalValue.descriptions', [])
+															{nvl(values, 'adminDramasSubmitModalValue.descriptions', [])
 																.filter(({ key }: any) => nvl(item, key, null) != null || nvl(item, key, '') !== '')
 																.map(({ key, label }: any) => {
 																	if (key === 'actors') {
@@ -80,16 +80,6 @@ export default function List() {
 																			nvl(item, `${key}.length`, 0) && (
 																				<Descriptions.Item key={key} label={label}>
 																					{nvl(item, key, []).join(', ')}
-																				</Descriptions.Item>
-																			)
-																		);
-																	}
-
-																	if (key === 'awards') {
-																		return (
-																			nvl(item, `${key}.length`, 0) && (
-																				<Descriptions.Item key={key} label={label} contentStyle={{ whiteSpace: 'pre-line' }}>
-																					{nvl(item, key, []).join('\n')}
 																				</Descriptions.Item>
 																			)
 																		);

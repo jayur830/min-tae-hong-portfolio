@@ -35,14 +35,6 @@ export const adminMoviesSubmitModalValue: AdminMoviesSubmitModalValueType = {
 	},
 	descriptions: [
 		{
-			key: 'img',
-			label: '대표 이미지',
-		},
-		{
-			key: 'title',
-			label: '제목',
-		},
-		{
 			key: 'director',
 			label: '감독',
 		},
@@ -53,10 +45,6 @@ export const adminMoviesSubmitModalValue: AdminMoviesSubmitModalValueType = {
 		{
 			key: 'awards',
 			label: '수상',
-		},
-		{
-			key: 'scenes',
-			label: '씬',
 		},
 	],
 	formItems: [

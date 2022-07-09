@@ -16,7 +16,6 @@ function useFormContents() {
 	const form = useForm();
 
 	const [imageFile, setImageFile] = useState<UploadFile | null>(null);
-	const [videoFile, setVideoFile] = useState<UploadFile | null>(null);
 	const [sceneFileList, setSceneFileList] = useState<UploadFile[]>([]);
 
 	const onPreview = useCallback(async file => {
@@ -51,26 +50,8 @@ function useFormContents() {
 		});
 	}, []);
 
-	const getVideoValue = useCallback(e => {
-		return new Promise(resolve => {
-			const fileReader = new FileReader();
-			fileReader.readAsDataURL(e.target.files[0]);
-			fileReader.onload = () => {
-				const video = document.createElement('video');
-				video.src = fileReader.result as string;
-				video.onloadedmetadata = function () {
-					resolve({
-						filename: e.target.files[0].name,
-						width: video.videoWidth,
-						height: video.videoHeight,
-					});
-				};
-			};
-		});
-	}, []);
-
 	const formItems = useMemo(() => {
-		return nvl(values, 'adminMoviesSubmitModalValue.formItems', []).map((item: FormItemUnionType | UploadItemType | ListItemType) => {
+		return nvl(values, 'adminDramasSubmitModalValue.formItems', []).map((item: FormItemUnionType | UploadItemType | ListItemType) => {
 			const key = nvl(item, 'key', '');
 
 			if (key === 'img') {
@@ -81,6 +62,8 @@ function useFormContents() {
 						fileList: imageFile ? [imageFile] : [],
 						onPreview,
 						async onChange({ file }: UploadChangeParam) {
+							console.log(file);
+
 							if (imageFile && imageFile.uid === file.uid) {
 								setImageFile(null);
 								form.setFieldsValue({ img: null });
@@ -89,33 +72,6 @@ function useFormContents() {
 							} else {
 								const base64 = (await getBase64(nvl(file, 'originFileObj', null))) as string;
 								setImageFile({
-									uid: '-1',
-									name: nvl(file, 'name', ''),
-									status: 'done',
-									url: base64,
-								});
-							}
-						},
-					},
-				};
-			}
-
-			if (key === 'video') {
-				return {
-					...item,
-					props: {
-						...nvl(item, 'props', {}),
-						fileList: videoFile ? [videoFile] : [],
-						onPreview,
-						async onChange({ file }: UploadChangeParam) {
-							if (videoFile && videoFile.uid === file.uid) {
-								setVideoFile(null);
-								form.setFieldsValue({ img: null });
-							} else if (!nvl(file, 'type', '').includes('video')) {
-								message.error('비디오만 추가하세요.');
-							} else {
-								const base64 = (await getBase64(nvl(file, 'originFileObj', null))) as string;
-								setVideoFile({
 									uid: '-1',
 									name: nvl(file, 'name', ''),
 									status: 'done',
@@ -162,20 +118,18 @@ function useFormContents() {
 
 			return item;
 		});
-	}, [imageFile, videoFile, sceneFileList]);
+	}, [imageFile, sceneFileList]);
 
-	return { setImageFile, setVideoFile, setSceneFileList, onPreview, getImageValue, getVideoValue, formItems };
+	return { setImageFile, setSceneFileList, onPreview, getImageValue, formItems };
 }
 
-const [Provider, useSetImageFile, useSetVideoFile, useSetSceneFileList, useOnPreview, useGetImageValue, useGetVideoValue, useFormItems] = constate(
+const [Provider, useSetImageFile, useSetSceneFileList, useOnPreview, useGetImageValue, useFormItems] = constate(
 	useFormContents,
 	value => value.setImageFile,
-	value => value.setVideoFile,
 	value => value.setSceneFileList,
 	value => value.onPreview,
 	value => value.getImageValue,
-	value => value.getVideoValue,
 	value => value.formItems
 );
 
-export { Provider, useSetImageFile, useSetVideoFile, useSetSceneFileList, useOnPreview, useGetImageValue, useGetVideoValue, useFormItems };
+export { Provider, useSetImageFile, useSetSceneFileList, useOnPreview, useGetImageValue, useFormItems };

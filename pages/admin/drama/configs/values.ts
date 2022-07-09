@@ -1,8 +1,11 @@
 import dayjs from 'dayjs';
-import { AdminDramasModifyModalValueType } from './types';
+import { AdminDramasSubmitModalValueType } from './types';
 
-export const adminDramasModifyModalValue: AdminDramasModifyModalValueType = {
-	title: '영화 작품 수정',
+export const adminDramasSubmitModalValue: AdminDramasSubmitModalValueType = {
+	title: {
+		create: '드라마 작품 추가',
+		update: '드라마 작품 수정',
+	},
 	okText: '완료',
 	messages: {
 		create: {
@@ -32,28 +35,16 @@ export const adminDramasModifyModalValue: AdminDramasModifyModalValueType = {
 	},
 	descriptions: [
 		{
-			key: 'img',
-			label: '대표 이미지',
-		},
-		{
-			key: 'title',
-			label: '제목',
+			key: 'actors',
+			label: '출연진',
 		},
 		{
 			key: 'director',
 			label: '감독',
 		},
 		{
-			key: 'actors',
-			label: '연출',
-		},
-		{
-			key: 'awards',
-			label: '수상',
-		},
-		{
-			key: 'scenes',
-			label: '씬',
+			key: 'schedule',
+			label: '일정',
 		},
 	],
 	formItems: [
@@ -88,16 +79,6 @@ export const adminDramasModifyModalValue: AdminDramasModifyModalValueType = {
 			},
 		},
 		{
-			key: 'video',
-			type: 'upload',
-			label: '비디오',
-			props: {
-				name: 'img',
-				action: '/api/file/post',
-				listType: 'picture',
-			},
-		},
-		{
 			key: 'title',
 			type: 'text',
 			label: '제목',
@@ -108,6 +89,21 @@ export const adminDramasModifyModalValue: AdminDramasModifyModalValueType = {
 					message: '제목을 입력해주세요.',
 				},
 			],
+			props: {
+				placeholder: '제목을 입력해주세요.',
+			},
+		},
+		{
+			key: 'actors',
+			type: 'list',
+			label: '출연진',
+			itemType: {
+				type: 'text',
+				label: '',
+				props: {
+					placeholder: '출연 배우를 입력해주세요.',
+				},
+			},
 		},
 		{
 			key: 'director',
@@ -120,23 +116,23 @@ export const adminDramasModifyModalValue: AdminDramasModifyModalValueType = {
 					message: '감독명을 입력해주세요.',
 				},
 			],
-		},
-		{
-			key: 'actors',
-			type: 'list',
-			label: '연출',
-			itemType: {
-				type: 'text',
-				label: '',
+			props: {
+				placeholder: '감독명을 입력해주세요.',
 			},
 		},
 		{
-			key: 'awards',
-			type: 'list',
-			label: '수상',
-			itemType: {
-				type: 'text',
-				label: '',
+			key: 'schedule',
+			type: 'text',
+			label: '일정',
+			required: true,
+			rules: [
+				{
+					required: true,
+					message: '일정을 입력해주세요.',
+				},
+			],
+			props: {
+				placeholder: '일정을 입력해주세요.',
 			},
 		},
 		{

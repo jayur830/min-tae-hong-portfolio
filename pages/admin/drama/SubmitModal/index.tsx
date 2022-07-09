@@ -22,8 +22,8 @@ const SubmitModal: NextPage = () => {
 		centered: true,
 		destroyOnClose: true,
 		visible: visibleModifyModal,
-		title: nvl(values, `adminMoviesSubmitModalValue.title.${modalType}`, ''),
-		okText: nvl(values, 'adminMoviesSubmitModalValue.okText', ''),
+		title: nvl(values, `adminDramasSubmitModalValue.title.${modalType}`, ''),
+		okText: nvl(values, 'adminDramasSubmitModalValue.okText', ''),
 		bodyStyle: {
 			overflowY: 'scroll',
 			height: 750,

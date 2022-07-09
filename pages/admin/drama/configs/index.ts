@@ -1,5 +1,5 @@
 import * as values from './values';
-import type { UploadItemType, ListItemType, AdminDramasModifyModalValueType } from './types';
+import type { UploadItemType, ListItemType, AdminDramasSubmitModalValueType } from './types';
 
 export { values };
-export type { UploadItemType, ListItemType, AdminDramasModifyModalValueType as AdminMoviesModifyModalValueType };
+export type { UploadItemType, ListItemType, AdminDramasSubmitModalValueType };

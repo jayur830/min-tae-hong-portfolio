@@ -1,0 +1,17 @@
+#import "../fragments/MediaMetadata.gql"
+
+mutation UpdateTheaters($updateTheatersInput: UpdateTheatersInput!) {
+	updated: Theaters_update(updateTheatersInput: $updateTheatersInput) {
+		id
+		title
+		theater
+		year
+		schedule
+		img {
+			...MediaMetadata
+		}
+		scenes {
+			...MediaMetadata
+		}
+	}
+}

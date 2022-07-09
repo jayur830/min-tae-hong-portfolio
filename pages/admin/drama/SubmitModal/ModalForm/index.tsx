@@ -13,7 +13,7 @@ import FormContent, { FormContentProps } from '@root/components/FormContent';
 // Local
 import { useSelectedData } from '../../Provider';
 import { useForm, useOnFinish, useOnValuesChange } from '../Provider';
-import { Provider, useSetImageFile, useSetVideoFile, useSetSceneFileList, useGetImageValue, useGetVideoValue, useFormItems } from './Provider';
+import { Provider, useSetImageFile, useSetSceneFileList, useGetImageValue, useFormItems } from './Provider';
 
 const ModalForm: NextPage = () => {
 	const imgUri = useImgUri();
@@ -22,10 +22,8 @@ const ModalForm: NextPage = () => {
 	const onFinish = useOnFinish();
 	const onValuesChange = useOnValuesChange();
 	const setImageFile = useSetImageFile();
-	const setVideoFile = useSetVideoFile();
 	const setSceneFileList = useSetSceneFileList();
 	const getImageValue = useGetImageValue();
-	const getVideoValue = useGetVideoValue();
 	const formItems = useFormItems();
 
 	useEffect(() => {
@@ -37,15 +35,6 @@ const ModalForm: NextPage = () => {
 				name: nvl(selectedData, 'img.filename', ''),
 				status: 'done',
 				url: `${imgUri}/${nvl(selectedData, 'img.filename', '')}`,
-			});
-		}
-
-		if (nvl(selectedData, 'video.filename', null)) {
-			setVideoFile({
-				uid: '-1',
-				name: nvl(selectedData, 'video.filename', ''),
-				status: 'done',
-				url: `${imgUri}/${nvl(selectedData, 'video.filename', '')}`,
 			});
 		}
 
@@ -101,44 +90,7 @@ const ModalForm: NextPage = () => {
 				);
 			}
 
-			if (key === 'video') {
-				const formItemProps: FormItemProps = {
-					name: key,
-					label,
-					valuePropName: 'file',
-					initialValue: nvl(selectedData, key, {}),
-					async getValueFromEvent(e) {
-						if (Array.isArray(e)) {
-							return e;
-						}
-
-						if (!nvl(e, 'target.files.0.type').includes('video')) {
-							return null;
-						}
-
-						return getVideoValue(e);
-					},
-				};
-
-				const buttonProps: ButtonProps = {
-					icon: <UploadOutlined />,
-					type: 'primary',
-				};
-
-				return (
-					<Form.Item key={key} {...formItemProps}>
-						<Row>
-							<Col span={24}>
-								<StyledUpload {...nvl(item, 'props', {})}>
-									<Button {...buttonProps}>업로드</Button>
-								</StyledUpload>
-							</Col>
-						</Row>
-					</Form.Item>
-				);
-			}
-
-			if (['actors', 'awards'].includes(key)) {
+			if (key === 'actors') {
 				return (
 					<Form.Item key={key} label={label}>
 						<Form.List name={key} initialValue={nvl(selectedData, key, [])}>

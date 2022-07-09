@@ -1,0 +1,3 @@
+mutation RemoveByYearDramas($year: Int!) {
+	removed: Dramas_removeByYear(year: $year)
+}
