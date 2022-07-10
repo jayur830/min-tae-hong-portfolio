@@ -2,12 +2,12 @@
 import { useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Menu, Drawer, DrawerProps } from 'antd';
+import { Menu, Drawer, DrawerProps, MenuProps } from 'antd';
 import styled from 'styled-components';
 
 // Global
 import { DarkModeProps } from '@root/configs';
-import { useVisibleMenu, useSetVisibleMenu, useTab, useSetTab, useDarkMode } from '@contexts/Provider';
+import { useVisibleMenu, useSetVisibleMenu, useTab, useSetTab, useDarkMode } from '@root/contexts/Provider';
 
 // Local
 import { values } from '../configs';
@@ -36,17 +36,22 @@ const SideNavigation = () => {
 		onClose: onInvisibleMobileMenu,
 	};
 
+	const menuProps: MenuProps = {
+		mode: 'inline',
+		selectedKeys: [tab],
+		items: values.navigation.map(menu => ({
+			key: menu.name,
+			label: (
+				<Link scroll={false} href={menu.uri} passHref>
+					<a>{menu.label.toUpperCase()}</a>
+				</Link>
+			),
+		})),
+	};
+
 	return (
 		<StyledDrawer {...drawerProps} dark-mode={isDarkMode.toString()}>
-			<StyledMenu mode="inline" selectedKeys={[tab]}>
-				{values.navigation.map(menu => (
-					<StyledMenuItem key={menu.name} dark-mode={isDarkMode.toString()}>
-						<Link scroll={false} href={menu.uri} passHref>
-							{menu.label.toUpperCase()}
-						</Link>
-					</StyledMenuItem>
-				))}
-			</StyledMenu>
+			<StyledMenu {...menuProps} dark-mode={`${isDarkMode}`} />
 		</StyledDrawer>
 	);
 };
@@ -72,14 +77,11 @@ const StyledDrawer = styled(Drawer)<DarkModeProps>(({ theme, ...props }) => ({
 	},
 }));
 
-const StyledMenu = styled(Menu)(({ theme }) => ({
+const StyledMenu: any = styled(Menu)<DarkModeProps>(({ theme, ...props }) => ({
 	justifyContent: theme.center,
 	borderColor: 'transparent',
 	marginBottom: 20,
-}));
-
-const StyledMenuItem = styled(Menu.Item)<DarkModeProps>(({ theme, ...props }) => ({
-	['&&&']: {
+	['&&& .ant-menu-item']: {
 		fontSize: 18,
 		fontFamily: theme.fontFamilyBold,
 		margin: '0 20px',

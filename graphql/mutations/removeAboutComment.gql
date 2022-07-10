@@ -1,0 +1,3 @@
+mutation RemoveAboutComment($id: String!) {
+	removed: AboutComment_remove(id: $id)
+}

@@ -15,15 +15,46 @@ const authLink = setContext((_, { headers }) => ({
 
 const client = new ApolloClient({
 	connectToDevTools: process.env.NODE_ENV !== 'production',
-	cache: new InMemoryCache().restore({}),
+	cache: new InMemoryCache({
+		typePolicies: {
+			['Query']: {
+				fields: {
+					['getAbout']: {
+						merge: true,
+					},
+					['getCommon']: {
+						merge: true,
+					},
+					['getContact']: {
+						merge: true,
+					},
+					['getDramas']: {
+						merge: false,
+					},
+					['getFooter']: {
+						merge: true,
+					},
+					['getHome']: {
+						merge: true,
+					},
+					['getMovies']: {
+						merge: false,
+					},
+					['getTheaters']: {
+						merge: false,
+					},
+				},
+			},
+		},
+	}).restore({}),
 	link: ApolloLink.from([authLink, httpLink]),
 	defaultOptions: {
 		watchQuery: {
-			fetchPolicy: 'no-cache',
+			fetchPolicy: 'cache-first',
 			errorPolicy: 'ignore',
 		},
 		query: {
-			fetchPolicy: 'no-cache',
+			fetchPolicy: 'network-only',
 			errorPolicy: 'all',
 		},
 	},

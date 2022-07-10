@@ -1,10 +1,11 @@
 // Package
-import { CSSProperties } from 'react';
-import { default as NextImage } from 'next/image';
-import { ImageProps as NextImageProps } from 'next/image';
+import { CSSProperties, useEffect, useState } from 'react';
+import { StaticImageData, default as NextImage, ImageProps as NextImageProps } from 'next/image';
 import { Skeleton } from 'antd';
 
 // Global
+import { imgLoader } from '@root/utils';
+import NotFountImage from '@root/public/not_found.png';
 
 // Local
 
@@ -13,15 +14,38 @@ export interface ImageProps {
 	src: string;
 	width?: number | string;
 	height?: number | string;
-	layout?: 'fill' | 'fixed' | 'intrinsic' | 'responsive' | 'raw';
+	layout?: 'fill' | 'fixed' | 'intrinsic' | 'responsive';
 	alt?: string;
 }
 
-const Image = ({ loading, src, width, height, layout, alt }: ImageProps) => {
-	const imageProps: NextImageProps = { src, width, height, layout, alt };
-	const skeletonInlineStyle: CSSProperties = { width, height };
+const Image = ({ loading, width, height, ...props }: ImageProps) => {
+	const [imgSrc, setImgSrc] = useState<string | StaticImageData>('');
 
-	return loading ? <Skeleton.Image style={skeletonInlineStyle} /> : <NextImage {...imageProps} />;
+	useEffect(() => {
+		setImgSrc(loading ? '' : props.src);
+	}, [loading, props.src]);
+
+	if (loading) {
+		const skeletonInlineStyle: CSSProperties = { width, height };
+		return <Skeleton.Image style={skeletonInlineStyle} />;
+	}
+
+	if (imgSrc === '') {
+		return null;
+	}
+
+	const imageProps: NextImageProps = {
+		...props,
+		loader: imgLoader,
+		src: imgSrc,
+		width,
+		height,
+		onError() {
+			setImgSrc(NotFountImage);
+		},
+	};
+
+	return <NextImage {...imageProps} />;
 };
 
 export default Image;

@@ -1,0 +1,21 @@
+#import "../fragments/MediaMetadata.gql"
+
+mutation CreateMovies($createMoviesInput: CreateMoviesInput!) {
+	created: Movies_create(createMoviesInput: $createMoviesInput) {
+		id
+		title
+		year
+		director
+		actors
+		awards
+		img {
+			...MediaMetadata
+		}
+		video {
+			...MediaMetadata
+		}
+		scenes {
+			...MediaMetadata
+		}
+	}
+}

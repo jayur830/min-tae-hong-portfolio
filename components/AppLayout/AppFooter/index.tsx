@@ -8,7 +8,7 @@ import styled from 'styled-components';
 // Global
 import { DarkModeProps } from '@root/configs';
 import { nvl } from '@root/utils';
-import { useDarkMode, useFooterData } from '@contexts/Provider';
+import { useDarkMode, useFooterData } from '@root/contexts/Provider';
 
 // Local
 import { values } from '../configs';

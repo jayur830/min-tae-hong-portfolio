@@ -1,0 +1,7 @@
+mutation CreateAboutComment($input: AboutCommentInput!) {
+	created: AboutComment_create(input: $input) {
+		id
+		comment
+		date
+	}
+}

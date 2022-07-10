@@ -23,12 +23,12 @@ export default models.About
 						height: Number,
 					},
 					comments: [
-						{
-							_id: false,
+						new Schema({
+							_id: Schema.Types.ObjectId,
 							comment: String,
 							date: String,
 							secret: Boolean,
-						},
+						}),
 					],
 				},
 				{

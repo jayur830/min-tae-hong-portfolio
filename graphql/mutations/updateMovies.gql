@@ -1,0 +1,21 @@
+#import "../fragments/MediaMetadata.gql"
+
+mutation UpdateMovies($updateMoviesInput: UpdateMoviesInput!) {
+	updated: Movies_update(updateMoviesInput: $updateMoviesInput) {
+		id
+		title
+		year
+		director
+		actors
+		awards
+		img {
+			...MediaMetadata
+		}
+		video {
+			...MediaMetadata
+		}
+		scenes {
+			...MediaMetadata
+		}
+	}
+}

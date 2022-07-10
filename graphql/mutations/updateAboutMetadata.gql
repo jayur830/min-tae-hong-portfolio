@@ -1,0 +1,9 @@
+mutation UpdateAboutMetadata($input: UpdateAboutMetadataInput!) {
+	updated: AboutMetadata_update(input: $input) {
+		name
+		metadata {
+			label
+			value
+		}
+	}
+}

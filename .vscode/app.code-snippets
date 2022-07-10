@@ -28,7 +28,7 @@
 		"description": "React Functional Component"
 	},
 	"React Provider": {
-		"scope": "javascriptreact,typescriptreact",
+		"scope": "javascriptreact,typescriptreact,javascript,typescript",
 		"prefix": "rp",
 		"body": [
 			"// Package",

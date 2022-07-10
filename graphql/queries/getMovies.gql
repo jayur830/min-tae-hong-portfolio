@@ -2,6 +2,7 @@
 
 query Movies {
 	movies: getMovies {
+		id
 		title
 		year
 		director

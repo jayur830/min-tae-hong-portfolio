@@ -1,8 +1,8 @@
 // Package
-import nextConnect from "next-connect";
-import AWS from "aws-sdk";
-import multer from "multer";
-import multerS3 from "multer-s3";
+import nextConnect from 'next-connect';
+import AWS from 'aws-sdk';
+import multer from 'multer';
+import multerS3 from 'multer-s3';
 
 // Global
 
@@ -16,7 +16,7 @@ AWS.config.update({
 
 export const app = nextConnect({
 	onError(error, request, response) {
-		console.log("Error:", error);
+		console.log('Error:', error);
 	},
 	onNoMatch(request, response) {},
 });
@@ -27,9 +27,12 @@ export const upload = multer({
 	storage: multerS3({
 		s3,
 		bucket: process.env.S3_BUCKET as string,
+		key(req, file, callback) {
+			callback(null, file.originalname);
+		},
 	}),
 	limits: {
-		fileSize: 1024 * 1024 * 1024, // 1GB
+		fileSize: 10 * 1024 * 1024 * 1024, // 10GB
 	},
 });
 

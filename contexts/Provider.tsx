@@ -4,17 +4,16 @@ import constate from 'constate';
 import { useQuery } from '@apollo/client';
 
 // Global
-// import { CommonQuery, FooterQuery } from '@graphql/queries';
-import CommonQuery from '@graphql/queries/getCommon.gql';
-import FooterQuery from '@graphql/queries/getFooter.gql';
 import { nvl } from '@root/utils';
+import CommonQuery from '@root/graphql/queries/getCommon.gql';
+import FooterQuery from '@root/graphql/queries/getFooter.gql';
 
 // Local
 
 const useAppLayout = () => {
-	const [visibleMenu, setVisibleMenu] = useState(false);
-	const [isDarkMode, setDarkMode] = useState(false);
-	const [tab, setTab] = useState('');
+	const [visibleMenu, setVisibleMenu] = useState<boolean>(false);
+	const [isDarkMode, setDarkMode] = useState<boolean>(false);
+	const [tab, setTab] = useState<string>('');
 
 	const imgUri = `https://${process.env.NEXT_PUBLIC_S3_BUCKET}.s3.${process.env.NEXT_PUBLIC_S3_REGION}.amazonaws.com`;
 

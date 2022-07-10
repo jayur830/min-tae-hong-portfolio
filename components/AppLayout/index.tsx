@@ -7,8 +7,8 @@ import styled from 'styled-components';
 // Global
 import { nest } from '@root/utils';
 import { DarkModeProps } from '@root/configs';
-import { Provider, useDarkMode } from '@contexts/Provider';
-import Helmet from '@components/Helmet';
+import { Provider, useDarkMode } from '@root/contexts/Provider';
+import Helmet from '@root/components/AppLayout/Helmet';
 
 // Local
 import AppFooter from './AppFooter';
@@ -17,7 +17,7 @@ import AppTop from './AppTop';
 import TopNavigation from './TopNavigation';
 import SideNavigation from './SideNavigation';
 
-const AppLayout: NextPage = ({ children }) => {
+const AppLayout: NextPage<any> = ({ children }) => {
 	const isDarkMode = useDarkMode();
 
 	return (

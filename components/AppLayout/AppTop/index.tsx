@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 // Global
 import { DarkModeProps } from '@root/configs';
-import { useSetVisibleMenu, useDarkMode, useSetDarkMode } from '@contexts/Provider';
+import { useSetVisibleMenu, useDarkMode, useSetDarkMode } from '@root/contexts/Provider';
 
 // Local
 

@@ -1,0 +1,17 @@
+#import "../fragments/MediaMetadata.gql"
+
+mutation CreateTheaters($createTheatersInput: CreateTheatersInput!) {
+	created: Theaters_create(createTheatersInput: $createTheatersInput) {
+		id
+		title
+		theater
+		year
+		schedule
+		img {
+			...MediaMetadata
+		}
+		scenes {
+			...MediaMetadata
+		}
+	}
+}
