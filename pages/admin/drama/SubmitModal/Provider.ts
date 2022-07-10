@@ -120,7 +120,7 @@ const useModifyModal = () => {
 		[selectedData]
 	);
 
-	const onValuesChange = useCallback(changedValues => {
+	const onValuesChange = useCallback((changedValues: { [name: string]: any }) => {
 		if (changedValues.img) {
 			changedValues.img.then((img: any) => {
 				form.setFieldsValue({ img });

@@ -39,7 +39,7 @@ const Movies: NextPage = () => {
 
 								const imageProps: ImageProps = {
 									loading,
-									src: `${imgUri}/${nvl(img, 'filename', '')}`,
+									src: nvl(img, 'filename', null) != null ? `${imgUri}/${nvl(img, 'filename', '')}` : '',
 									width: nvl(img, 'width', 0),
 									height: nvl(img, 'height', 0),
 									alt: 'Movies main image',

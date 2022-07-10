@@ -6,7 +6,7 @@ export const AboutMetadata_update = async (_: any, args: { input: UpdateAboutMet
 	const name = nvl(args, 'input.name', '');
 	const metadata = nvl(args, 'input.metadata', []);
 
-	await About.findOneAndUpdate({ $set: { name, metadata } }).exec();
+	await (About as any).findOneAndUpdate({ $set: { name, metadata } }).exec();
 
 	return { name, metadata };
 };

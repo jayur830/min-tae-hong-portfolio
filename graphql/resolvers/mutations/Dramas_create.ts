@@ -7,7 +7,7 @@ export const Dramas_create = async (_: any, args: { createDramasInput: CreateDra
 	const { createDramasInput: input } = args;
 
 	const _id = new mongoose.Types.ObjectId();
-	const data = await Dramas.create({
+	const data = await (Dramas as any).create({
 		...input,
 		_id,
 	});

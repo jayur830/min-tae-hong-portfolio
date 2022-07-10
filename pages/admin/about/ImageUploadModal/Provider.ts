@@ -75,7 +75,7 @@ const useImageUploadModal = () => {
 		});
 	}, []);
 
-	const onValuesChange = useCallback(changedValues => {
+	const onValuesChange = useCallback((changedValues: any) => {
 		if (changedValues.img) {
 			changedValues.img.then((img: any) => {
 				form.setFieldsValue({ img });

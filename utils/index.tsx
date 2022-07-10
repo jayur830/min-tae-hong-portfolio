@@ -59,3 +59,15 @@ export const onKeyDownInputNumber = (e: any) => {
 		e.preventDefault();
 	}
 };
+
+export const imgLoader = ({ src, width, quality }: { src: string; width: number; quality?: number }): string => {
+	if (src === '') {
+		return '';
+	}
+
+	if (src.includes('not_found')) {
+		return src;
+	}
+
+	return `${src}?w=${width}&q=${quality || 75}`;
+};

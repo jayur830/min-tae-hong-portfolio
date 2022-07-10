@@ -3,8 +3,8 @@ import { useEffect } from 'react';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { Menu } from 'antd';
-import styled from 'styled-components';
+import { Menu, MenuProps, MenuTheme } from 'antd';
+import styled, { DefaultTheme } from 'styled-components';
 
 // Global
 import { DarkModeProps } from '@root/configs';
@@ -24,30 +24,30 @@ const TopNavigation: NextPage = () => {
 		setTab(paths[paths.length - 1]);
 	}, [pathname]);
 
-	return (
-		<StyledMenu mode="horizontal" selectedKeys={[tab]} dark-mode={isDarkMode.toString()}>
-			{values.navigation.map(menu => (
-				<StyledMenuItem key={menu.name} dark-mode={isDarkMode.toString()}>
-					<Link scroll={false} href={menu.uri} passHref>
-						{menu.label.toUpperCase()}
-					</Link>
-				</StyledMenuItem>
-			))}
-		</StyledMenu>
-	);
+	const menuProps: MenuProps = {
+		mode: 'horizontal',
+		selectedKeys: [tab],
+		items: values.navigation.map(menu => ({
+			key: menu.name,
+			label: (
+				<Link scroll={false} href={menu.uri} passHref>
+					{menu.label.toUpperCase()}
+				</Link>
+			),
+		})),
+	};
+
+	return <StyledMenu {...menuProps} dark-mode={`${isDarkMode}`} />;
 };
 
 export default TopNavigation;
 
-const StyledMenu = styled(Menu)<DarkModeProps>(({ theme, ...props }) => ({
+const StyledMenu: any = styled(Menu)<DarkModeProps>(({ theme, ...props }) => ({
 	justifyContent: theme.center,
 	backgroundColor: props['dark-mode'] === 'true' ? theme.darkMode6 : theme.white,
 	borderColor: 'transparent',
 	marginBottom: 20,
-}));
-
-const StyledMenuItem = styled(Menu.Item)<DarkModeProps>(({ theme, ...props }) => ({
-	['&&&']: {
+	['&&& .ant-menu-item']: {
 		fontSize: 18,
 		fontFamily: theme.fontFamilyBold,
 		margin: '0 20px',

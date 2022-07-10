@@ -7,7 +7,7 @@ export const Theaters_create = async (_: any, args: { createTheatersInput: Creat
 	const { createTheatersInput: input } = args;
 
 	const _id = new mongoose.Types.ObjectId();
-	const data = await Theaters.create({
+	const data = await (Theaters as any).create({
 		...input,
 		_id,
 	});

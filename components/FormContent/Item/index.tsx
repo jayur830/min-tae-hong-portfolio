@@ -1,7 +1,7 @@
 // import dependency modules : package.json에 명시된 외부모듈을 선언하세요.
 import { CSSProperties } from 'react';
-import { Form, FormItemProps, Select, SelectProps, Input, InputProps, InputNumber, InputNumberProps, Button, Checkbox, Radio, Switch, DatePicker, DatePickerProps } from 'antd';
-import { PasswordProps, TextAreaProps, SearchProps } from 'antd/lib/input';
+import { Form, FormItemProps, Select, Input, InputProps, InputNumber, Button, Checkbox, Radio, Switch, DatePicker, DatePickerProps } from 'antd';
+import { SearchProps } from 'antd/lib/input';
 import { RangePickerProps } from 'antd/lib/date-picker';
 import Text from 'antd/lib/typography/Text';
 import TextArea from 'antd/lib/input/TextArea';

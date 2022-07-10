@@ -1,6 +1,6 @@
 // Package
 import { NextPage } from 'next';
-import { Card, Button } from 'antd';
+import { Card, CardProps, Button, ButtonProps } from 'antd';
 import Title from 'antd/lib/typography/Title';
 
 // Global
@@ -9,15 +9,28 @@ import Image, { ImageProps } from '@root/components/Image';
 import { useImgUri } from '@root/contexts/Provider';
 
 // Local
-import { useContactData, useContactLoading } from '../Provider';
+import { useSetVisibleImageUploadModal, useContactData, useContactLoading } from '../Provider';
 
 const ContactImage: NextPage = () => {
 	const imgUri = useImgUri();
+	const setVisibleImageUploadModal = useSetVisibleImageUploadModal();
 	const contactData = useContactData();
 	const loading = useContactLoading();
 
+	const uploadButtonProps: ButtonProps = {
+		type: 'primary',
+		onClick() {
+			setVisibleImageUploadModal(true);
+		},
+	};
+
+	const cardProps: CardProps = {
+		title: <Title level={4}>대표 이미지</Title>,
+		extra: <Button {...uploadButtonProps}>수정</Button>,
+	};
+
 	const imageProps: ImageProps = {
-		loading,
+		loading: loading || nvl(contactData, 'img.filename', '') === '',
 		src: `${imgUri}/${nvl(contactData, 'img.filename', '')}`,
 		width: nvl(contactData, 'img.width', 0),
 		height: nvl(contactData, 'img.height', 0),
@@ -26,7 +39,7 @@ const ContactImage: NextPage = () => {
 	};
 
 	return (
-		<Card title={<Title level={4}>대표 이미지</Title>} extra={<Button type="primary">수정</Button>}>
+		<Card {...cardProps}>
 			<Image {...imageProps} />
 		</Card>
 	);

@@ -29,7 +29,7 @@ const client = new ApolloClient({
 						merge: true,
 					},
 					['getDramas']: {
-						merge: true,
+						merge: false,
 					},
 					['getFooter']: {
 						merge: true,
@@ -38,10 +38,10 @@ const client = new ApolloClient({
 						merge: true,
 					},
 					['getMovies']: {
-						merge: true,
+						merge: false,
 					},
 					['getTheaters']: {
-						merge: true,
+						merge: false,
 					},
 				},
 			},

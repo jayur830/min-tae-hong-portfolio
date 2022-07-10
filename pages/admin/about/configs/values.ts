@@ -35,7 +35,7 @@ export const adminAboutCommentsValue: AdminAboutCommentsValueType = {
 };
 
 export const adminAboutImageUploadModalValue: AdminAboutImageUploadModalValueType = {
-	title: '이미지 수정',
+	title: '이미지 변경',
 	okText: '완료',
 	messages: {
 		confirm: '이미지를 바꾸시겠습니까?',

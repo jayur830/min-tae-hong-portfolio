@@ -17,7 +17,7 @@ import AppTop from './AppTop';
 import TopNavigation from './TopNavigation';
 import SideNavigation from './SideNavigation';
 
-const AppLayout: NextPage = ({ children }) => {
+const AppLayout: NextPage<any> = ({ children }) => {
 	const isDarkMode = useDarkMode();
 
 	return (

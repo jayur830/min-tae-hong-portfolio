@@ -1,6 +1,6 @@
 // Package
 import Link from 'next/link';
-import { Menu } from 'antd';
+import { Menu, MenuProps } from 'antd';
 import Sider from 'antd/lib/layout/Sider';
 import styled from 'styled-components';
 
@@ -14,17 +14,21 @@ import { useRouter } from 'next/router';
 const SideMenu = () => {
 	const { pathname } = useRouter();
 
+	const menuProps: MenuProps = {
+		defaultSelectedKeys: [pathname],
+		items: nvl(values, 'adminLayoutValue.menus', []).map(({ label, link }: any) => ({
+			key: link,
+			label: (
+				<Link href={link}>
+					<a>{label}</a>
+				</Link>
+			),
+		})),
+	};
+
 	return (
 		<StyledSider>
-			<StyledMenu defaultSelectedKeys={[pathname]}>
-				{nvl(values, 'adminLayoutValue.menus', []).map(({ label, link }: any) => (
-					<Menu.Item key={link}>
-						<Link href={link}>
-							<a>{label}</a>
-						</Link>
-					</Menu.Item>
-				))}
-			</StyledMenu>
+			<StyledMenu {...menuProps} />
 		</StyledSider>
 	);
 };
@@ -41,7 +45,7 @@ const StyledSider = styled(Sider)(({ theme }) => ({
 	padding: 15,
 }));
 
-const StyledMenu = styled(Menu)(({ theme }) => ({
+const StyledMenu: any = styled(Menu)(({ theme }) => ({
 	color: theme.white,
 	backgroundColor: 'transparent',
 	border: theme.none,

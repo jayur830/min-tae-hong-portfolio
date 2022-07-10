@@ -6,8 +6,9 @@ import { Row, Col } from 'antd';
 
 // Local
 import { Provider } from './Provider';
-import ContactImage from './ContactImage';
 import Email from './Email';
+import ContactImage from './ContactImage';
+import ImageUploadModal from './ImageUploadModal';
 
 const Contact: NextPage = () => {
 	return (
@@ -16,8 +17,11 @@ const Contact: NextPage = () => {
 				<Col span={12}>
 					<Email />
 				</Col>
-				<Col span={12}>{/* <ContactImage /> */}</Col>
+				<Col span={12}>
+					<ContactImage />
+				</Col>
 			</Row>
+			<ImageUploadModal />
 		</Provider>
 	);
 };

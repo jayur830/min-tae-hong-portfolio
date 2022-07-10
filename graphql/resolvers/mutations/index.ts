@@ -1,5 +1,4 @@
-import { auth } from './auth';
-
+import { login } from './login';
 import { AboutMetadata_update } from './AboutMetadata_update';
 import { AboutImg_update } from './AboutImg_update';
 import { AboutComment_create } from './AboutComment_create';
@@ -16,9 +15,11 @@ import { Theaters_create } from './Theaters_create';
 import { Theaters_update } from './Theaters_update';
 import { Theaters_remove } from './Theaters_remove';
 import { Theaters_removeByYear } from './Theaters_removeByYear';
+import { ContactEmail_update } from './ContactEmail_update';
+import { ContactImg_update } from './ContactImg_update';
 
 export {
-	auth,
+	login,
 	AboutMetadata_update,
 	AboutImg_update,
 	AboutComment_create,
@@ -35,4 +36,6 @@ export {
 	Theaters_update,
 	Theaters_remove,
 	Theaters_removeByYear,
+	ContactEmail_update,
+	ContactImg_update,
 };

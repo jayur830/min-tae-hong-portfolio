@@ -7,7 +7,7 @@ export const Movies_create = async (_: any, args: { createMoviesInput: CreateMov
 	const { createMoviesInput: input } = args;
 
 	const _id = new mongoose.Types.ObjectId();
-	const data = await Movies.create({
+	const data = await (Movies as any).create({
 		...input,
 		_id,
 	});

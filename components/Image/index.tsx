@@ -4,6 +4,7 @@ import { StaticImageData, default as NextImage, ImageProps as NextImageProps } f
 import { Skeleton } from 'antd';
 
 // Global
+import { imgLoader } from '@root/utils';
 import NotFountImage from '@root/public/not_found.png';
 
 // Local
@@ -13,7 +14,7 @@ export interface ImageProps {
 	src: string;
 	width?: number | string;
 	height?: number | string;
-	layout?: 'fill' | 'fixed' | 'intrinsic' | 'responsive' | 'raw';
+	layout?: 'fill' | 'fixed' | 'intrinsic' | 'responsive';
 	alt?: string;
 }
 
@@ -22,7 +23,7 @@ const Image = ({ loading, width, height, ...props }: ImageProps) => {
 
 	useEffect(() => {
 		setImgSrc(loading ? '' : props.src);
-	}, [loading]);
+	}, [loading, props.src]);
 
 	if (loading) {
 		const skeletonInlineStyle: CSSProperties = { width, height };
@@ -35,6 +36,7 @@ const Image = ({ loading, width, height, ...props }: ImageProps) => {
 
 	const imageProps: NextImageProps = {
 		...props,
+		loader: imgLoader,
 		src: imgSrc,
 		width,
 		height,

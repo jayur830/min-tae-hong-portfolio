@@ -1,0 +1,7 @@
+#import "../fragments/MediaMetadata.gql"
+
+mutation UpdateContactImg($input: MediaMetadataInput!) {
+	updated: ContactImg_update(input: $input) {
+		...MediaMetadata
+	}
+}

@@ -18,21 +18,21 @@ function useFormContents() {
 	const [imageFile, setImageFile] = useState<UploadFile | null>(null);
 	const [sceneFileList, setSceneFileList] = useState<UploadFile[]>([]);
 
-	const onPreview = useCallback(async file => {
+	const onPreview = useCallback(async (file: UploadFile) => {
 		if (!file.url && !file.preview) {
 			file.preview = await new Promise((resolve, reject) => {
 				const reader = new FileReader();
-				reader.readAsDataURL(file.originFileObj);
-				reader.onload = () => resolve(reader.result);
+				reader.readAsDataURL(file.originFileObj as Blob);
+				reader.onload = () => resolve(reader.result as string);
 				reader.onerror = error => reject(error);
 			});
 		}
 
-		setPreviewImage(file.url || file.preview);
+		setPreviewImage(file.url || file.preview || '');
 		setVisiblePreviewModal(true);
 	}, []);
 
-	const getImageValue = useCallback(e => {
+	const getImageValue = useCallback((e: any) => {
 		return new Promise(resolve => {
 			const fileReader = new FileReader();
 			fileReader.readAsDataURL(e.target.files[0]);

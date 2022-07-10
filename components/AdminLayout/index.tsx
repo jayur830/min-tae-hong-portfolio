@@ -12,7 +12,7 @@ import { Provider } from '@root/contexts/Provider';
 import Helmet from './Helmet';
 import SideMenu from './SideMenu';
 
-const AdminLayout: NextPage = ({ children }) => {
+const AdminLayout: NextPage<any> = ({ children }) => {
 	return (
 		<StyledLayout>
 			<Helmet />
