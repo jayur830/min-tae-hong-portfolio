@@ -35,7 +35,7 @@ const client = new ApolloClient({
 						merge: true,
 					},
 					['getHome']: {
-						merge: true,
+						merge: false,
 					},
 					['getMovies']: {
 						merge: false,
