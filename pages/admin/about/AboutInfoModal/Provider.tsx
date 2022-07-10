@@ -1,17 +1,17 @@
 // Package
 import { useCallback, useMemo } from 'react';
 import constate from 'constate';
+import { MutationHookOptions, useMutation } from '@apollo/client';
 import { Modal, Form, message } from 'antd';
 
 // Global
 import { nvl } from '@root/utils';
 import AboutQuery from '@root/graphql/queries/getAbout.gql';
-import UpdateMutation from '@root/graphql/mutations/UpdateAboutMetadata.gql';
+import UpdateMutation from '@root/graphql/mutations/updateAboutMetadata.gql';
 
 // Local
 import { values } from '../configs';
 import { useSetVisibleInfoModal, useAboutData } from '../Provider';
-import { MutationHookOptions, useMutation } from '@apollo/client';
 
 const useAboutInfoModal = () => {
 	const setVisibleInfoModal = useSetVisibleInfoModal();
