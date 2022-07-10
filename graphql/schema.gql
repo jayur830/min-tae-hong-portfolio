@@ -114,6 +114,7 @@ type Mutation {
 	Theaters_update(updateTheatersInput: UpdateTheatersInput!): Theaters!
 	Theaters_remove(id: String!): String!
 	Theaters_removeByYear(year: Int!): Int!
+	ContactEmail_update(email: String!): String!
 }
 
 input MediaMetadataInput {

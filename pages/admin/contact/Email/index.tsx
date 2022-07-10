@@ -1,74 +1,49 @@
 // Package
 import { NextPage } from 'next';
-import { Row, Col, Card, CardProps, Button, Input, Form } from 'antd';
-
-// Global
-import { nvl } from '@root/utils';
-
-// Local
-import { useContactData, useEditEmail, useSetEditEmail } from '../Provider';
-import { useCallback, useEffect } from 'react';
+import { Card, CardProps, Popconfirm, PopconfirmProps, Button, Space } from 'antd';
 import Text from 'antd/lib/typography/Text';
 
+// Global
+import { nest, nvl } from '@root/utils';
+
+// Local
+import { values } from '../configs';
+import { useContactData, useEditEmail } from '../Provider';
+import { Provider, useForm, useOnChangeEditMode } from './Provider';
+import ModalForm from './ModalForm';
+
 const Email: NextPage = () => {
-	const [form] = Form.useForm();
 	const contactData = useContactData();
 	const editEmail = useEditEmail();
-	const setEditEmail = useSetEditEmail();
+	const form = useForm();
+	const onChangeEditMode = useOnChangeEditMode();
 
-	useEffect(() => {
-		if (editEmail) {
-			form.resetFields();
-			form.setFieldsValue({ email: nvl(contactData, 'email', '') });
-		}
-	}, [editEmail]);
-
-	const onChangeEditMode = useCallback(() => {
-		setEditEmail(state => !state);
-	}, []);
-
-	const onModifyEmail = useCallback(() => {
-		/** TODO Implement */
-		setEditEmail(false);
-	}, []);
+	const popconfirmProps: PopconfirmProps = {
+		title: nvl(values, 'messages.email.confirm', ''),
+		onConfirm() {
+			form.submit();
+		},
+	};
 
 	const cardProps: CardProps = {
 		title: '이메일',
 		extra: (
-			<Row gutter={[10, 0]}>
+			<Space>
 				{editEmail ? (
 					<>
-						<Col>
-							<Button onClick={onChangeEditMode}>취소</Button>
-						</Col>
-						<Col>
-							<Button type="primary" onClick={onModifyEmail}>
-								확인
-							</Button>
-						</Col>
+						<Button onClick={onChangeEditMode}>취소</Button>
+						<Popconfirm {...popconfirmProps}>
+							<Button type="primary">확인</Button>
+						</Popconfirm>
 					</>
 				) : (
-					<Col>
-						<Button onClick={onChangeEditMode}>수정</Button>
-					</Col>
+					<Button onClick={onChangeEditMode}>수정</Button>
 				)}
-			</Row>
+			</Space>
 		),
 	};
 
-	return (
-		<Card {...cardProps}>
-			{editEmail ? (
-				<Form form={form} autoComplete="off">
-					<Form.Item name="email">
-						<Input />
-					</Form.Item>
-				</Form>
-			) : (
-				<Text>{nvl(contactData, 'email', '')}</Text>
-			)}
-		</Card>
-	);
+	return <Card {...cardProps}>{editEmail ? <ModalForm /> : <Text>{nvl(contactData, 'email', '')}</Text>}</Card>;
 };
 
-export default Email;
+export default nest(Provider, Email);
