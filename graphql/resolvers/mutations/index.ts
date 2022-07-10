@@ -1,4 +1,5 @@
 import { login } from './login';
+import { Secret_update } from './Secret_update';
 import { AboutMetadata_update } from './AboutMetadata_update';
 import { AboutImg_update } from './AboutImg_update';
 import { AboutComment_create } from './AboutComment_create';
@@ -20,6 +21,7 @@ import { ContactImg_update } from './ContactImg_update';
 
 export {
 	login,
+	Secret_update,
 	AboutMetadata_update,
 	AboutImg_update,
 	AboutComment_create,

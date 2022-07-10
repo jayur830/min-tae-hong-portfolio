@@ -14,6 +14,7 @@ const useAppLayout = () => {
 	const [visibleMenu, setVisibleMenu] = useState<boolean>(false);
 	const [isDarkMode, setDarkMode] = useState<boolean>(false);
 	const [tab, setTab] = useState<string>('');
+	const [visibleUpdatePasswordModal, setVisibleUpdatePasswordModal] = useState<boolean>(false);
 
 	const imgUri = `https://${process.env.NEXT_PUBLIC_S3_BUCKET}.s3.${process.env.NEXT_PUBLIC_S3_REGION}.amazonaws.com`;
 
@@ -23,10 +24,25 @@ const useAppLayout = () => {
 	const { data: footer, loading: footerLoading } = useQuery(FooterQuery);
 	const footerData = nvl(footer, 'footer', {});
 
-	return { visibleMenu, setVisibleMenu, imgUri, isDarkMode, setDarkMode, commonData, commonLoading, footerData, footerLoading, tab, setTab };
+	return { visibleMenu, setVisibleMenu, imgUri, isDarkMode, setDarkMode, commonData, commonLoading, footerData, footerLoading, tab, setTab, visibleUpdatePasswordModal, setVisibleUpdatePasswordModal };
 };
 
-const [Provider, useVisibleMenu, useSetVisibleMenu, useImgUri, useDarkMode, useSetDarkMode, useCommonData, useCommonLoading, useFooterData, useFooterLoading, useTab, useSetTab] = constate(
+const [
+	Provider,
+	useVisibleMenu,
+	useSetVisibleMenu,
+	useImgUri,
+	useDarkMode,
+	useSetDarkMode,
+	useCommonData,
+	useCommonLoading,
+	useFooterData,
+	useFooterLoading,
+	useTab,
+	useSetTab,
+	useVisibleUpdatePasswordModal,
+	useSetVisibleUpdatePasswordModal,
+] = constate(
 	useAppLayout,
 	value => value.visibleMenu,
 	value => value.setVisibleMenu,
@@ -38,7 +54,24 @@ const [Provider, useVisibleMenu, useSetVisibleMenu, useImgUri, useDarkMode, useS
 	value => value.footerData,
 	value => value.footerLoading,
 	value => value.tab,
-	value => value.setTab
+	value => value.setTab,
+	value => value.visibleUpdatePasswordModal,
+	value => value.setVisibleUpdatePasswordModal
 );
 
-export { Provider, useVisibleMenu, useSetVisibleMenu, useImgUri, useDarkMode, useSetDarkMode, useCommonData, useCommonLoading, useFooterData, useFooterLoading, useTab, useSetTab };
+export {
+	Provider,
+	useVisibleMenu,
+	useSetVisibleMenu,
+	useImgUri,
+	useDarkMode,
+	useSetDarkMode,
+	useCommonData,
+	useCommonLoading,
+	useFooterData,
+	useFooterLoading,
+	useTab,
+	useSetTab,
+	useVisibleUpdatePasswordModal,
+	useSetVisibleUpdatePasswordModal,
+};

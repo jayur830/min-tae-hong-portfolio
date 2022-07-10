@@ -1,8 +1,9 @@
 // Package
+import { useCallback } from 'react';
+import constate from 'constate';
 import { useMutation } from '@apollo/client';
 import { Form, message } from 'antd';
-import constate from 'constate';
-import { useCallback } from 'react';
+import crypto from 'crypto';
 
 // Global
 import LoginMutation from '@root/graphql/mutations/login.gql';
@@ -18,9 +19,14 @@ const uselogin = () => {
 	const [login] = useMutation(LoginMutation);
 
 	const onFinish = useCallback(async (fields: any) => {
+		const { password } = fields;
 		const {
 			data: { auth },
-		} = await login({ variables: fields });
+		} = await login({
+			variables: {
+				password: crypto.createHash('sha256').update(password).digest('hex'),
+			},
+		});
 		if (auth) {
 			localStorage.setItem('mthp_authentication', 'true');
 			router.push('/admin');

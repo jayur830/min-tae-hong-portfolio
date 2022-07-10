@@ -6,7 +6,7 @@ import { NextPage } from 'next';
 // Local
 
 const Home: NextPage = () => {
-	return <>Home</>;
+	return <>기획 중...</>;
 };
 
 export default Home;

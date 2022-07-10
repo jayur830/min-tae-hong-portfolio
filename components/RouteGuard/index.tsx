@@ -25,11 +25,9 @@ export default function RouteGuard({ children }: any) {
 			setAuthorized(true);
 		} else {
 			setAuthorized(false);
-			router.push({ pathname: '/login' });
+			router.push('/login');
 		}
 	}, [auth]);
-
-	console.log('authorized:', authorized);
 
 	return authorized ? <AdminLayout>{children}</AdminLayout> : children;
 }

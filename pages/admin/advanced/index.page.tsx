@@ -6,7 +6,7 @@ import { NextPage } from 'next';
 // Local
 
 const Advanced: NextPage = () => {
-	return <>Advanced</>;
+	return <>기획 중...</>;
 };
 
 export default Advanced;
