@@ -1,5 +1,5 @@
 // Package
-import { CSSProperties, useState } from 'react';
+import { CSSProperties, useEffect, useState } from 'react';
 import { StaticImageData, default as NextImage, ImageProps as NextImageProps } from 'next/image';
 import { Skeleton } from 'antd';
 
@@ -18,7 +18,20 @@ export interface ImageProps {
 }
 
 const Image = ({ loading, width, height, ...props }: ImageProps) => {
-	const [imgSrc, setImgSrc] = useState<string | StaticImageData>(props.src);
+	const [imgSrc, setImgSrc] = useState<string | StaticImageData>('');
+
+	useEffect(() => {
+		setImgSrc(loading ? '' : props.src);
+	}, [loading]);
+
+	if (loading) {
+		const skeletonInlineStyle: CSSProperties = { width, height };
+		return <Skeleton.Image style={skeletonInlineStyle} />;
+	}
+
+	if (imgSrc === '') {
+		return null;
+	}
 
 	const imageProps: NextImageProps = {
 		...props,
@@ -30,9 +43,7 @@ const Image = ({ loading, width, height, ...props }: ImageProps) => {
 		},
 	};
 
-	const skeletonInlineStyle: CSSProperties = { width, height };
-
-	return loading ? <Skeleton.Image style={skeletonInlineStyle} /> : <NextImage {...imageProps} />;
+	return <NextImage {...imageProps} />;
 };
 
 export default Image;

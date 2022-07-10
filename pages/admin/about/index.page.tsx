@@ -10,6 +10,7 @@ import AboutInfoModal from './AboutInfoModal';
 import Comments from './Comments';
 import Info from './Info';
 import AboutImage from './AboutImage';
+import ImageUploadModal from './ImageUploadModal';
 
 const About: NextPage = () => {
 	return (
@@ -18,12 +19,15 @@ const About: NextPage = () => {
 				<Col span={12}>
 					<Info />
 				</Col>
-				<Col span={12}>{/* <AboutImage /> */}</Col>
+				<Col span={12}>
+					<AboutImage />
+				</Col>
 				<Col span={24}>
 					<Comments />
 				</Col>
 			</Row>
 			<AboutInfoModal />
+			<ImageUploadModal />
 		</Provider>
 	);
 };

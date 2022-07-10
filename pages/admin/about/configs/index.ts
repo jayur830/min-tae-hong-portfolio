@@ -1,5 +1,5 @@
 import * as values from './values';
-import type { AdminAboutInfoModalValueType, AdminAboutCommentsTableColumnType, AdminAboutCommentsValueType } from './types';
+import type { AdminAboutCommentsTableColumnType, AdminAboutCommentsValueType, UploadItemType, AdminAboutImageUploadModalValueType } from './types';
 
 export { values };
-export type { AdminAboutInfoModalValueType, AdminAboutCommentsTableColumnType, AdminAboutCommentsValueType };
+export type { AdminAboutCommentsTableColumnType, AdminAboutCommentsValueType, UploadItemType, AdminAboutImageUploadModalValueType };

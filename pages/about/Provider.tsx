@@ -1,14 +1,14 @@
 // Package
-import { useState } from 'react';
-import { useQuery, useMutation } from '@apollo/client';
+import { useMemo, useState } from 'react';
+import { useQuery, useMutation, MutationHookOptions } from '@apollo/client';
 import constate from 'constate';
 
 // Global
 import { nvl } from '@root/utils';
+import { About } from '@root/graphql/scheme';
 import AboutQuery from '@root/graphql/queries/getAbout.gql';
 import CommentsQuery from '@root/graphql/queries/getComments.gql';
-import CommentMutation from '@root/graphql/mutations/postComment.gql';
-import { About } from '@root/graphql/scheme';
+import CreateCommentMutation from '@root/graphql/mutations/createAboutComment.gql';
 
 // Local
 
@@ -22,9 +22,26 @@ const useAbout = () => {
 	const { data: comments, loading: commentsLoading, refetch: commentsRefetch } = useQuery<About>(CommentsQuery);
 	const commentsData = nvl(comments, 'comments.comments', []);
 
-	const [postComment] = useMutation(CommentMutation);
+	const createCommentMutationOptions = useMemo((): MutationHookOptions => {
+		return {
+			update(cache, { data: { created } }) {
+				const cachedData = nvl(cache.readQuery({ query: CommentsQuery }), 'comments', {});
+				cache.writeQuery({
+					query: CommentsQuery,
+					data: {
+						comments: {
+							...cachedData,
+							comments: [...nvl(cachedData, 'comments', []), created],
+						},
+					},
+				});
+			},
+		};
+	}, []);
 
-	return { isWriteComment, setWriteComment, visibleInfoModal, setVisibleInfoModal, aboutData, aboutLoading, commentsData, commentsLoading, commentsRefetch, postComment };
+	const [createComment] = useMutation(CreateCommentMutation, createCommentMutationOptions);
+
+	return { isWriteComment, setWriteComment, visibleInfoModal, setVisibleInfoModal, aboutData, aboutLoading, commentsData, commentsLoading, commentsRefetch, createComment };
 };
 
 const [
@@ -38,7 +55,7 @@ const [
 	useCommentsData,
 	useCommentsLoading,
 	useCommentsRefetch,
-	usePostComment,
+	useCreateComment,
 ] = constate(
 	useAbout,
 	value => value.isWriteComment,
@@ -50,7 +67,7 @@ const [
 	value => value.commentsData,
 	value => value.commentsLoading,
 	value => value.commentsRefetch,
-	value => value.postComment
+	value => value.createComment
 );
 
 export {
@@ -64,5 +81,5 @@ export {
 	useCommentsData,
 	useCommentsLoading,
 	useCommentsRefetch,
-	usePostComment,
+	useCreateComment,
 };

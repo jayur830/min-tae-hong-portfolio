@@ -20,28 +20,28 @@ const client = new ApolloClient({
 			['Query']: {
 				fields: {
 					['getAbout']: {
-						merge: false,
+						merge: true,
 					},
 					['getCommon']: {
-						merge: false,
+						merge: true,
 					},
 					['getContact']: {
-						merge: false,
+						merge: true,
 					},
 					['getDramas']: {
-						merge: false,
+						merge: true,
 					},
 					['getFooter']: {
-						merge: false,
+						merge: true,
 					},
 					['getHome']: {
-						merge: false,
+						merge: true,
 					},
 					['getMovies']: {
-						merge: false,
+						merge: true,
 					},
 					['getTheaters']: {
-						merge: false,
+						merge: true,
 					},
 				},
 			},
@@ -54,7 +54,7 @@ const client = new ApolloClient({
 			errorPolicy: 'ignore',
 		},
 		query: {
-			fetchPolicy: 'cache-first',
+			fetchPolicy: 'network-only',
 			errorPolicy: 'all',
 		},
 	},

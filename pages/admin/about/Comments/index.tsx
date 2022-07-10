@@ -9,18 +9,21 @@ import { values } from '../configs';
 import { assignKeys, nvl } from '@root/utils';
 
 // Local
-import { useCommentsData } from '../Provider';
+import { useCommentsData, useRemoveComment } from '../Provider';
 
 const Comments: NextPage = () => {
 	const commentsData = useCommentsData();
+	const removeComment = useRemoveComment();
 
-	const onRemove = useCallback(({ date, comment }: any) => {
+	const onRemove = useCallback(async (id: string) => {
 		try {
 			message.loading({
 				key: 'loading',
 				content: nvl(values, 'adminAboutCommentsValue.loadingText', ''),
 			});
-			/** TODO Implement */
+
+			await removeComment({ variables: { id } });
+
 			message.destroy('loading');
 			message.success(nvl(values, 'adminAboutCommentsValue.infoText', ''));
 		} catch (e) {
@@ -36,7 +39,7 @@ const Comments: NextPage = () => {
 			if (key === 'option') {
 				return {
 					...column,
-					render(_: any, record: any) {
+					render(id: string) {
 						const popconfirmProps: PopconfirmProps = {
 							title: nvl(values, 'adminAboutCommentsValue.removeText', ''),
 							overlayStyle: {
@@ -44,7 +47,7 @@ const Comments: NextPage = () => {
 								width: 'fit-content',
 							},
 							onConfirm() {
-								onRemove(record);
+								onRemove(id);
 							},
 						};
 

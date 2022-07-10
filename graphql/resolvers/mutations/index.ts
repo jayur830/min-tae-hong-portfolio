@@ -1,6 +1,9 @@
-import { postComment } from './postComment';
 import { auth } from './auth';
 
+import { AboutMetadata_update } from './AboutMetadata_update';
+import { AboutImg_update } from './AboutImg_update';
+import { AboutComment_create } from './AboutComment_create';
+import { AboutComment_remove } from './AboutComment_remove';
 import { Movies_create } from './Movies_create';
 import { Movies_update } from './Movies_update';
 import { Movies_remove } from './Movies_remove';
@@ -15,8 +18,11 @@ import { Theaters_remove } from './Theaters_remove';
 import { Theaters_removeByYear } from './Theaters_removeByYear';
 
 export {
-	postComment,
 	auth,
+	AboutMetadata_update,
+	AboutImg_update,
+	AboutComment_create,
+	AboutComment_remove,
 	Movies_create,
 	Movies_update,
 	Movies_remove,

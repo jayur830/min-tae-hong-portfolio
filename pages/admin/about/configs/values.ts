@@ -1,10 +1,11 @@
-import { AdminAboutCommentsValueType, AdminAboutInfoModalValueType } from './types';
+import { MessageType } from '@root/configs';
+import { AdminAboutCommentsValueType, AdminAboutImageUploadModalValueType } from './types';
 
-export const adminAboutInfoModalValue: AdminAboutInfoModalValueType = {
-	confirmText: '수정하시겠습니까?',
-	infoText: '수정되었습니다.',
-	loadingText: '수정중입니다...',
-	errorText: '문제가 발생했습니다. 좆될수도 있으니 관리자에게 문의하세요.',
+export const adminAboutInfoModalValue: MessageType = {
+	confirm: '수정하시겠습니까?',
+	loading: '수정중입니다...',
+	success: '수정되었습니다.',
+	error: '문제가 발생했습니다. 좆될수도 있으니 관리자에게 문의하세요.',
 };
 
 export const adminAboutCommentsValue: AdminAboutCommentsValueType = {
@@ -27,8 +28,33 @@ export const adminAboutCommentsValue: AdminAboutCommentsValueType = {
 		{
 			key: 'option',
 			title: '',
-			dataIndex: ['option'],
+			dataIndex: ['id'],
 			width: 50,
+		},
+	],
+};
+
+export const adminAboutImageUploadModalValue: AdminAboutImageUploadModalValueType = {
+	title: '이미지 수정',
+	okText: '완료',
+	messages: {
+		confirm: '이미지를 바꾸시겠습니까?',
+		loading: '이미지를 수정중입니다...',
+		success: '이미지가 수정되었습니다.',
+		error: '문제가 발생했습니다. 관리자에게 문의하세요.',
+	},
+	formItems: [
+		{
+			key: 'img',
+			type: 'upload',
+			label: '이미지',
+			required: true,
+			valuePropName: 'file',
+			props: {
+				name: 'img',
+				action: '/api/file/post',
+				listType: 'picture',
+			},
 		},
 	],
 };

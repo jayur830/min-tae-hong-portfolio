@@ -14,7 +14,7 @@ import { useImgUri, useDarkMode } from '@root/contexts/Provider';
 import Image, { ImageProps } from '@root/components/Image';
 
 // Local
-import { Provider, useWriteComment, useSetWriteComment, useAboutData, useAboutLoading, useCommentsData, useCommentsRefetch, usePostComment } from './Provider';
+import { Provider, useWriteComment, useSetWriteComment, useAboutData, useAboutLoading, useCommentsData, useCommentsRefetch, useCreateComment } from './Provider';
 
 const About: NextPage = () => {
 	const isDarkMode = useDarkMode();
@@ -26,7 +26,7 @@ const About: NextPage = () => {
 	const loading = useAboutLoading();
 	const commentsData = useCommentsData();
 	const commentsRefetch = useCommentsRefetch();
-	const postComment = usePostComment();
+	const createComment = useCreateComment();
 
 	const onWriteComment = useCallback(() => {
 		setWriteComment(true);
@@ -37,10 +37,12 @@ const About: NextPage = () => {
 	}, []);
 
 	const onFinish = useCallback(async ({ comment }: any) => {
-		const { data: isPostedComment } = await postComment({
+		const { data: isPostedComment } = await createComment({
 			variables: {
-				comment,
-				date: dayjs().format('YYYY.MM.DD HH:mm:ss'),
+				input: {
+					comment,
+					date: dayjs().format('YYYY.MM.DD HH:mm:ss'),
+				},
 			},
 		});
 		if (isPostedComment) {
