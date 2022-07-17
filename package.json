@@ -8,7 +8,8 @@
 	},
 	"scripts": {
 		"dev": "node server.js",
-		"build": "next build && next export",
+		"build": "rm -f public/sitemap*.xml && next build",
+		"postbuild": "next-sitemap",
 		"start": "NODE_ENV=production node server.js",
 		"lint": "next lint",
 		"generate": "graphql-codegen --config codegen.yml",

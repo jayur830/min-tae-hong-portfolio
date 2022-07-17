@@ -2,6 +2,10 @@ import { GetServerSidePropsContext } from 'next';
 import { getServerSideSitemap } from 'next-sitemap';
 import dayjs from 'dayjs';
 
+export default () => {
+	return;
+};
+
 export async function getServerSideProps(context: GetServerSidePropsContext) {
 	const lastmod = dayjs().toISOString();
 
@@ -14,5 +18,3 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 		},
 	]);
 }
-
-export default () => {};
