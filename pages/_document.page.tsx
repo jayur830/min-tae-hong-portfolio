@@ -40,7 +40,7 @@ export default class MyDocument extends Document {
 					<meta name="og:url" content="https://min-tae-hong-portfolio.herokuapp.com" />
 					<meta name="keywords" content="민태홍, 태홍, 포트폴리오, min tae hong, portfolio" />
 					<meta name="title" content="민태홍, 태홍, 포트폴리오, min tae hong, portfolio" />
-					<meta name="google-site-verification" content={process.env.GOOGLE_SITE_VERIFICATION} />
+					<meta name="google-site-verification" content="TWupcmG0uAjUfivvhR56XYgUWnYhaXnKShQEWY_TIMk" />
 					<link rel="icon" href="/favicon.ico" />
 				</Head>
 				<body>
